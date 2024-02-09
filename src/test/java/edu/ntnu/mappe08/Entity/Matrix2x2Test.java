@@ -25,7 +25,7 @@ class Matrix2x2Test {
    * Test the constructor in the Matrix2x2 class.
    */
   @Test
-  public void testConstructor() {
+  public void testValidMatrixConstructor() {
     Matrix2x2 testConstructorMatrix = new Matrix2x2(2, 3, 4, 5);
     assertEquals(2, testConstructorMatrix.getA00());
     assertEquals(3, testConstructorMatrix.getA01());
@@ -38,7 +38,7 @@ class Matrix2x2Test {
    * Test the multiply method in the Matrix2x2 class.
    */
   @Test
-  public void testMultiply() {
+  public void testValidMultiply() {
     Vector2D result = this.testMatrix.multiply(this.testVector);
     assertEquals(5, result.getX());
     assertEquals(11, result.getY());

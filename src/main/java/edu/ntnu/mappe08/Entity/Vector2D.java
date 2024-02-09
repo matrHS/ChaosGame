@@ -13,8 +13,8 @@ public class Vector2D {
    * @param y second value of the vector
    */
   public Vector2D(double x, double y){
-    this.x = x;
-    this.y = y;
+    this.setX(x);
+    this.setY(y);
   }
 
   /**
@@ -34,6 +34,22 @@ public class Vector2D {
   }
 
   /**
+   * Method to set the x value of the vector
+   * @param x New x value of the vector
+   */
+  private void setX(double x) {
+    this.x = x;
+  }
+  
+  /**
+   * Method to set the y value of the vector
+   * @param y New y value of the vector
+   */
+  private void setY(double y) {
+    this.y = y;
+  }
+  
+  /**
    * Adds vector to original vector
    * @param other Vector to add to the original
    * @return New vector
@@ -42,8 +58,10 @@ public class Vector2D {
     if (other == null) {
       throw new NullPointerException("Passed vector is null");
     }
-
-    return new Vector2D(this.getX() + other.getX(), this.getY() + other.getY());
+    double newX = this.getX() + other.getX();
+    double newY = this.getY() + other.getY();
+    
+    return new Vector2D(newX, newY);
   }
 
   /**
@@ -55,7 +73,9 @@ public class Vector2D {
     if (other == null) {
       throw new NullPointerException("Passed vector is null");
     }
-
-    return new Vector2D(this.getX() - other.getX(), this.getY() - other.getY());
+    double newX = this.getX() - other.getX();
+    double newY = this.getY() - other.getY();
+    
+    return new Vector2D(newX, newY);
   }
 }
