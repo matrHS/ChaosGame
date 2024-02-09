@@ -1,4 +1,4 @@
-package edu.ntnu.mappe08.Entity;
+package edu.ntnu.mappe08.entity;
 
 /**
  * Represents a 2 Dimentional Vector with position x and y

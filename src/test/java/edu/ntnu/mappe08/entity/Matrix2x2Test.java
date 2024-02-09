@@ -1,4 +1,4 @@
-package edu.ntnu.mappe08.Entity;
+package edu.ntnu.mappe08.entity;
 
 import static org.junit.jupiter.api.Assertions.*;
 

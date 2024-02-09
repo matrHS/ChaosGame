@@ -1,4 +1,4 @@
-package edu.ntnu.mappe08.Entity;
+package edu.ntnu.mappe08.entity;
 
 /**
  * Class for a 2x2 matrix.

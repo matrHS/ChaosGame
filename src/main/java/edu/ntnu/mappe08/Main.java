@@ -1,7 +1,7 @@
 package edu.ntnu.mappe08;
 
 
-import edu.ntnu.mappe08.Entity.Matrix2x2;
+import edu.ntnu.mappe08.entity.Matrix2x2;
 
 public class Main {
   public static void main(String[] args){

@@ -1,8 +1,7 @@
-package edu.ntnu.mappe08.Entity;
+package edu.ntnu.mappe08.entity;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

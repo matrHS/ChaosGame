@@ -1,4 +1,4 @@
-package edu.ntnu.mappe08.Entity;
+package edu.ntnu.mappe08.entity;
 
 public class Complex extends Vector2D{
   
