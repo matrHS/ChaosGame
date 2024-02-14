@@ -39,4 +39,16 @@ class AffineTransform2DTest {
       assertEquals(47, result.getY());
     }
 
+  /**
+   * Negative test:
+   * Test Affine transform with null point.
+   */
+  @Test
+  public void testNullPointTransform() {
+    Vector2D testPoint = null;
+    assertThrows(NullPointerException.class, () -> {
+      this.testTransform.transform(testPoint);
+    });
+  }
+
 }
