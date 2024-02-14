@@ -11,8 +11,12 @@ public class Vector2D {
    * Constructor for Vector2D
    * @param x first value of the vector
    * @param y second value of the vector
+   * @throws ArithmeticException if x or y is NaN
    */
   public Vector2D(double x, double y){
+    if (Double.isNaN(x) || Double.isNaN(y)) {
+      throw new ArithmeticException("Vector cannot contain NaN values");
+    }
     this.setX(x);
     this.setY(y);
   }

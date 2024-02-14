@@ -41,4 +41,14 @@ class ComplexTest {
       assertEquals(4, result.getY());
     }
 
+  /**
+   * Negative test:
+   * Try initializing a complex with zero point division to get a NaN
+   */
+  @Test
+  public void TestZeroPointConstructor(){
+    assertThrows(ArithmeticException.class, () -> {
+      Complex zeroVector = new Complex(5/0,3/0);
+    });
+  }
 }

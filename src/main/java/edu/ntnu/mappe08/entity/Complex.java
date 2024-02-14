@@ -7,6 +7,7 @@ public class Complex extends Vector2D{
    * 
    * @param realPart the real part of the complex number
    * @param imaginaryPart the imaginary part of the complex number
+   * @throws ArithmeticException if realPart or imaginaryPart is NaN
    */
   public Complex(double realPart, double imaginaryPart) {
     super(realPart, imaginaryPart);

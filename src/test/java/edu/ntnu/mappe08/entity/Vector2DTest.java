@@ -91,4 +91,15 @@ class Vector2DTest {
     });
   }
 
+  /**
+   * Negative test:
+   * Try initializing a vector with zero point division to get a NaN
+   */
+  @Test
+  public void TestZeroPointConstructor(){
+    assertThrows(ArithmeticException.class, () -> {
+      Vector2D zeroVector = new Vector2D(5/0,3/0);
+    });
+  }
+
 }
