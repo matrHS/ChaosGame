@@ -67,4 +67,19 @@ class JuliaTransformTest {
       testTransform.transform(testPointZ);
     });
   }
+  
+  /**
+   * Negative test:
+   * Test Julia transform with non-complex point.
+   */
+  @Test
+  public void testNonComplexPointTransform() {
+    sign = 1;
+    testTransform = new JuliaTransform(testComplex,sign);
+    Vector2D testPointZ = new Vector2D(2, 6);
+    
+    assertThrows(IllegalArgumentException.class, () -> {
+      testTransform.transform(testPointZ);
+    });
+  }
 }
