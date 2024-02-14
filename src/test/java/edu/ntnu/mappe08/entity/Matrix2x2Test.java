@@ -43,5 +43,17 @@ class Matrix2x2Test {
     assertEquals(5, result.getX());
     assertEquals(11, result.getY());
   }
+  
+  /**
+   * Negative test:
+   * Test Matrix2x2 multiply with null vector.
+   */
+  @Test
+  public void testNullVectorMultiply() {
+    Vector2D testVector = null;
+    assertThrows(NullPointerException.class, () -> {
+      this.testMatrix.multiply(testVector);
+    });
+  }
 
 }

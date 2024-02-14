@@ -66,5 +66,29 @@ class Vector2DTest {
     assertEquals(expectedX,vectorResult.getX());
     assertEquals(expectedY,vectorResult.getY());
   }
+  
+  /**
+   * Negative test:
+   * Check if add function throws exception when null vector is passed
+   */
+  @Test
+  public void TestNullAdd(){
+    Vector2D nullVector = null;
+    assertThrows(NullPointerException.class, () -> {
+      testVector.add(nullVector);
+    });
+  }
+  
+  /**
+   * Negative test:
+   * Check if subtract function throws exception when null vector is passed
+   */
+  @Test
+  public void TestNullSubtract(){
+    Vector2D nullVector = null;
+    assertThrows(NullPointerException.class, () -> {
+      testVector.subtract(nullVector);
+    });
+  }
 
 }
