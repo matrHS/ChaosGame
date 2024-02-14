@@ -32,6 +32,7 @@ public class Complex extends Vector2D{
   
   /**
    * Method to calculate the square root of a complex number.
+   * // TODO: Write in report regarding potential divide by negative number
    * 
    * @return the square root of the complex number
    */
