@@ -98,7 +98,7 @@ class Vector2DTest {
   @Test
   public void TestZeroPointConstructor(){
     assertThrows(ArithmeticException.class, () -> {
-      Vector2D zeroVector = new Vector2D(5/0,3/0);
+      Vector2D zeroVector = new Vector2D(Math.sqrt(-5),Math.sqrt(-7));
     });
   }
 
