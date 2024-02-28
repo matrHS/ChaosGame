@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Handles reading and writing of chaos game descriptions to and from files.
@@ -21,7 +20,7 @@ public class ChaosGameFileHandler {
 
   /**
    * Reads a chaos game description from a file.
-   * 
+   *
    * @param filepath path to the file to read from
    * @return a chaos game description
    */
@@ -39,6 +38,7 @@ public class ChaosGameFileHandler {
         formatedFileContent.add(fileContent.get(i).split("#")[0].trim());
       }
       
+      // TODO: Consider refactoring each transform into its own class to generalize filehandler
       if (formatedFileContent.get(0).contains("Affine2D")) {
         minCoords = parseCoords(formatedFileContent.get(1));
         maxCoords = parseCoords(formatedFileContent.get(2));
@@ -47,7 +47,9 @@ public class ChaosGameFileHandler {
           transforms.add(parseAffineTransform(formatedFileContent.get(i)));
         }
       } else if (formatedFileContent.get(0).contains("Julia")) {
-        transforms.add(new JuliaTransform((Complex) parseCoords(formatedFileContent.get(1))));
+        Complex point = parseCoords(formatedFileContent.get(1));
+        transforms.add(new JuliaTransform(point));
+        
       }
     } catch (IOException e) {
       // TODO: Replace with logger
@@ -61,15 +63,16 @@ public class ChaosGameFileHandler {
 
   /**
    * Method for parsing the coordinates from a line in the file.
-   * 
+   *
    * @param line the line to parse containing 2 numerical numbers at start of line
    */
-  private Vector2D parseCoords(String line) {
+  private Complex parseCoords(String line) {
     if (line == null || line.isBlank()) {
       throw new IllegalArgumentException("line cannot be null or empty");
     }
     String[] splitLine = line.split(",");
-    return new Vector2D(Double.parseDouble(splitLine[0].trim()), Double.parseDouble(splitLine[1].trim()));
+    return new Complex(Double.parseDouble(splitLine[0].trim()), 
+        Double.parseDouble(splitLine[1].trim()));
   }
   
   private AffineTransform2D parseAffineTransform(String line) {

@@ -7,7 +7,7 @@ import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
 
 public class Main {
   public static void main(String[] args){
-    String testFilePath = "test.csv";
+    String testFilePath = "testAffine.csv";
     ChaosGameFileHandler fileHandler = new ChaosGameFileHandler();
     ChaosGameDescription chaosGameDescription = fileHandler.readFromFile(testFilePath);
   }
