@@ -22,6 +22,16 @@ public class JuliaTransform implements Transform2D {
   }
 
   /**
+   * Constructor for Julia transform.
+   * Defaults sign to +1.
+   * 
+   * @param point Complex number to use for transformation.
+   */
+  public JuliaTransform(Complex point) {
+    this(point,1);
+  }
+
+  /**
    * Transforms a 2D vector using the Julia transformation.
    * 
    * @param point Complex number to use for transformation.
