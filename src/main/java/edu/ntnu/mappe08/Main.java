@@ -2,11 +2,10 @@ package edu.ntnu.mappe08;
 
 
 import edu.ntnu.mappe08.entity.Matrix2x2;
+import edu.ntnu.mappe08.logic.ChaosGameDescription;
+import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
 
 public class Main {
   public static void main(String[] args){
-    System.out.println("Main");
-    Matrix2x2 matrix = new Matrix2x2(1, 2, 3, 4);
-    System.out.println(matrix.getA00());
   }
 }

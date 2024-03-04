@@ -51,4 +51,15 @@ class AffineTransform2DTest {
     });
   }
 
+  /**
+   * Positive test:
+   * Test getMatrix and getVector method for AffineTransform2D.
+   */
+  @Test
+  public void testGetMatrixAndVector() {
+    assertEquals(this.testMatrix, this.testTransform.getMatrix());
+    assertEquals(this.testVector, this.testTransform.getVector());
+  }
+
+
 }
