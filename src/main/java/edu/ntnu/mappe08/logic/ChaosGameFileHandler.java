@@ -4,6 +4,7 @@ import edu.ntnu.mappe08.entity.Complex;
 import edu.ntnu.mappe08.entity.Matrix2x2;
 import edu.ntnu.mappe08.entity.Vector2D;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -111,7 +112,13 @@ public class ChaosGameFileHandler {
     return new Complex(Double.parseDouble(splitLine[0].trim()), 
         Double.parseDouble(splitLine[1].trim()));
   }
-  
+
+  /**
+   * Method for parsing an affine transformation from a line in the file.
+   * 
+   * @param line the line to parse containing a 2x2 matrix and a 2D vector
+   * @return an affine transformation
+   */
   private AffineTransform2D parseAffineTransform(String line) {
     if (line == null || line.isBlank()) {
       throw new IllegalArgumentException("line cannot be null or empty");
@@ -126,7 +133,56 @@ public class ChaosGameFileHandler {
         
     return new AffineTransform2D(parsedMatrix, parsedVector);
   }
-  
+
+  /**
+   * Writes a chaos game description to a file.
+   * Writes the file depending on type of transform.
+   * 
+   * @param description the chaos game description to write to file
+   * @param path the path to write the file to
+   */
   public void writeToFile(ChaosGameDescription description, String path) {
+    if (description == null || path == null || path.isBlank()) {
+      throw new IllegalArgumentException("description and path cannot be null or empty");
+    }
+    try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
+      String transformType = "";
+      if (description.getTransforms().get(0) instanceof AffineTransform2D) {
+        transformType = "Affine2D";
+      } else if (description.getTransforms().get(0) instanceof JuliaTransform) {
+        transformType = "Julia";
+      }
+      writer.write(transformType);
+      writer.write(" # Type of transform \n");
+      writer.write(description.getMinCoords().getX() + ", " + description.getMinCoords().getY());
+      writer.write(" # Lower left \n");
+      writer.write(description.getMaxCoords().getX() + ", " + description.getMaxCoords().getY());
+      writer.write(" # Upper Right \n");
+      
+      for (Transform2D transform : description.getTransforms()) {
+        if (transform instanceof AffineTransform2D) {
+          AffineTransform2D affineTransform = (AffineTransform2D) transform;
+          writer.write(affineTransform.getMatrix().getA00() + ", " 
+              + affineTransform.getMatrix().getA01() + ", " 
+              + affineTransform.getMatrix().getA10() + ", " 
+              + affineTransform.getMatrix().getA11() + ", " 
+              + affineTransform.getVector().getX() + ", " 
+              + affineTransform.getVector().getY());
+          writer.write(" # Affine transform \n");
+        } else if (transform instanceof JuliaTransform) {
+          JuliaTransform juliaTransform = (JuliaTransform) transform;
+          writer.write(juliaTransform.getPointC().getRealPart() + ", " + juliaTransform.getPointC().getImaginaryPart());
+          writer.write(" # Julia transform \n");
+        }
+      }
+      
+      
+    } catch (IOException e) {
+      // TODO: Replace with logger
+      e.printStackTrace();
+      // TODO: Replace with custom exception
+      throw new IllegalArgumentException("Could not read from file");
+    }
+    
   }
 }

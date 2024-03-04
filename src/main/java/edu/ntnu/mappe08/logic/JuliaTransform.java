@@ -22,6 +22,15 @@ public class JuliaTransform implements Transform2D {
   }
 
   /**
+   * Gets the point C of the Julia transformation.
+   * 
+   * @return The point C of the Julia transformation.
+   */
+  public Complex getPointC() {
+    return this.pointC;
+  }
+  
+  /**
    * Constructor for Julia transform.
    * Defaults sign to +1.
    * 
