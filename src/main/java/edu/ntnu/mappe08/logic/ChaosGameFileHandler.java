@@ -47,7 +47,9 @@ public class ChaosGameFileHandler {
           transforms.add(parseAffineTransform(formatedFileContent.get(i)));
         }
       } else if (formatedFileContent.get(0).contains("Julia")) {
-        Complex point = parseCoords(formatedFileContent.get(1));
+        minCoords = parseCoords(formatedFileContent.get(1));
+        maxCoords = parseCoords(formatedFileContent.get(2));
+        Complex point = parseCoords(formatedFileContent.get(3));
         transforms.add(new JuliaTransform(point));
         
       }
