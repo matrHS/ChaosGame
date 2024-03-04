@@ -19,40 +19,75 @@ public class ChaosGameFileHandler {
   }
 
   /**
+   * Builds a chaos game description from a file.
+   *
+   * @param filepath path to the file to read from
+   * @return a chaos game description
+   */
+  public ChaosGameDescription buildChaosGameDescriptionFromFile(String filepath) {
+    if (filepath == null || filepath.isBlank()) {
+      throw new IllegalArgumentException("filepath cannot be null or empty");
+    }
+    return buildChaosGameDescription(readFromFile(filepath));
+  }
+  
+  /**
+   * Builds a chaos game description from a list of strings.
+   * 
+   * @param fileContent the list of strings to build the chaos game description from
+   * @return a chaos game description
+   */
+  public ChaosGameDescription buildChaosGameDescription(List<String> fileContent) {
+    if (fileContent == null || fileContent.isEmpty()) {
+      throw new IllegalArgumentException("fileContent cannot be null or empty");
+    }
+    String transformType;
+    Vector2D minCoords;
+    Vector2D maxCoords;
+    List<Transform2D> transforms = new ArrayList<>();
+    
+    List<String> formatedFileContent = new ArrayList<>();
+    for (int i = 0; i < fileContent.size(); i++) {
+      formatedFileContent.add(fileContent.get(i).split("#")[0].trim());
+    }
+    transformType = formatedFileContent.get(0);
+    
+    // TODO: Consider refactoring each transform into its own class to generalize filehandler
+    if (transformType.contains("Affine2D")) {
+      minCoords = parseCoords(formatedFileContent.get(1));
+      maxCoords = parseCoords(formatedFileContent.get(2));
+
+      for (int i = 3; i < formatedFileContent.size(); i++) {
+        transforms.add(parseAffineTransform(formatedFileContent.get(i)));
+      }
+    } else if (transformType.contains("Julia")) {
+      minCoords = parseCoords(formatedFileContent.get(1));
+      maxCoords = parseCoords(formatedFileContent.get(2));
+      Complex point = parseCoords(formatedFileContent.get(3));
+      transforms.add(new JuliaTransform(point));
+
+    } else {
+      throw new IllegalArgumentException("Invalid file content");
+    }
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+  }
+  
+  /**
    * Reads a chaos game description from a file.
    *
    * @param filepath path to the file to read from
    * @return a chaos game description
    */
-  public ChaosGameDescription readFromFile(String filepath) {
+  public List<String> readFromFile(String filepath) {
+    if (filepath == null || filepath.isBlank()) {
+      throw new IllegalArgumentException("filepath cannot be null or empty");
+    }
     Path path = Path.of(filepath);
-    String transformType = "";
-    Vector2D minCoords = new Vector2D(0, 0);
-    Vector2D maxCoords = new Vector2D(0, 0);
-    List<Transform2D> transforms = new ArrayList<>();
-
+    List<String> fileContent = new ArrayList<>();
+    
     try (BufferedReader reader = Files.newBufferedReader(path)) {
-      List<String> fileContent = reader.lines().toList();
-      List<String> formatedFileContent = new ArrayList<>();
-      for (int i = 0; i < fileContent.size(); i++) {
-        formatedFileContent.add(fileContent.get(i).split("#")[0].trim());
-      }
+      fileContent = reader.lines().toList();
       
-      // TODO: Consider refactoring each transform into its own class to generalize filehandler
-      if (formatedFileContent.get(0).contains("Affine2D")) {
-        minCoords = parseCoords(formatedFileContent.get(1));
-        maxCoords = parseCoords(formatedFileContent.get(2));
-        
-        for (int i = 3; i < formatedFileContent.size(); i++) {
-          transforms.add(parseAffineTransform(formatedFileContent.get(i)));
-        }
-      } else if (formatedFileContent.get(0).contains("Julia")) {
-        minCoords = parseCoords(formatedFileContent.get(1));
-        maxCoords = parseCoords(formatedFileContent.get(2));
-        Complex point = parseCoords(formatedFileContent.get(3));
-        transforms.add(new JuliaTransform(point));
-        
-      }
     } catch (IOException e) {
       // TODO: Replace with logger
       e.printStackTrace();
@@ -60,7 +95,7 @@ public class ChaosGameFileHandler {
       throw new IllegalArgumentException("Could not read from file");
     }
     
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
+    return fileContent;
   }
 
   /**
