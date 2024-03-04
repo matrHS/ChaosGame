@@ -82,4 +82,15 @@ class JuliaTransformTest {
       testTransform.transform(testPointZ);
     });
   }
+  
+  /**
+   * Positive test:
+   * Test getPointC method for JuliaTransform.
+   */
+  @Test
+  public void testGetPointC() {
+    sign = 1;
+    testTransform = new JuliaTransform(testComplex,sign);
+    assertEquals(this.testComplex, testTransform.getPointC());
+  }
 }
