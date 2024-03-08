@@ -33,8 +33,8 @@ public class ChaosCanvas {
     this.transformCoordsToIndices = new AffineTransform2D(new Matrix2x2(
         0,
         (width - 1) / (minCoords.getY() - maxCoords.getY()),
-        0,
-        (height - 1) / (maxCoords.getX() - minCoords.getX())),
+        (height - 1) / (maxCoords.getX() - minCoords.getX()),
+        0),
 
         new Vector2D(((width - 1) * maxCoords.getY()) / (maxCoords.getY() - minCoords.getY()),
             ((height - 1) * minCoords.getX()) / (minCoords.getX() - maxCoords.getX())));
@@ -45,28 +45,87 @@ public class ChaosCanvas {
    * Method to get the pixel at a given point.
    *
    * @param point the point to get the pixel from.
+   * @return the pixel at the given point.
    */
-  private int getPixel(Vector2D point) {
-    return this.canvas[(int) point.getX()][(int) point.getY()];
-    // TODO: Implement method.
+  public int getPixel(Vector2D point) {
+    if (point == null) {
+      throw new IllegalArgumentException("Passed vector can not be null");
+    }
+    if (point.getX() < 0 || point.getX() >= this.width || point.getY() < 0 || point.getY() >= this.height) {
+      throw new IllegalArgumentException("Point is outside the canvas");
+    }
+
+    return this.getCanvasArray()[(int) point.getX()][(int) point.getY()];
   }
 
   /**
    * Method to set the pixel at a given point.
    *
-   * @param point the point to set the pixel at
+   * @param point the point to set the pixel at.
    */
-  private void setPixel(Vector2D point) {
-    this.canvas[(int) point.getX()][(int) point.getY()] = 1;
-    // TODO: Implement method.
+  public void putPixel(Vector2D point) {
+    if (point == null) {
+      throw new IllegalArgumentException("Passed vector can not be null");
+    }
+    if (point.getX() < 0 || point.getX() >= this.width || point.getY() < 0 || point.getY() >= this.height) {
+      throw new IllegalArgumentException("Point is outside the canvas");
+    }
+    this.getCanvasArray()[(int) point.getX()][(int) point.getY()] = 1;
   }
 
   /**
    * Get the canvas array.
    * @return the canvas array.
    */
-  private int[][] getCanvasArray() {
+  public int[][] getCanvasArray() {
     return this.canvas;
+  }
+
+  /**
+   * Method to clear the canvas.
+   */
+  public void clear() {
+    for (int i = 0; i < this.width; i++) {
+      for (int j = 0; j < this.height; j++) {
+        this.canvas[i][j] = 0;
+      }
+    }
+  }
+
+  /**
+   * Method to get the width of the canvas.
+   *
+   * @return the width of the canvas
+   */
+  public int getWidth() {
+    return this.width;
+  }
+
+  /**
+   * Method to get the height of the canvas.
+   *
+   * @return the height of the canvas
+   */
+  public int getHeight() {
+    return this.height;
+  }
+
+  /**
+   * Method to get the minimum coordinates of the canvas.
+   *
+   * @return the minimum coordinates of the canvas
+   */
+  public Vector2D getMinCoords() {
+    return this.minCoords;
+  }
+
+  /**
+   * Method to get the maximum coordinates of the canvas.
+   *
+   * @return the maximum coordinates of the canvas
+   */
+  public Vector2D getMaxCoords() {
+    return this.maxCoords;
   }
 
 }
