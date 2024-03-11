@@ -72,8 +72,8 @@ public class ChaosCanvas {
     }
 
     // TODO: DELETE THIS LATER
-    double normX = (point.getX() - minCoords.getX())/(maxCoords.getX() - minCoords.getX());
-    double normY = (point.getY() - minCoords.getY())/(maxCoords.getY() - minCoords.getY());
+    double normX = (point.getX() - minCoords.getY())/(maxCoords.getY() - minCoords.getY());
+    double normY = (point.getY() - minCoords.getX())/(maxCoords.getX() - minCoords.getX());
     Vector2D test = new Vector2D(normX*(this.getWidth()-1), normY*(this.getHeight()-1));
 
     this.getCanvasArray()[(int) test.getX()][(int) test.getY()] = 1;

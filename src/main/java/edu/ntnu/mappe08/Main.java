@@ -15,7 +15,7 @@ public class Main {
     ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
     ChaosGameDescription chaosGameDescription = chaosGameFileHandler.buildChaosGameDescriptionFromFile("data/testJulia.csv");
     ChaosGame chaosGame = new ChaosGame(chaosGameDescription, 100, 100);
-    chaosGame.runSteps(10000000);
+    chaosGame.runSteps(1000000);
     ChaosCanvas canvas = chaosGame.getCanvas();
     
     printCanvas(canvas);
