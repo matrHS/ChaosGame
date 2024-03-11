@@ -1,6 +1,8 @@
 package edu.ntnu.mappe08.logic;
 
+import edu.ntnu.mappe08.entity.Complex;
 import edu.ntnu.mappe08.entity.Vector2D;
+import java.util.Random;
 
 
 /**
@@ -11,6 +13,7 @@ public class ChaosGame {
   private ChaosCanvas canvas;
   private ChaosGameDescription description;
   private Vector2D currentPoint;
+  private Random random;
 
 
   /**
@@ -21,9 +24,10 @@ public class ChaosGame {
    * @param height the height of the canvas
    */
   public ChaosGame(ChaosGameDescription description, int width, int height) {
+    random = new Random();
     this.description = description;
     this.canvas = new ChaosCanvas(width, height, description.getMinCoords(), description.getMaxCoords());
-    this.currentPoint = new Vector2D(0, 0);
+    this.currentPoint = new Complex(0, 0);
   }
 
   /**
@@ -42,7 +46,11 @@ public class ChaosGame {
   }
 
   private void runStep() {
+    int randomVal = random.nextInt(description.getTransforms().size());
+    Vector2D newPoint = description.getTransforms().get(randomVal).transform(currentPoint);
+    currentPoint = newPoint;
     
+    canvas.putPixel(currentPoint);
   }
 
 }

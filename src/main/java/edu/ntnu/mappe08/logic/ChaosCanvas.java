@@ -54,7 +54,7 @@ public class ChaosCanvas {
     if (point.getX() < 0 || point.getX() >= this.width || point.getY() < 0 || point.getY() >= this.height) {
       throw new IllegalArgumentException("Point is outside the canvas");
     }
-
+    
     return this.getCanvasArray()[(int) point.getX()][(int) point.getY()];
   }
 
@@ -70,7 +70,13 @@ public class ChaosCanvas {
     if (point.getX() < 0 || point.getX() >= this.width || point.getY() < 0 || point.getY() >= this.height) {
       throw new IllegalArgumentException("Point is outside the canvas");
     }
-    this.getCanvasArray()[(int) point.getX()][(int) point.getY()] = 1;
+
+    // TODO: DELETE THIS LATER
+    double normX = (point.getX() - minCoords.getX())/(maxCoords.getX() - minCoords.getX());
+    double normY = (point.getY() - minCoords.getY())/(maxCoords.getY() - minCoords.getY());
+    Vector2D test = new Vector2D(normX*(this.getWidth()-1), normY*(this.getHeight()-1));
+
+    this.getCanvasArray()[(int) test.getX()][(int) test.getY()] = 1;
   }
 
   /**
