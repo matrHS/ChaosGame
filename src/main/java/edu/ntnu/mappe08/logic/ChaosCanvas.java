@@ -67,14 +67,18 @@ public class ChaosCanvas {
     if (point == null) {
       throw new IllegalArgumentException("Passed vector can not be null");
     }
-    if (point.getX() < 0 || point.getX() >= this.width || point.getY() < 0 || point.getY() >= this.height) {
-      throw new IllegalArgumentException("Point is outside the canvas");
-    }
+    
 
     // TODO: DELETE THIS LATER
-    double normX = (point.getX() - minCoords.getY())/(maxCoords.getY() - minCoords.getY());
-    double normY = (point.getY() - minCoords.getX())/(maxCoords.getX() - minCoords.getX());
-    Vector2D test = new Vector2D(normX*(this.getWidth()-1), normY*(this.getHeight()-1));
+    double normXtest = (minCoords.getX() * (this.getWidth() - point.getX()) + point.getX() *
+        maxCoords.getX()) / (this.getWidth());
+    double normYtest = (minCoords.getY() * (this.getHeight() - point.getY()) + point.getY() * 
+        maxCoords.getY()) / (this.getHeight());
+    
+    double normX = (point.getX() - minCoords.getX())/(maxCoords.getX() - minCoords.getX());
+    double normY = (point.getY() - minCoords.getY())/(maxCoords.getY() - minCoords.getY());
+    
+    Vector2D test = new Vector2D(Math.min(1,normX)*(this.getWidth()-1), Math.min(1,normY)*(this.getHeight()-1));
 
     this.getCanvasArray()[(int) test.getX()][(int) test.getY()] = 1;
   }
