@@ -65,7 +65,8 @@ public class ChaosGameFileHandler {
       minCoords = parseCoords(formatedFileContent.get(1));
       maxCoords = parseCoords(formatedFileContent.get(2));
       Complex point = parseCoords(formatedFileContent.get(3));
-      transforms.add(new JuliaTransform(point));
+      transforms.add(new JuliaTransform(point, 1));
+      transforms.add(new JuliaTransform(point,-1));
 
     } else {
       throw new IllegalArgumentException("Invalid file content");

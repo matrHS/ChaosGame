@@ -32,12 +32,12 @@ public class ChaosCanvas {
     this.canvas = new int[width][height];
     this.transformCoordsToIndices = new AffineTransform2D(new Matrix2x2(
         0,
-        (width - 1) / (minCoords.getY() - maxCoords.getY()),
-        (height - 1) / (maxCoords.getX() - minCoords.getX()),
+        (height - 1) / (minCoords.getY() - maxCoords.getY()),
+        (width - 1) / (maxCoords.getX() - minCoords.getX()),
         0),
 
-        new Vector2D(((width - 1) * maxCoords.getY()) / (maxCoords.getY() - minCoords.getY()),
-            ((height - 1) * minCoords.getX()) / (minCoords.getX() - maxCoords.getX())));
+        new Vector2D(((height - 1) * maxCoords.getY()) / (maxCoords.getY() - minCoords.getY()),
+            ((width - 1) * minCoords.getX()) / (minCoords.getX() - maxCoords.getX())));
   }
 
 
@@ -70,17 +70,15 @@ public class ChaosCanvas {
     
 
     // TODO: DELETE THIS LATER
-    double normXtest = (minCoords.getX() * (this.getWidth() - point.getX()) + point.getX() *
-        maxCoords.getX()) / (this.getWidth());
-    double normYtest = (minCoords.getY() * (this.getHeight() - point.getY()) + point.getY() * 
-        maxCoords.getY()) / (this.getHeight());
     
-    double normX = (point.getX() - minCoords.getX())/(maxCoords.getX() - minCoords.getX());
-    double normY = (point.getY() - minCoords.getY())/(maxCoords.getY() - minCoords.getY());
     
-    Vector2D test = new Vector2D(Math.min(1,normX)*(this.getWidth()-1), Math.min(1,normY)*(this.getHeight()-1));
-
-    this.getCanvasArray()[(int) test.getX()][(int) test.getY()] = 1;
+    Vector2D test2 = transformCoordsToIndices.transform(point);
+    int i = (int) test2.getX();
+    int j = (int) test2.getY();
+    if (i >= 0 && i < this.width && j >= 0 && j < this.height) {
+      this.canvas[i][j] = 1;
+    }
+    
   }
 
   /**

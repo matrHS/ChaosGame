@@ -13,9 +13,9 @@ public class Main {
   
   public static void main(String[] args){
     ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
-    ChaosGameDescription chaosGameDescription = chaosGameFileHandler.buildChaosGameDescriptionFromFile("data/testBarnsley.csv");
-    ChaosGame chaosGame = new ChaosGame(chaosGameDescription, 100, 100);
-    chaosGame.runSteps(1000000);
+    ChaosGameDescription chaosGameDescription = chaosGameFileHandler.buildChaosGameDescriptionFromFile("data/testJulia.csv");
+    ChaosGame chaosGame = new ChaosGame(chaosGameDescription, 20, 60);
+    chaosGame.runSteps(100000);
     ChaosCanvas canvas = chaosGame.getCanvas();
     
     printCanvas(canvas);
