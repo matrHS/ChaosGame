@@ -35,8 +35,8 @@ class AffineTransform2DTest {
     public void testValidTransform() {
       Vector2D testPoint = new Vector2D(7, 6);
       Vector2D result = this.testTransform.transform(testPoint);
-      assertEquals(20, result.getX());
-      assertEquals(47, result.getY());
+      assertEquals(20, result.getX0());
+      assertEquals(47, result.getX1());
     }
 
   /**

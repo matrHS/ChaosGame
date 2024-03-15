@@ -18,7 +18,7 @@ class JuliaTransformTest {
    */
   @BeforeEach
   public void initializeTestValues() {
-    this.testComplex = new Complex(11, 46);
+    this.testComplex = new Complex(0.4, 0.2);
   }
   
   /**
@@ -29,12 +29,12 @@ class JuliaTransformTest {
   public void testValidPosSignTransform() {
     sign = 1;
     testTransform = new JuliaTransform(testComplex,sign);
-    Complex testPointZ = new Complex(2, 6);
+    Complex testPointZ = new Complex(0.3, 0.6);
     
     Complex result = (Complex) testTransform.transform(testPointZ);
     
-    assertEquals(5, result.getRealPart());
-    assertEquals(4, result.getImaginaryPart());
+    assertEquals(0.506, result.getRealPart(), 0.001);
+    assertEquals(0.395, result.getImaginaryPart(), 0.001);
   }
 
   /**
@@ -45,12 +45,12 @@ class JuliaTransformTest {
   public void testValidNegSignTransform() {
     sign = -1;
     testTransform = new JuliaTransform(testComplex,sign);
-    Complex testPointZ = new Complex(2, 6);
+    Complex testPointZ = new Complex(0.3, 0.6);
 
     Complex result = (Complex) testTransform.transform(testPointZ);
 
-    assertEquals(-5, result.getRealPart());
-    assertEquals(-4, result.getImaginaryPart());
+    assertEquals(-0.506, result.getRealPart(), 0.001);
+    assertEquals(-0.395, result.getImaginaryPart(), 0.001);
   }
   
   /**

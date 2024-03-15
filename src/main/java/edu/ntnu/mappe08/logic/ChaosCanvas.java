@@ -24,20 +24,20 @@ public class ChaosCanvas {
    * @param minCoords the minimum coordinates of the canvas
    * @param maxCoords the maximum coordinates of the canvas
    */
-  public ChaosCanvas(int width, int height, Vector2D minCoords, Vector2D maxCoords) {
+  public ChaosCanvas(int height, int width, Vector2D minCoords, Vector2D maxCoords) {
     this.width = width;
     this.height = height;
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
-    this.canvas = new int[width][height];
+    this.canvas = new int[height][width];
     this.transformCoordsToIndices = new AffineTransform2D(new Matrix2x2(
         0,
-        (width - 1) / (minCoords.getY() - maxCoords.getY()),
-        (height - 1) / (maxCoords.getX() - minCoords.getX()),
+        (height - 1) / (minCoords.getX1() - maxCoords.getX1()),
+        (width - 1) / (maxCoords.getX0() - minCoords.getX0()),
         0),
 
-        new Vector2D(((width - 1) * maxCoords.getY()) / (maxCoords.getY() - minCoords.getY()),
-            ((height - 1) * minCoords.getX()) / (minCoords.getX() - maxCoords.getX())));
+        new Vector2D(((height - 1) * maxCoords.getX1()) / (maxCoords.getX1() - minCoords.getX1()),
+            ((width - 1) * minCoords.getX0()) / (minCoords.getX0() - maxCoords.getX0())));
   }
 
 
@@ -51,11 +51,14 @@ public class ChaosCanvas {
     if (point == null) {
       throw new IllegalArgumentException("Passed vector can not be null");
     }
-    if (point.getX() < 0 || point.getX() >= this.width || point.getY() < 0 || point.getY() >= this.height) {
+    if (point.getX0() < 0 || point.getX0() >= this.height || point.getX1() < 0 || point.getX1() >= this.width) {
       throw new IllegalArgumentException("Point is outside the canvas");
     }
-
-    return this.getCanvasArray()[(int) point.getX()][(int) point.getY()];
+    
+    int i = (int) Math.round(point.getX0());
+    int j = (int) Math.round(point.getX1());
+    
+    return this.getCanvasArray()[i][j];
   }
 
   /**
@@ -67,10 +70,18 @@ public class ChaosCanvas {
     if (point == null) {
       throw new IllegalArgumentException("Passed vector can not be null");
     }
-    if (point.getX() < 0 || point.getX() >= this.width || point.getY() < 0 || point.getY() >= this.height) {
+    if (point.getX0() < 0 || point.getX0() >= this.height || point.getX1() < 0 || point.getX1() >= this.width) {
       throw new IllegalArgumentException("Point is outside the canvas");
     }
-    this.getCanvasArray()[(int) point.getX()][(int) point.getY()] = 1;
+    
+
+    Vector2D test2 = transformCoordsToIndices.transform(point);
+    int i = (int) Math.round(test2.getX0());
+    int j = (int) Math.round(test2.getX1());
+    if (i >= 0 && i < this.width && j >= 0 && j < this.height) {
+      this.canvas[i][j] = 1;
+    }
+    
   }
 
   /**

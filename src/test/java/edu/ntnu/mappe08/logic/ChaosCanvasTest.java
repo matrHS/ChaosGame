@@ -34,10 +34,10 @@ class ChaosCanvasTest {
     testMaxCoords = testCanvasConstruct.getMaxCoords();
     assertEquals(200, testCanvasConstruct.getWidth());
     assertEquals(200, testCanvasConstruct.getHeight());
-    assertEquals(-3, testMinCoords.getX());
-    assertEquals(5, testMinCoords.getY());
-    assertEquals(3, testMaxCoords.getX());
-    assertEquals(-5, testMaxCoords.getY());
+    assertEquals(-3, testMinCoords.getX0());
+    assertEquals(5, testMinCoords.getX1());
+    assertEquals(3, testMaxCoords.getX0());
+    assertEquals(-5, testMaxCoords.getX1());
   }
 
   /**
@@ -46,8 +46,9 @@ class ChaosCanvasTest {
   @Test
   void testValidGetPutPixel() {
     Vector2D point = new Vector2D(1, 1);
+    Vector2D pointTransformed = new Vector2D(25, 74);
     testCanvas.putPixel(point);
-    assertEquals(1, testCanvas.getPixel(point));
+    assertEquals(1, testCanvas.getPixel(pointTransformed));
   }
 
   /**
@@ -68,13 +69,15 @@ class ChaosCanvasTest {
   void testClear() {
     Vector2D point = new Vector2D(1, 1);
     Vector2D point2 = new Vector2D(2, 2);
+    Vector2D pointTransformed = new Vector2D(25, 74);
+    Vector2D point2Transformed = new Vector2D(0, 99);
     testCanvas.putPixel(point);
     testCanvas.putPixel(point2);
-    assertEquals(1, testCanvas.getPixel(point));
-    assertEquals(1, testCanvas.getPixel(point2));
+    assertEquals(1, testCanvas.getPixel(pointTransformed));
+    assertEquals(1, testCanvas.getPixel(point2Transformed));
     testCanvas.clear();
-    assertEquals(0, testCanvas.getPixel(point));
-    assertEquals(0, testCanvas.getPixel(point2));
+    assertEquals(0, testCanvas.getPixel(pointTransformed));
+    assertEquals(0, testCanvas.getPixel(point2Transformed));
   }
 
 }
