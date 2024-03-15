@@ -40,8 +40,8 @@ class Matrix2x2Test {
   @Test
   public void testValidMultiply() {
     Vector2D result = this.testMatrix.multiply(this.testVector);
-    assertEquals(5, result.getX());
-    assertEquals(11, result.getY());
+    assertEquals(5, result.getX0());
+    assertEquals(11, result.getX1());
   }
   
   /**

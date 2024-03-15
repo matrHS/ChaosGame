@@ -19,7 +19,7 @@ public class Complex extends Vector2D{
    * @return the real part of the complex number
    */
   public double getRealPart() {
-    return super.getX();
+    return super.getX0();
   }
   
   /**
@@ -28,7 +28,7 @@ public class Complex extends Vector2D{
    * @return the imaginary part of the complex number
    */
   public double getImaginaryPart() {
-    return super.getY();
+    return super.getX1();
   }
   
   /**

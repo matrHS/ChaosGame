@@ -33,8 +33,8 @@ class Vector2DTest {
     double expectedX = 5;
     double expectedY = 2;
     
-    assertEquals(expectedX,testConstctorVector.getX());
-    assertEquals(expectedY,testConstctorVector.getY());
+    assertEquals(expectedX,testConstctorVector.getX0());
+    assertEquals(expectedY,testConstctorVector.getX1());
   }
 
   /**
@@ -48,8 +48,8 @@ class Vector2DTest {
     double expectedY = 5;
     
     
-    assertEquals(expectedX,vectorResult.getX());
-    assertEquals(expectedY,vectorResult.getY());
+    assertEquals(expectedX,vectorResult.getX0());
+    assertEquals(expectedY,vectorResult.getX1());
   }
 
   /**
@@ -63,8 +63,8 @@ class Vector2DTest {
     double expectedY = -1;
 
 
-    assertEquals(expectedX,vectorResult.getX());
-    assertEquals(expectedY,vectorResult.getY());
+    assertEquals(expectedX,vectorResult.getX0());
+    assertEquals(expectedY,vectorResult.getX1());
   }
   
   /**

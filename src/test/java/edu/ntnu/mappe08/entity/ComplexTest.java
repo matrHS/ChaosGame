@@ -37,8 +37,8 @@ class ComplexTest {
     public void testValidSqrt() {
       Complex result = this.testComplex.sqrt();
       
-      assertEquals(5, result.getX());
-      assertEquals(4, result.getY());
+      assertEquals(5, result.getX0());
+      assertEquals(4, result.getX1());
     }
 
   /**

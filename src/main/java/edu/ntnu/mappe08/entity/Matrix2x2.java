@@ -100,8 +100,8 @@ public class Matrix2x2 {
       throw new NullPointerException("Passed vector is null");
     }
 
-    double newX = this.a00 * vector.getX() + this.a01 * vector.getY();
-    double newY = this.a10 * vector.getX() + this.a11 * vector.getY();
+    double newX = this.a00 * vector.getX0() + this.a01 * vector.getX1();
+    double newY = this.a10 * vector.getX0() + this.a11 * vector.getX1();
 
     return new Vector2D(newX, newY);
   }

@@ -34,10 +34,10 @@ class ChaosCanvasTest {
     testMaxCoords = testCanvasConstruct.getMaxCoords();
     assertEquals(200, testCanvasConstruct.getWidth());
     assertEquals(200, testCanvasConstruct.getHeight());
-    assertEquals(-3, testMinCoords.getX());
-    assertEquals(5, testMinCoords.getY());
-    assertEquals(3, testMaxCoords.getX());
-    assertEquals(-5, testMaxCoords.getY());
+    assertEquals(-3, testMinCoords.getX0());
+    assertEquals(5, testMinCoords.getX1());
+    assertEquals(3, testMaxCoords.getX0());
+    assertEquals(-5, testMaxCoords.getX1());
   }
 
   /**

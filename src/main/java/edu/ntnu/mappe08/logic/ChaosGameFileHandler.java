@@ -155,9 +155,9 @@ public class ChaosGameFileHandler {
       }
       writer.write(transformType);
       writer.write(" # Type of transform \n");
-      writer.write(description.getMinCoords().getX() + ", " + description.getMinCoords().getY());
+      writer.write(description.getMinCoords().getX0() + ", " + description.getMinCoords().getX1());
       writer.write(" # Lower left \n");
-      writer.write(description.getMaxCoords().getX() + ", " + description.getMaxCoords().getY());
+      writer.write(description.getMaxCoords().getX0() + ", " + description.getMaxCoords().getX1());
       writer.write(" # Upper Right \n");
       
       for (Transform2D transform : description.getTransforms()) {
@@ -167,8 +167,8 @@ public class ChaosGameFileHandler {
               + affineTransform.getMatrix().getA01() + ", " 
               + affineTransform.getMatrix().getA10() + ", " 
               + affineTransform.getMatrix().getA11() + ", " 
-              + affineTransform.getVector().getX() + ", " 
-              + affineTransform.getVector().getY());
+              + affineTransform.getVector().getX0() + ", " 
+              + affineTransform.getVector().getX1());
           writer.write(" # Affine transform \n");
         } else if (transform instanceof JuliaTransform) {
           JuliaTransform juliaTransform = (JuliaTransform) transform;
