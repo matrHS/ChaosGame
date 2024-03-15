@@ -13,7 +13,7 @@ public class Main {
   
   public static void main(String[] args){
     ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
-    ChaosGameDescription chaosGameDescription = chaosGameFileHandler.buildChaosGameDescriptionFromFile("data/testAffine.csv");
+    ChaosGameDescription chaosGameDescription = chaosGameFileHandler.buildChaosGameDescriptionFromFile("data/testJulia.csv");
     ChaosGame chaosGame = new ChaosGame(chaosGameDescription, 40, 40);
     chaosGame.runSteps(100000);
     ChaosCanvas canvas = chaosGame.getCanvas();

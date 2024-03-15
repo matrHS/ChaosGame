@@ -72,9 +72,6 @@ public class ChaosCanvas {
     }
     
 
-    // TODO: DELETE THIS LATER
-    
-    
     Vector2D test2 = transformCoordsToIndices.transform(point);
     int i = (int) Math.round(test2.getX0());
     int j = (int) Math.round(test2.getX1());

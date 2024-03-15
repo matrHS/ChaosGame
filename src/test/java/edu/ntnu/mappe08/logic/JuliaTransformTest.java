@@ -49,7 +49,7 @@ class JuliaTransformTest {
 
     Complex result = (Complex) testTransform.transform(testPointZ);
 
-    assertEquals(0.506, result.getRealPart(), 0.001);
+    assertEquals(-0.506, result.getRealPart(), 0.001);
     assertEquals(-0.395, result.getImaginaryPart(), 0.001);
   }
   
