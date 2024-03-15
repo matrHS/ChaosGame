@@ -55,7 +55,10 @@ public class ChaosCanvas {
       throw new IllegalArgumentException("Point is outside the canvas");
     }
     
-    return this.getCanvasArray()[(int) point.getX0()][(int) point.getX1()];
+    int i = (int) Math.round(point.getX0());
+    int j = (int) Math.round(point.getX1());
+    
+    return this.getCanvasArray()[i][j];
   }
 
   /**
@@ -73,8 +76,8 @@ public class ChaosCanvas {
     
     
     Vector2D test2 = transformCoordsToIndices.transform(point);
-    int i = (int) test2.getX0();
-    int j = (int) test2.getX1();
+    int i = (int) Math.round(test2.getX0());
+    int j = (int) Math.round(test2.getX1());
     if (i >= 0 && i < this.width && j >= 0 && j < this.height) {
       this.canvas[i][j] = 1;
     }
