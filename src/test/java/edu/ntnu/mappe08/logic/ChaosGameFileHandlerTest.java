@@ -38,7 +38,7 @@ class ChaosGameFileHandlerTest {
   void testValidBuildChaosGameDescription() {
     ChaosGameFileHandler fileHandler = new ChaosGameFileHandler();
     assertEquals(3, fileHandler.buildChaosGameDescription(testAffineList).getTransforms().size());
-    assertEquals(1, fileHandler.buildChaosGameDescription(testJuliaList).getTransforms().size());
+    assertEquals(2, fileHandler.buildChaosGameDescription(testJuliaList).getTransforms().size());
   }
   
   /**
