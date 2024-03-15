@@ -23,7 +23,7 @@ public class ChaosGame {
    * @param width the width of the canvas
    * @param height the height of the canvas
    */
-  public ChaosGame(ChaosGameDescription description, int width, int height) {
+  public ChaosGame(ChaosGameDescription description, int height, int width) {
     random = new Random();
     this.description = description;
     this.canvas = new ChaosCanvas(height, width, description.getMinCoords(), description.getMaxCoords());

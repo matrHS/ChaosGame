@@ -24,12 +24,12 @@ public class ChaosCanvas {
    * @param minCoords the minimum coordinates of the canvas
    * @param maxCoords the maximum coordinates of the canvas
    */
-  public ChaosCanvas(int width, int height, Vector2D minCoords, Vector2D maxCoords) {
+  public ChaosCanvas(int height, int width, Vector2D minCoords, Vector2D maxCoords) {
     this.width = width;
     this.height = height;
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
-    this.canvas = new int[width][height];
+    this.canvas = new int[height][width];
     this.transformCoordsToIndices = new AffineTransform2D(new Matrix2x2(
         0,
         (height - 1) / (minCoords.getX1() - maxCoords.getX1()),
@@ -51,7 +51,7 @@ public class ChaosCanvas {
     if (point == null) {
       throw new IllegalArgumentException("Passed vector can not be null");
     }
-    if (point.getX0() < 0 || point.getX0() >= this.width || point.getX1() < 0 || point.getX1() >= this.height) {
+    if (point.getX0() < 0 || point.getX0() >= this.height || point.getX1() < 0 || point.getX1() >= this.width) {
       throw new IllegalArgumentException("Point is outside the canvas");
     }
     
@@ -69,6 +69,9 @@ public class ChaosCanvas {
   public void putPixel(Vector2D point) {
     if (point == null) {
       throw new IllegalArgumentException("Passed vector can not be null");
+    }
+    if (point.getX0() < 0 || point.getX0() >= this.height || point.getX1() < 0 || point.getX1() >= this.width) {
+      throw new IllegalArgumentException("Point is outside the canvas");
     }
     
 
