@@ -5,6 +5,10 @@ import edu.ntnu.mappe08.entity.Vector2D;
 import edu.ntnu.mappe08.logic.ChaosCanvas;
 import java.util.Scanner;
 
+
+/**
+ * Represents the Chaos Game CLI.
+ */
 public class ChaosGameCLI {
 
 
@@ -15,11 +19,16 @@ public class ChaosGameCLI {
   private static final int EXIT = 3;
   private static final int MAX_MENU_CHOICE = 9;
 
-
+  /**
+   * Creates an instance of ChaosGameCLI.
+   */
   public ChaosGameCLI() {
     this.controller = new ChaosGameController();
   }
 
+  /**
+   * Starts the Chaos Game CLI.
+   */
   public void start() {
 
     boolean finished = false;
@@ -34,16 +43,26 @@ public class ChaosGameCLI {
     System.out.println("Thank you for using this application!");
   }
 
+  /**
+   * Prints the welcome screen.
+   */
   private void printWelcomeScreen() {
     System.out.println("Welcome to the Chaos Game CLI");
   }
 
+  /**
+   * Displays the menu.
+   */
   private void displayMenu() {
     System.out.println("1. Sierpinski Triangle");
     System.out.println("2. Barnsley Fern");
     System.out.println("3. Exit");
   }
 
+  /**
+   * Gets the users menu choice.
+   * @return the users menu choice.
+   */
   private int getUsersMenuChoice() {
     int selectedMenu;
     Scanner userInput = new Scanner(System.in);
@@ -57,6 +76,11 @@ public class ChaosGameCLI {
     return selectedMenu;
   }
 
+  /**
+   * Executes the menu choice.
+   * @param selectedMenu to execute.
+   * @return {@code true} if the application should continue running, {@code false} otherwise.
+   */
   private boolean executeMenuChoice(int selectedMenu) {
     boolean running = true;
     int[] parameters;
@@ -82,7 +106,10 @@ public class ChaosGameCLI {
     return running;
   }
 
-
+  /**
+   * Prints the canvas.
+   * @param canvas to print.
+   */
   private void printCanvas(ChaosCanvas canvas) {
     int[][] canvasArray = canvas.getCanvasArray();
     StringBuilder sb = new StringBuilder();
@@ -100,6 +127,10 @@ public class ChaosGameCLI {
   }
 
 
+  /**
+   * Sets the parameters for the canvas.
+   * @return the parameters for the canvas.
+   */
   public int[] setParameters() {
     Scanner userInput = new Scanner(System.in);
     System.out.print("Please enter the height of the canvas: ");
