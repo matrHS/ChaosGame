@@ -46,7 +46,7 @@ public class Complex extends Vector2D{
     double imaginaryPart = getImaginaryPart();
     double length = Math.sqrt(realPart * realPart + imaginaryPart * imaginaryPart);
     double r = Math.sqrt((length + realPart) / 2);
-    double i = Math.sqrt((length - realPart) / 2);
+    double i = (imaginaryPart/Math.abs(imaginaryPart))*Math.sqrt((length - realPart) / 2);
     
     return new Complex(r, i);
   }
