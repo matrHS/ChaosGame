@@ -16,6 +16,7 @@ public class ChaosGameCLI {
 
   private static final int SIERPINSKI = 1;
   private static final int BARNSLEY = 2;
+  private static final int JULIA = 3;
   private static final int EXIT = 9;
   private static final int MAX_MENU_CHOICE = 9;
 
@@ -56,6 +57,7 @@ public class ChaosGameCLI {
   private void displayMenu() {
     System.out.println("1. Sierpinski Triangle");
     System.out.println("2. Barnsley Fern");
+    System.out.println("3. Julia");
     System.out.println("9. Exit");
   }
 
@@ -94,6 +96,11 @@ public class ChaosGameCLI {
       case BARNSLEY:
         parameters = setParameters();
         printCanvas(controller.getBarnsley(parameters[0], parameters[1], parameters[2]));
+        break;
+        
+        case JULIA:
+        parameters = setParameters();
+        printCanvas(controller.getJulia(parameters[0], parameters[1], parameters[2]));
         break;
 
       case EXIT:

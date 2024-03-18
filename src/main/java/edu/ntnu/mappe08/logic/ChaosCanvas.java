@@ -70,15 +70,15 @@ public class ChaosCanvas {
     if (point == null) {
       throw new IllegalArgumentException("Passed vector can not be null");
     }
-    if (point.getX0() < 0 || point.getX0() >= this.height || point.getX1() < 0 || point.getX1() >= this.width) {
+
+    Vector2D test2 = transformCoordsToIndices.transform(point);
+    if (test2.getX0() < 0 || test2.getX0() >= this.height || test2.getX1() < 0 || test2.getX1() >= this.width) {
       throw new IllegalArgumentException("Point is outside the canvas");
     }
     
-
-    Vector2D test2 = transformCoordsToIndices.transform(point);
     int i = (int) Math.round(test2.getX0());
     int j = (int) Math.round(test2.getX1());
-    if (i >= 0 && i < this.width && j >= 0 && j < this.height) {
+    if (i >= 0 && i < this.height && j >= 0 && j < this.width) {
       this.canvas[i][j] = 1;
     }
     

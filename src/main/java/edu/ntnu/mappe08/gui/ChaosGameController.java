@@ -59,5 +59,9 @@ public class ChaosGameController {
   public ChaosCanvas getBarnsley(int height, int width, int iterations) {
     return getChaosCanvas(height, width, iterations,"data/testBarnsley.csv");
   }
-  
+
+  public ChaosCanvas getJulia(int height, int width, int iterations) {
+
+    return getChaosCanvas(height, width, iterations,"data/testJulia2.csv");
+  }
 }
