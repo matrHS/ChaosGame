@@ -39,12 +39,20 @@ public class ChaosGame {
     return this.canvas;
   }
 
+  /**
+   * Method to run a number of steps in the chaos game.
+   *
+   * @param steps number of steps to run
+   */
   public void runSteps(int steps) {
     for (int i = 0; i < steps; i++) {
       this.runStep();
     }
   }
 
+  /**
+   * Method to run a single step in the chaos game.
+   */
   private void runStep() {
     int randomVal = random.nextInt(description.getTransforms().size());
     Vector2D newPoint = description.getTransforms().get(randomVal).transform(currentPoint);

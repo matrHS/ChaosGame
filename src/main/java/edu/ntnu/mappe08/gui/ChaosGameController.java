@@ -31,6 +31,7 @@ public class ChaosGameController {
    * @return ChaosCanvas.
    */
   private ChaosCanvas getChaosCanvas(int height, int width, int iterations, String path) {
+    // TODO: Improve parameterization
     ChaosGameDescription chaosGameDescription = fileHandler.buildChaosGameDescriptionFromFile(path);
     ChaosGame chaosGame = new ChaosGame(chaosGameDescription, height, width);
     chaosGame.runSteps(iterations);
@@ -46,6 +47,7 @@ public class ChaosGameController {
    * @return ChaosCanvas.
    */
   public ChaosCanvas getSierpinski(int height, int width, int iterations) {
+    //TODO: Implement Variable path
     return getChaosCanvas(height, width, iterations,"data/testAffine.csv");
   }
 
@@ -57,11 +59,20 @@ public class ChaosGameController {
    * @return ChaosCanvas.
    */
   public ChaosCanvas getBarnsley(int height, int width, int iterations) {
+    //TODO: Implement Variable path
     return getChaosCanvas(height, width, iterations,"data/testBarnsley.csv");
   }
 
+  /**
+   * Returns a Julia ChaosCanvas.
+   * 
+   * @param height
+   * @param width
+   * @param iterations
+   * @return
+   */
   public ChaosCanvas getJulia(int height, int width, int iterations) {
-
-    return getChaosCanvas(height, width, iterations,"data/testJulia.csv");
+    //TODO: Implement Variable path
+    return getChaosCanvas(height, width, iterations,"data/testJulia3.csv");
   }
 }

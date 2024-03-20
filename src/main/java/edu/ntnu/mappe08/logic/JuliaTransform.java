@@ -62,8 +62,7 @@ public class JuliaTransform implements Transform2D {
     Complex complexResult = new Complex(complexPoint.subtract(this.pointC));
     Complex complexSquare = complexResult.sqrt();
 
-    Complex juliaResult = new Complex(complexSquare.getRealPart() * sign,
-        complexSquare.getImaginaryPart() * sign);
+    Complex juliaResult = new Complex(complexSquare.multiply(this.sign));
     
     
     return juliaResult;

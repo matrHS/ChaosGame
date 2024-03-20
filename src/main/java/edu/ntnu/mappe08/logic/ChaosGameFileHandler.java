@@ -169,7 +169,7 @@ public class ChaosGameFileHandler {
               + affineTransform.getMatrix().getA11() + ", " 
               + affineTransform.getVector().getX0() + ", " 
               + affineTransform.getVector().getX1());
-          writer.write(" # Affine transform \n");
+          writer.write(" # Affine tranWsform \n");
         } else if (transform instanceof JuliaTransform) {
           JuliaTransform juliaTransform = (JuliaTransform) transform;
           writer.write(juliaTransform.getPointC().getRealPart() + ", " + juliaTransform.getPointC().getImaginaryPart());
