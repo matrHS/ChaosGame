@@ -1,0 +1,6 @@
+Affine2D                # Type of fractal 
+0, 0                    # Lower left 
+1, 1                    # Upper right 
+.5, 0, 0, .5, 0, 0      # 1st transform (a00, a01, a10, a11, b0, b1) 
+.5, 0, 0, .5, .25, .5   # 2nd transform 
+.5, 0, 0, .5, .5, 0     # 3rd transform

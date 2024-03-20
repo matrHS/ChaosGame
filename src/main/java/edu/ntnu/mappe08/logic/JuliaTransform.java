@@ -55,16 +55,15 @@ public class JuliaTransform implements Transform2D {
     if (!(point instanceof Complex)) {
       throw new IllegalArgumentException("Passed vector is not a complex number");
     }
+
+    Complex complexPoint = new Complex(point);
     
-    Complex complexPoint = (Complex) point;
-    double realPartResult = pointC.getRealPart() - complexPoint.getRealPart();
-    double imaginaryPartResult = pointC.getImaginaryPart() - complexPoint.getImaginaryPart();
     
-    Complex complexResult = new Complex(realPartResult, imaginaryPartResult);
+    Complex complexResult = new Complex(complexPoint.subtract(this.pointC));
     Complex complexSquare = complexResult.sqrt();
+
+    Complex juliaResult = new Complex(complexSquare.multiply(this.sign));
     
-    Vector2D juliaResult = new Complex(complexSquare.getRealPart() * sign, 
-        complexSquare.getImaginaryPart() * sign);
     
     return juliaResult;
   }

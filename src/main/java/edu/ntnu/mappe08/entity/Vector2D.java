@@ -80,6 +80,19 @@ public class Vector2D {
     double newX0 = this.getX0() - other.getX0();
     double newX1 = this.getX1() - other.getX1();
     
+    return new Complex(newX0, newX1);
+  }
+  
+  /**
+   * Multiplies vector with scalar.
+   * 
+   * @param scalar Scalar to multiply the vector with
+   * @return New vector
+   */
+  public Vector2D multiply(double scalar){
+    double newX0 = this.getX0() * scalar;
+    double newX1 = this.getX1() * scalar;
+    
     return new Vector2D(newX0, newX1);
   }
 }

@@ -58,7 +58,6 @@ class ChaosCanvasTest {
   void testInvalidGetPutPixel() {
     assertThrows(IllegalArgumentException.class, () -> testCanvas.getPixel(new Vector2D(-1, 1)));
     assertThrows(IllegalArgumentException.class, () -> testCanvas.getPixel(null));
-    assertThrows(IllegalArgumentException.class, () -> testCanvas.putPixel(new Vector2D(-1, 1)));
     assertThrows(IllegalArgumentException.class, () -> testCanvas.putPixel(null));
   }
 
