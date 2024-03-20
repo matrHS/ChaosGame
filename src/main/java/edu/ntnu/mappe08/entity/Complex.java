@@ -51,7 +51,12 @@ public class Complex extends Vector2D{
     double imaginaryPart = getImaginaryPart();
     double length = Math.sqrt(realPart * realPart + imaginaryPart * imaginaryPart);
     double r = Math.sqrt((length + realPart) / 2);
-    double i = Math.signum(imaginaryPart)*Math.sqrt((length - realPart) / 2);
+    double imSign = Math.signum(imaginaryPart);
+    // If the imaginary part is 0 we set it to 1 to avoid removing the imaginary part
+    if (imSign == 0) {
+      imSign = 1;
+    }
+    double i = imSign*Math.sqrt((length - realPart) / 2);
     
     return new Complex(r, i);
   }

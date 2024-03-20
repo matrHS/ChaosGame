@@ -73,6 +73,6 @@ public class ChaosGameController {
    */
   public ChaosCanvas getJulia(int height, int width, int iterations) {
     //TODO: Implement Variable path
-    return getChaosCanvas(height, width, iterations,"data/testJulia3.csv");
+    return getChaosCanvas(height, width, iterations,"data/testJulia2.csv");
   }
 }
