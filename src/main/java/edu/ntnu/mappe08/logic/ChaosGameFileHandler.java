@@ -101,7 +101,7 @@ public class ChaosGameFileHandler {
   }
 
   /**
-   * Method for parsing the coordinates from a line in the file.
+   * Parses coordinates from a line in the file.
    *
    * @param line the line to parse containing 2 numerical numbers at start of line
    */
@@ -115,7 +115,7 @@ public class ChaosGameFileHandler {
   }
 
   /**
-   * Method for parsing an affine transformation from a line in the file.
+   * Parses an affine transformation from a line in the file.
    * 
    * @param line the line to parse containing a 2x2 matrix and a 2D vector
    * @return an affine transformation
@@ -136,7 +136,7 @@ public class ChaosGameFileHandler {
   }
 
   /**
-   * Writes a chaos game description to a file.
+   * Writes chaos game description to a file.
    * Writes the file depending on type of transform.
    * 
    * @param description the chaos game description to write to file

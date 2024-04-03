@@ -26,7 +26,7 @@ public class Matrix2x2 {
   }
 
   /**
-   * Method to get the first value of the matrix.
+   * Returns the first value of the matrix.
    * 
    * @return the first value of the matrix
    */
@@ -43,7 +43,7 @@ public class Matrix2x2 {
   }
 
   /**
-   * Method to get the third value of the matrix
+   * Returns the third value of the matrix
    * @return the third value of the matrix
    */
   public double getA10() {
@@ -51,7 +51,7 @@ public class Matrix2x2 {
   }
 
   /**
-   * Method to get the fourth value of the matrix
+   * Returns the fourth value of the matrix
    * @return the fourth value of the matrix
    */
   public double getA11() {
@@ -59,7 +59,7 @@ public class Matrix2x2 {
   }
 
   /**
-   * Method to set the first value of the matrix
+   * Sets the first value of the matrix
    * @param a00 New first value of the matrix
    */
   private void setA00(double a00) {
@@ -67,7 +67,7 @@ public class Matrix2x2 {
   }
   
   /**
-   * Method to set the second value of the matrix
+   * Sets the second value of the matrix
    * @param a01 New second value of the matrix
    */
   private void setA01(double a01) {
@@ -75,7 +75,7 @@ public class Matrix2x2 {
   }
   
   /**
-   * Method to set the third value of the matrix
+   * Sets the third value of the matrix
    * @param a10 New third value of the matrix
    */
   private void setA10(double a10) {
@@ -83,7 +83,7 @@ public class Matrix2x2 {
   }
   
   /**
-   * Method to set the fourth value of the matrix
+   * Sets the fourth value of the matrix
    * @param a11 New fourth value of the matrix
    */
   private void setA11(double a11) {
@@ -91,7 +91,7 @@ public class Matrix2x2 {
   }
 
   /**
-   * Method to multiply the matrix with a vector.
+   * Returns the matrix multiplied by a vector.
    * @param vector Vector to multiply with the matrix.
    * @return New vector.
    */

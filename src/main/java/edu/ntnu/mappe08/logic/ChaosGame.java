@@ -31,7 +31,7 @@ public class ChaosGame {
   }
 
   /**
-   * Method to get the canvas of the chaos game.
+   * Returns the canvas of the chaos game.
    *
    * @return the canvas of the chaos game
    */
@@ -40,7 +40,7 @@ public class ChaosGame {
   }
 
   /**
-   * Method to run a number of steps in the chaos game.
+   * Runs a number of steps in the chaos game.
    *
    * @param steps number of steps to run
    */
@@ -51,7 +51,7 @@ public class ChaosGame {
   }
 
   /**
-   * Method to run a single step in the chaos game.
+   * Runs a single step in the chaos game.
    */
   private void runStep() {
     int randomVal = random.nextInt(description.getTransforms().size());

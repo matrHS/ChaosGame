@@ -42,7 +42,7 @@ public class ChaosCanvas {
 
 
   /**
-   * Method to get the pixel at a given point.
+   * Returns pixel at a given point.
    *
    * @param point the point to get the pixel from.
    * @return the pixel at the given point.
@@ -62,7 +62,7 @@ public class ChaosCanvas {
   }
 
   /**
-   * Method to set the pixel at a given point.
+   * Sets pixel at a given point.
    *
    * @param point the point to set the pixel at.
    */
@@ -85,7 +85,7 @@ public class ChaosCanvas {
   }
 
   /**
-   * Get the canvas array.
+   * Returns the canvas array.
    * @return the canvas array.
    */
   public int[][] getCanvasArray() {
@@ -93,7 +93,7 @@ public class ChaosCanvas {
   }
 
   /**
-   * Method to clear the canvas.
+   * Clear the canvas.
    */
   public void clear() {
     for (int i = 0; i < this.width; i++) {
@@ -104,7 +104,7 @@ public class ChaosCanvas {
   }
 
   /**
-   * Method to get the width of the canvas.
+   * Returns the width of the canvas.
    *
    * @return the width of the canvas
    */
@@ -113,7 +113,7 @@ public class ChaosCanvas {
   }
 
   /**
-   * Method to get the height of the canvas.
+   * Returns the height of the canvas.
    *
    * @return the height of the canvas
    */
@@ -122,7 +122,7 @@ public class ChaosCanvas {
   }
 
   /**
-   * Method to get the minimum coordinates of the canvas.
+   * Returns the minimum coordinates of the canvas.
    *
    * @return the minimum coordinates of the canvas
    */
@@ -131,7 +131,7 @@ public class ChaosCanvas {
   }
 
   /**
-   * Method to get the maximum coordinates of the canvas.
+   * Returns the maximum coordinates of the canvas.
    *
    * @return the maximum coordinates of the canvas
    */

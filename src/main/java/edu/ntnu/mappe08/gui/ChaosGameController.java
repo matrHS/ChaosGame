@@ -9,7 +9,6 @@ import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
  * Represents the controller for the Chaos Game.
  * Should be interchangeable with GUI and CLI.
  */
-
 public class ChaosGameController {
 
   private ChaosGameFileHandler fileHandler;

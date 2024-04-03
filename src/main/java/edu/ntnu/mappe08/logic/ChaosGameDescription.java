@@ -18,7 +18,7 @@ public class ChaosGameDescription {
   }
 
   /**
-   * Gets the minimum coordinates of the chaos game.
+   * Returns minimum coordinates of the chaos game.
    *
    * @return the minimum coordinates of the chaos game
    */
@@ -27,7 +27,7 @@ public class ChaosGameDescription {
   }
   
   /**
-   * Sets the minimum coords of the chaos game.
+   * Sets minimum coords of the chaos game.
    *
    * @param minCoords the minimum coords of the chaos game
    */
@@ -39,7 +39,7 @@ public class ChaosGameDescription {
   }
   
   /**
-   * Gets the maximum coordinates of the chaos game.
+   * Returns maximum coordinates of the chaos game.
    *
    * @return the maximum coordinates of the chaos game
    */
@@ -48,7 +48,7 @@ public class ChaosGameDescription {
   }
   
   /**
-   * Sets the maximum coords of the chaos game.
+   * Sets maximum coords of the chaos game.
    *
    * @param maxCoords the maximum coords of the chaos game
    */
@@ -60,7 +60,7 @@ public class ChaosGameDescription {
   }
 
   /**
-   * Gets the transforms of the chaos game.
+   * Returns transforms of the chaos game.
    *
    * @return the transforms of the chaos game
    */
@@ -69,7 +69,7 @@ public class ChaosGameDescription {
   }
   
   /**
-   * Sets the transforms of the chaos game.
+   * Sets transforms of the chaos game.
    *
    * @param transforms the transforms of the chaos game
    */ 

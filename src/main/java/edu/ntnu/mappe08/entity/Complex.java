@@ -1,5 +1,8 @@
 package edu.ntnu.mappe08.entity;
 
+/**
+ * Represents a complex number.
+ */
 public class Complex extends Vector2D{
   
   /**
@@ -23,7 +26,7 @@ public class Complex extends Vector2D{
   }
 
   /**
-   * Method to get the real part of the complex number.
+   * Returns the real part of the complex number.
    * 
    * @return real part of the complex number
    */
@@ -32,7 +35,7 @@ public class Complex extends Vector2D{
   }
   
   /**
-   * Method to get the imaginary part of the complex number.
+   * Returns the imaginary part of the complex number.
    * 
    * @return imaginary part of the complex number
    */
@@ -41,7 +44,7 @@ public class Complex extends Vector2D{
   }
   
   /**
-   * Method to calculate the square root of a complex number.
+   * Calculates and returns the square root of a complex number.
    * // TODO: Write in report regarding potential divide by negative number
    * 
    * @return square root of the complex number

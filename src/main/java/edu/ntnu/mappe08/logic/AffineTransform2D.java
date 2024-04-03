@@ -23,7 +23,7 @@ public class AffineTransform2D implements Transform2D{
   }
 
   /**
-   * Gets the matrix of the transformation.
+   * Returns the matrix of the transformation.
    *
    * @return the matrix of the transformation
    */
@@ -32,7 +32,7 @@ public class AffineTransform2D implements Transform2D{
   }
   
   /**
-   * Gets the vector of the transformation.
+   * Returns the vector of the transformation.
    *
    * @return the vector of the transformation
    */
@@ -41,7 +41,7 @@ public class AffineTransform2D implements Transform2D{
   }
   
   /**
-   * Method to transform a 2D vector.
+   * Transforms a 2D vector.
    *
    * @param point the vector to transform
    * @return the transformed vector

@@ -22,7 +22,7 @@ public class Vector2D {
   }
 
   /**
-   * Method to get the x value of the vector
+   * Returns the x value of the vector
    * @return the x value of the vector
    */
   public double getX0(){
@@ -30,7 +30,7 @@ public class Vector2D {
   }
   
   /**
-   * Method to get the y value of the vector
+   * Returns the y value of the vector
    * @return the y value of the vector
    */
   public double getX1(){
@@ -38,7 +38,7 @@ public class Vector2D {
   }
 
   /**
-   * Method to set the x value of the vector
+   * Sets the x value of the vector
    * @param x0 New x value of the vector
    */
   private void setX0(double x0) {
@@ -46,7 +46,7 @@ public class Vector2D {
   }
   
   /**
-   * Method to set the y value of the vector
+   * Sets the y value of the vector
    * @param x1 New y value of the vector
    */
   private void setX1(double x1) {
@@ -54,7 +54,7 @@ public class Vector2D {
   }
   
   /**
-   * Adds vector to original vector
+   * Returns new vector added to original vector
    * @param other Vector to add to the original
    * @return New vector
    */
@@ -69,7 +69,7 @@ public class Vector2D {
   }
 
   /**
-   * Subtracts vector from original vector
+   * Returns new vector subtracted from original vector
    * @param other Vector to subtract from the original
    * @return New vector
    */
@@ -84,7 +84,7 @@ public class Vector2D {
   }
   
   /**
-   * Multiplies vector with scalar.
+   * Returns new vector multiplied by scalar.
    * 
    * @param scalar Scalar to multiply the vector with
    * @return New vector

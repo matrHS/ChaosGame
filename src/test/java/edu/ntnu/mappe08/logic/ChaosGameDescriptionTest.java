@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+// TODO: Write Javadoc of positive and negative tests.
 class ChaosGameDescriptionTest {
 
   Vector2D testMinCoords;
