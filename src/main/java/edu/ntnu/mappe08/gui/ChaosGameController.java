@@ -5,6 +5,7 @@ import edu.ntnu.mappe08.logic.ChaosGame;
 import edu.ntnu.mappe08.logic.ChaosGameDescription;
 import edu.ntnu.mappe08.logic.ChaosGameDescriptionFactory;
 import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
+import java.util.List;
 
 /**
  * Represents the controller for the Chaos Game.
@@ -36,6 +37,13 @@ public class ChaosGameController {
     // TODO: Improve parameterization
     ChaosGameDescription chaosGameDescription = this.descriptionFactory.createDescription(transformType);
     ChaosGame chaosGame = new ChaosGame(chaosGameDescription, height, width);
+    chaosGame.runSteps(iterations);
+    return chaosGame.getCanvas();
+  }
+
+  public ChaosCanvas getCustom(int height, int width, int iterations, String filePath) {
+    List<String> strings = fileHandler.readFromFile(filePath);
+    ChaosGame chaosGame = new ChaosGame(descriptionFactory.buildChaosGameDescription(strings), height, width);
     chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }
@@ -77,4 +85,6 @@ public class ChaosGameController {
     //TODO: Implement Variable path
     return getChaosCanvas(height, width, iterations,"Julia");
   }
+  
+  
 }
