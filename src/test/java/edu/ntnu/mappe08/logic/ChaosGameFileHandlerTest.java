@@ -31,7 +31,7 @@ class ChaosGameFileHandlerTest {
   }
   
   /**
-   * Positive test:
+   * TODO: Move to factory test class
    * Test that the buildChaosGameDescription method returns a ChaosGameDescription object with the correct values.
    */
   @Test
@@ -42,7 +42,7 @@ class ChaosGameFileHandlerTest {
   }
   
   /**
-   * Negative test:
+   * TODO: Move to factory test class
    * Test that the buildChaosGameDescription method throws an IllegalArgumentException when the fileContent is null.
    */
   @Test
@@ -52,7 +52,7 @@ class ChaosGameFileHandlerTest {
   }
 
   /**
-   * Negative test:
+   * TODO: Move to factory test class
    * Test that Exception is thrown if structure of file is incorrect leading to incorrect parsing.
    */
   @Test
@@ -69,7 +69,7 @@ class ChaosGameFileHandlerTest {
   }
 
   /**
-   * Negative test:
+   * TODO: Move to factory test class
    * Test that buildChaosGameDescription throws an IllegalArgumentException when no valid transform type is set.
    */
   @Test
@@ -105,7 +105,7 @@ class ChaosGameFileHandlerTest {
   }
   
   /**
-   * Negative test:
+   * TODO: Move to factory test class
    * Test that the buildChaosGameDescriptionFromFile method throws an IllegalArgumentException when the filepath is null.
    */
   @Test
