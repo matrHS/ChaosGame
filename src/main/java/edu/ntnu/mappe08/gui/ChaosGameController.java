@@ -13,17 +13,26 @@ import java.util.List;
  */
 public class ChaosGameController {
 
+  private ChaosGameMainPage chaosGameMainPage;
   private ChaosGameFileHandler fileHandler;
   private ChaosGameDescriptionFactory descriptionFactory;
 
   /**
    * Creates an instance of ChaosGameController.
    */
-  public ChaosGameController() {
+  public ChaosGameController(ChaosGameMainPage chaosGameMainPage) {
+    this.chaosGameMainPage = chaosGameMainPage;
     this.fileHandler = new ChaosGameFileHandler();
     this.descriptionFactory = new ChaosGameDescriptionFactory();
   }
 
+  /**
+   * Creates an instance of ChaosGameController for use with CLI.
+   */
+  public ChaosGameController() {
+    this.fileHandler = new ChaosGameFileHandler();
+    this.descriptionFactory = new ChaosGameDescriptionFactory();
+  }
 
   /**
    * Builds and simulates ChaosCanvas for any transformation type.
