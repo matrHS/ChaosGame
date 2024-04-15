@@ -7,9 +7,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -20,6 +22,7 @@ import javafx.stage.Stage;
 public class ChaosGameMainPage extends Application {
   
   ChaosGameController controller;
+  BorderPane borderPane;
   
   /**
    * Starts the javafx GUI.
@@ -31,14 +34,14 @@ public class ChaosGameMainPage extends Application {
     this.controller = new ChaosGameController(this);
     
     stage.setTitle("My Application");
-    BorderPane borderPane = new BorderPane();
+    borderPane = new BorderPane();
     ChaosCanvas canvas = controller.getBarnsley(1000, 800, 1000000);
 
     
     MenuBar menuBar = createMenus();
     borderPane.setTop(menuBar);
     
-    borderPane.setCenter(getTransformImage(canvas));
+    updateImage(getTransformImage(canvas));
     
     
     Scene scene = new Scene(borderPane, 1200, 600);
@@ -46,17 +49,33 @@ public class ChaosGameMainPage extends Application {
     stage.show();
   }
 
+  public void updateImage(ImageView image) {
+    // TODO: Refactor into a more sophisticated solution for swapping images.
+    borderPane.setCenter(image);
+  }
+  
   public MenuBar createMenus() {
 
     // File menu
     Menu fileMenu = new Menu("File");
-    MenuItem openTransform = new MenuItem("Open");
-    
+
     MenuItem saveTransform = new MenuItem("Save");
-    
+    saveTransform.setOnAction(e -> {
+      controller.saveTransform();
+    });
+    MenuItem openTransform = new MenuItem("Open");
+    openTransform.setOnAction(e -> {
+      controller.openTransform();
+    });
     MenuItem exitApp = new MenuItem("Exit");
+    exitApp.setOnAction(e -> {
+      controller.exitApp();
+    });
     
-    fileMenu.getItems().addAll(openTransform, saveTransform, exitApp);
+    fileMenu.getItems().addAll(openTransform, saveTransform);
+    fileMenu.getItems().add(new SeparatorMenuItem());
+    fileMenu.getItems().add(exitApp);
+    
     
     MenuBar menuBar = new MenuBar();
     menuBar.getMenus().addAll(fileMenu);

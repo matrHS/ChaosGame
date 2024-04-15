@@ -5,7 +5,9 @@ import edu.ntnu.mappe08.logic.ChaosGame;
 import edu.ntnu.mappe08.logic.ChaosGameDescription;
 import edu.ntnu.mappe08.logic.ChaosGameDescriptionFactory;
 import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
+import java.io.File;
 import java.util.List;
+import javafx.stage.FileChooser;
 
 /**
  * Represents the controller for the Chaos Game.
@@ -94,6 +96,42 @@ public class ChaosGameController {
     //TODO: Implement Variable path
     return getChaosCanvas(height, width, iterations,"Julia");
   }
-  
-  
+
+  /**
+   * Saves the current transformation to a file using file chooser dialog
+   */
+  public void saveTransform() {
+    FileChooser fileChooser = new FileChooser();
+    
+    fileChooser.setTitle("Save Transformation");
+    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+    fileChooser.setInitialFileName("transformation.csv");
+    File selectedFile = fileChooser.showSaveDialog(null);
+    if (selectedFile != null) {
+      fileHandler.writeToFile(this.descriptionFactory.createDescription("Julia"),selectedFile.getAbsolutePath());
+    }
+  }
+
+  /**
+   * Opens a transformation from a file using file chooser dialog
+   */
+  public void openTransform() {
+    // TODO: Consider refactoring file chooser to a separate method for both save and open.
+    // TODO: Ensure that files do not have to be hardcoded when it comes to canvas size etc.
+    FileChooser fileChooser = new FileChooser();
+
+    fileChooser.setTitle("Open Transformation");
+    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+    File selectedFile = fileChooser.showOpenDialog(null);
+    if (selectedFile != null) {
+      this.chaosGameMainPage.updateImage(this.chaosGameMainPage.getTransformImage(this.getCustom(1000, 800, 1000000, selectedFile.getAbsolutePath())));
+    }
+  }
+
+  /**
+   * Exits the application.
+   */ 
+  public void exitApp() {
+    // TODO: Fill later
+  }
 }
