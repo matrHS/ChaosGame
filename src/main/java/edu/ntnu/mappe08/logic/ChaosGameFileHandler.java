@@ -19,60 +19,8 @@ public class ChaosGameFileHandler {
   public ChaosGameFileHandler() {
   }
 
-  /**
-   * Builds a chaos game description from a file.
-   *
-   * @param filepath path to the file to read from
-   * @return a chaos game description
-   */
-  public ChaosGameDescription buildChaosGameDescriptionFromFile(String filepath) {
-    if (filepath == null || filepath.isBlank()) {
-      throw new IllegalArgumentException("filepath cannot be null or empty");
-    }
-    return buildChaosGameDescription(readFromFile(filepath));
-  }
   
-  /**
-   * Builds a chaos game description from a list of strings.
-   * 
-   * @param fileContent the list of strings to build the chaos game description from
-   * @return a chaos game description
-   */
-  public ChaosGameDescription buildChaosGameDescription(List<String> fileContent) {
-    if (fileContent == null || fileContent.isEmpty()) {
-      throw new IllegalArgumentException("fileContent cannot be null or empty");
-    }
-    String transformType;
-    Vector2D minCoords;
-    Vector2D maxCoords;
-    List<Transform2D> transforms = new ArrayList<>();
-    
-    List<String> formatedFileContent = new ArrayList<>();
-    for (int i = 0; i < fileContent.size(); i++) {
-      formatedFileContent.add(fileContent.get(i).split("#")[0].trim());
-    }
-    transformType = formatedFileContent.get(0);
-    
-    // TODO: Consider refactoring each transform into its own class to generalize filehandler
-    if (transformType.contains("Affine2D")) {
-      minCoords = parseCoords(formatedFileContent.get(1));
-      maxCoords = parseCoords(formatedFileContent.get(2));
-
-      for (int i = 3; i < formatedFileContent.size(); i++) {
-        transforms.add(parseAffineTransform(formatedFileContent.get(i)));
-      }
-    } else if (transformType.contains("Julia")) {
-      minCoords = parseCoords(formatedFileContent.get(1));
-      maxCoords = parseCoords(formatedFileContent.get(2));
-      Complex point = parseCoords(formatedFileContent.get(3));
-      transforms.add(new JuliaTransform(point, 1));
-      transforms.add(new JuliaTransform(point,-1));
-
-    } else {
-      throw new IllegalArgumentException("Invalid file content");
-    }
-    return new ChaosGameDescription(minCoords, maxCoords, transforms);
-  }
+  
   
   /**
    * Reads a chaos game description from a file.
@@ -100,40 +48,7 @@ public class ChaosGameFileHandler {
     return fileContent;
   }
 
-  /**
-   * Parses coordinates from a line in the file.
-   *
-   * @param line the line to parse containing 2 numerical numbers at start of line
-   */
-  private Complex parseCoords(String line) {
-    if (line == null || line.isBlank()) {
-      throw new IllegalArgumentException("line cannot be null or empty");
-    }
-    String[] splitLine = line.split(",");
-    return new Complex(Double.parseDouble(splitLine[0].trim()), 
-        Double.parseDouble(splitLine[1].trim()));
-  }
-
-  /**
-   * Parses an affine transformation from a line in the file.
-   * 
-   * @param line the line to parse containing a 2x2 matrix and a 2D vector
-   * @return an affine transformation
-   */
-  private AffineTransform2D parseAffineTransform(String line) {
-    if (line == null || line.isBlank()) {
-      throw new IllegalArgumentException("line cannot be null or empty");
-    }
-    String[] splitLine = line.split(",");
-    Matrix2x2 parsedMatrix = new Matrix2x2(Double.parseDouble(splitLine[0].trim()), 
-        Double.parseDouble(splitLine[1].trim()), 
-        Double.parseDouble(splitLine[2].trim()), 
-        Double.parseDouble(splitLine[3].trim()));
-    Vector2D parsedVector = new Vector2D(Double.parseDouble(splitLine[4].trim()), 
-        Double.parseDouble(splitLine[5].trim()));
-        
-    return new AffineTransform2D(parsedMatrix, parsedVector);
-  }
+  
 
   /**
    * Writes chaos game description to a file.

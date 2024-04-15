@@ -3,7 +3,9 @@ package edu.ntnu.mappe08.gui;
 import edu.ntnu.mappe08.logic.ChaosCanvas;
 import edu.ntnu.mappe08.logic.ChaosGame;
 import edu.ntnu.mappe08.logic.ChaosGameDescription;
+import edu.ntnu.mappe08.logic.ChaosGameDescriptionFactory;
 import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
+import java.util.List;
 
 /**
  * Represents the controller for the Chaos Game.
@@ -12,12 +14,14 @@ import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
 public class ChaosGameController {
 
   private ChaosGameFileHandler fileHandler;
+  private ChaosGameDescriptionFactory descriptionFactory;
 
   /**
    * Creates an instance of ChaosGameController.
    */
   public ChaosGameController() {
     this.fileHandler = new ChaosGameFileHandler();
+    this.descriptionFactory = new ChaosGameDescriptionFactory();
   }
 
 
@@ -26,13 +30,20 @@ public class ChaosGameController {
    * @param height height of canvas.
    * @param width width of canvas.
    * @param iterations number of iterations.
-   * @param path path to file.
+   * @param transformType type of transformation.
    * @return ChaosCanvas.
    */
-  private ChaosCanvas getChaosCanvas(int height, int width, int iterations, String path) {
+  private ChaosCanvas getChaosCanvas(int height, int width, int iterations, String transformType) {
     // TODO: Improve parameterization
-    ChaosGameDescription chaosGameDescription = fileHandler.buildChaosGameDescriptionFromFile(path);
+    ChaosGameDescription chaosGameDescription = this.descriptionFactory.createDescription(transformType);
     ChaosGame chaosGame = new ChaosGame(chaosGameDescription, height, width);
+    chaosGame.runSteps(iterations);
+    return chaosGame.getCanvas();
+  }
+
+  public ChaosCanvas getCustom(int height, int width, int iterations, String filePath) {
+    List<String> strings = fileHandler.readFromFile(filePath);
+    ChaosGame chaosGame = new ChaosGame(descriptionFactory.buildChaosGameDescription(strings), height, width);
     chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }
@@ -47,7 +58,7 @@ public class ChaosGameController {
    */
   public ChaosCanvas getSierpinski(int height, int width, int iterations) {
     //TODO: Implement Variable path
-    return getChaosCanvas(height, width, iterations,"data/testAffine.csv");
+    return getChaosCanvas(height, width, iterations,"Sierpinski");
   }
 
   /**
@@ -59,19 +70,21 @@ public class ChaosGameController {
    */
   public ChaosCanvas getBarnsley(int height, int width, int iterations) {
     //TODO: Implement Variable path
-    return getChaosCanvas(height, width, iterations,"data/testBarnsley.csv");
+    return getChaosCanvas(height, width, iterations,"Barnsley");
   }
 
   /**
    * Returns a Julia ChaosCanvas.
    * 
-   * @param height
-   * @param width
-   * @param iterations
-   * @return
+   * @param height height of canvas.
+   * @param width width of canvas.
+   * @param iterations number of iterations.
+   * @return ChaosCanvas.
    */
   public ChaosCanvas getJulia(int height, int width, int iterations) {
     //TODO: Implement Variable path
-    return getChaosCanvas(height, width, iterations,"data/testJulia2.csv");
+    return getChaosCanvas(height, width, iterations,"Julia");
   }
+  
+  
 }

@@ -17,6 +17,7 @@ public class ChaosGameCLI {
   private static final int SIERPINSKI = 1;
   private static final int BARNSLEY = 2;
   private static final int JULIA = 3;
+  private static final int CUSTOM = 4;
   private static final int EXIT = 9;
   private static final int MAX_MENU_CHOICE = 9;
 
@@ -101,6 +102,11 @@ public class ChaosGameCLI {
         case JULIA:
         parameters = setParameters();
         printCanvas(controller.getJulia(parameters[0], parameters[1], parameters[2]));
+        break;
+        
+      case CUSTOM:
+        parameters = setParameters();
+        printCanvas(controller.getCustom(parameters[0], parameters[1], parameters[2], "data/testJulia3.csv"));
         break;
 
       case EXIT:
