@@ -1,4 +1,4 @@
-package edu.ntnu.mappe08.gui;
+package edu.ntnu.mappe08.ui;
 
 import edu.ntnu.mappe08.entity.Vector2D;
 import edu.ntnu.mappe08.logic.ChaosCanvas;
@@ -18,9 +18,9 @@ import javafx.stage.Stage;
 /**
  * Represents the GUI for the Chaos Game.
  */
-public class ChaosGameMainPage extends Application {
+public class MainPage extends Application {
   
-  ChaosGameController controller;
+  MainPageController controller;
   BorderPane borderPane;
   
   /**
@@ -30,7 +30,7 @@ public class ChaosGameMainPage extends Application {
    */
   @Override
   public void start(Stage stage) {
-    this.controller = new ChaosGameController(this);
+    this.controller = new MainPageController(this);
     
     stage.setTitle("My Application");
     borderPane = new BorderPane();

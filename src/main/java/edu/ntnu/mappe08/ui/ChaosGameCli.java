@@ -1,4 +1,4 @@
-package edu.ntnu.mappe08.gui;
+package edu.ntnu.mappe08.ui;
 
 
 import edu.ntnu.mappe08.entity.Vector2D;
@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class ChaosGameCli {
 
 
-  private ChaosGameController controller;
+  private MainPageController controller;
 
   private static final int SIERPINSKI = 1;
   private static final int BARNSLEY = 2;
@@ -25,7 +25,7 @@ public class ChaosGameCli {
    * Creates an instance of ChaosGameCLI.
    */
   public ChaosGameCli() {
-    this.controller = new ChaosGameController();
+    this.controller = new MainPageController();
   }
 
   /**

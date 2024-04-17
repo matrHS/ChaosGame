@@ -1,7 +1,7 @@
 package edu.ntnu.mappe08;
 
 
-import edu.ntnu.mappe08.gui.ChaosGameMainPage;
+import edu.ntnu.mappe08.ui.MainPage;
 
 /**
  * Main class for the application. 
@@ -17,7 +17,7 @@ public class Main {
   public static void main(String[] args) {
 //    ChaosGameCLI app = new ChaosGameCLI();
 //    app.start();
-    ChaosGameMainPage app = new ChaosGameMainPage();
+    MainPage app = new MainPage();
     app.main(args);
   }
 

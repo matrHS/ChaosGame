@@ -1,4 +1,4 @@
-package edu.ntnu.mappe08.gui;
+package edu.ntnu.mappe08.ui;
 
 import edu.ntnu.mappe08.logic.ChaosCanvas;
 import edu.ntnu.mappe08.logic.ChaosGame;
@@ -13,17 +13,17 @@ import javafx.stage.FileChooser;
  * Represents the controller for the Chaos Game.
  * Should be interchangeable with GUI and CLI.
  */
-public class ChaosGameController {
+public class MainPageController {
 
-  private ChaosGameMainPage chaosGameMainPage;
+  private MainPage mainPage;
   private ChaosGameFileHandler fileHandler;
   private ChaosGameDescriptionFactory descriptionFactory;
 
   /**
    * Creates an instance of ChaosGameController.
    */
-  public ChaosGameController(ChaosGameMainPage chaosGameMainPage) {
-    this.chaosGameMainPage = chaosGameMainPage;
+  public MainPageController(MainPage mainPage) {
+    this.mainPage = mainPage;
     this.fileHandler = new ChaosGameFileHandler();
     this.descriptionFactory = new ChaosGameDescriptionFactory();
   }
@@ -31,7 +31,7 @@ public class ChaosGameController {
   /**
    * Creates an instance of ChaosGameController for use with CLI.
    */
-  public ChaosGameController() {
+  public MainPageController() {
     this.fileHandler = new ChaosGameFileHandler();
     this.descriptionFactory = new ChaosGameDescriptionFactory();
   }
@@ -139,7 +139,7 @@ public class ChaosGameController {
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
     File selectedFile = fileChooser.showOpenDialog(null);
     if (selectedFile != null) {
-      this.chaosGameMainPage.updateImage(this.chaosGameMainPage.drawImageFromChaosCanvas(
+      this.mainPage.updateImage(this.mainPage.drawImageFromChaosCanvas(
           this.getCustomCanvas(1000, 800, 1000000, 
               selectedFile.getAbsolutePath())));
     }

@@ -35,7 +35,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>edu.ntnu.mappe08.gui.ChaosGameMainPage</mainClass>
+                    <mainClass>edu.ntnu.mappe08.ui.MainPage</mainClass>
                 </configuration>
             </plugin>
         </plugins>
