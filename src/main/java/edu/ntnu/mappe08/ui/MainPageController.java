@@ -7,6 +7,7 @@ import edu.ntnu.mappe08.logic.ChaosGameDescriptionFactory;
 import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
 import java.io.File;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.stage.FileChooser;
 
 /**
@@ -150,5 +151,10 @@ public class MainPageController {
    */ 
   public void exitApp() {
     // TODO: Fill later
+    Platform.exit();
+  }
+
+  public void doChangeImage(ChaosCanvas newCanvas) {
+    this.mainPage.updateImage(this.mainPage.drawImageFromChaosCanvas(newCanvas));
   }
 }
