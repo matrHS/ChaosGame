@@ -53,7 +53,7 @@ public class ChaosGameFileHandler {
   /**
    * Writes chaos game description to a file.
    * Writes the file depending on type of transform.
-   * 
+   *
    * @param description the chaos game description to write to file
    * @param path the path to write the file to
    */
@@ -87,7 +87,9 @@ public class ChaosGameFileHandler {
           writer.write(" # Affine tranWsform \n");
         } else if (transform instanceof JuliaTransform) {
           JuliaTransform juliaTransform = (JuliaTransform) transform;
-          writer.write(juliaTransform.getPointC().getRealPart() + ", " + juliaTransform.getPointC().getImaginaryPart());
+          writer.write(juliaTransform.getPointC().getRealPart() 
+              + ", " 
+              + juliaTransform.getPointC().getImaginaryPart());
           writer.write(" # Julia transform \n");
         }
       }

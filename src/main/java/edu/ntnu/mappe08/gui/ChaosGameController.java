@@ -38,6 +38,7 @@ public class ChaosGameController {
 
   /**
    * Builds and simulates ChaosCanvas for any transformation type.
+   *
    * @param height height of canvas.
    * @param width width of canvas.
    * @param iterations number of iterations.
@@ -46,15 +47,26 @@ public class ChaosGameController {
    */
   private ChaosCanvas getChaosCanvas(int height, int width, int iterations, String transformType) {
     // TODO: Improve parameterization
-    ChaosGameDescription chaosGameDescription = this.descriptionFactory.createDescription(transformType);
+    ChaosGameDescription chaosGameDescription = this.descriptionFactory
+        .createDescription(transformType);
     ChaosGame chaosGame = new ChaosGame(chaosGameDescription, height, width);
     chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }
 
-  public ChaosCanvas getCustom(int height, int width, int iterations, String filePath) {
+  /**
+   * Creates a canvas based on file.
+   *
+   * @param height Height of canvas in pixels.
+   * @param width Width of canvas in pixels.
+   * @param iterations Number of iterations.
+   * @param filePath Filepath for transform.
+   * @return Simulated ChaosCanvas.
+   */
+  public ChaosCanvas getCustomCanvas(int height, int width, int iterations, String filePath) {
     List<String> strings = fileHandler.readFromFile(filePath);
-    ChaosGame chaosGame = new ChaosGame(descriptionFactory.buildChaosGameDescription(strings), height, width);
+    ChaosGame chaosGame = new ChaosGame(descriptionFactory.buildChaosGameDescription(strings), 
+        height, width);
     chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }
@@ -62,6 +74,7 @@ public class ChaosGameController {
 
   /**
    * Returns a Sierpinski ChaosCanvas.
+   *
    * @param height height of canvas.
    * @param width width of canvas.
    * @param iterations number of iterations.
@@ -69,11 +82,12 @@ public class ChaosGameController {
    */
   public ChaosCanvas getSierpinski(int height, int width, int iterations) {
     //TODO: Implement Variable path
-    return getChaosCanvas(height, width, iterations,"Sierpinski");
+    return getChaosCanvas(height, width, iterations, "Sierpinski");
   }
 
   /**
    * Returns a Barnsley ChaosCanvas.
+   *
    * @param height height of canvas.
    * @param width width of canvas.
    * @param iterations number of iterations.
@@ -81,12 +95,12 @@ public class ChaosGameController {
    */
   public ChaosCanvas getBarnsley(int height, int width, int iterations) {
     //TODO: Implement Variable path
-    return getChaosCanvas(height, width, iterations,"Barnsley");
+    return getChaosCanvas(height, width, iterations, "Barnsley");
   }
 
   /**
    * Returns a Julia ChaosCanvas.
-   * 
+   *
    * @param height height of canvas.
    * @param width width of canvas.
    * @param iterations number of iterations.
@@ -94,11 +108,11 @@ public class ChaosGameController {
    */
   public ChaosCanvas getJulia(int height, int width, int iterations) {
     //TODO: Implement Variable path
-    return getChaosCanvas(height, width, iterations,"Julia");
+    return getChaosCanvas(height, width, iterations, "Julia");
   }
 
   /**
-   * Saves the current transformation to a file using file chooser dialog
+   * Saves the current transformation to a file using file chooser dialog.
    */
   public void saveTransform() {
     FileChooser fileChooser = new FileChooser();
@@ -108,12 +122,13 @@ public class ChaosGameController {
     fileChooser.setInitialFileName("transformation.csv");
     File selectedFile = fileChooser.showSaveDialog(null);
     if (selectedFile != null) {
-      fileHandler.writeToFile(this.descriptionFactory.createDescription("Julia"),selectedFile.getAbsolutePath());
+      fileHandler.writeToFile(this.descriptionFactory.createDescription("Julia"),
+          selectedFile.getAbsolutePath());
     }
   }
 
   /**
-   * Opens a transformation from a file using file chooser dialog
+   * Opens a transformation from a file using file chooser dialog.
    */
   public void openTransform() {
     // TODO: Consider refactoring file chooser to a separate method for both save and open.
@@ -124,7 +139,9 @@ public class ChaosGameController {
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
     File selectedFile = fileChooser.showOpenDialog(null);
     if (selectedFile != null) {
-      this.chaosGameMainPage.updateImage(this.chaosGameMainPage.getTransformImage(this.getCustom(1000, 800, 1000000, selectedFile.getAbsolutePath())));
+      this.chaosGameMainPage.updateImage(this.chaosGameMainPage.drawImageFromChaosCanvas(
+          this.getCustomCanvas(1000, 800, 1000000, 
+              selectedFile.getAbsolutePath())));
     }
   }
 

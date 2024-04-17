@@ -1,19 +1,20 @@
 package edu.ntnu.mappe08;
 
 
-import edu.ntnu.mappe08.entity.Matrix2x2;
-import edu.ntnu.mappe08.entity.Vector2D;
-import edu.ntnu.mappe08.gui.ChaosGameCLI;
 import edu.ntnu.mappe08.gui.ChaosGameMainPage;
-import edu.ntnu.mappe08.logic.ChaosCanvas;
-import edu.ntnu.mappe08.logic.ChaosGame;
-import edu.ntnu.mappe08.logic.ChaosGameDescription;
-import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
 
-
+/**
+ * Main class for the application. 
+ * Used to launch the application
+ */
 public class Main {
-  
-  public static void main(String[] args){
+  /**
+   * Main method for the application.
+   * Used to start the application with either CLI or GUI.
+   *
+   * @param args Arguments
+   */
+  public static void main(String[] args) {
 //    ChaosGameCLI app = new ChaosGameCLI();
 //    app.start();
     ChaosGameMainPage app = new ChaosGameMainPage();

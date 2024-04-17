@@ -26,7 +26,7 @@ public class ChaosGameDescriptionFactory {
    * @param type the type of chaos game description to create
    * @return a ChaosGameDescription
    */
-  public ChaosGameDescription createDescription (String type, 
+  public ChaosGameDescription createDescription(String type, 
                                                  Vector2D minCoords, 
                                                  Vector2D maxCoords, 
                                                  List<Transform2D> transforms) {
@@ -57,7 +57,7 @@ public class ChaosGameDescriptionFactory {
 
   /**
    * Creates ChaosGameDescription based on Julia transforms.
-   * 
+   *
    * @return a ChaosGameDescription
    */
   private ChaosGameDescription juliaDescription(Vector2D minCoords,
@@ -83,26 +83,30 @@ public class ChaosGameDescriptionFactory {
 
   /**
    * Creates default Barnsley Fern ChaosGameDescription.
-   * 
+   *
    * @return ChaosGameDescription
    */
   private ChaosGameDescription barnsleyDescription() {
-
-    Vector2D minCoords = new Vector2D(-2.65 , 0);
-    Vector2D maxCoords = new Vector2D(2.65, 10);
+    
     List<Transform2D> transforms = new ArrayList<>();
-    transforms.add(new AffineTransform2D(new Matrix2x2(0, 0, 0, 0.16), new Vector2D(0, 0)));
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.85, 0.04, -0.04, 0.85), new Vector2D(0, 1.6)));
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.2, -0.26, 0.23, 0.22), new Vector2D(0, 1.6)));
-    transforms.add(new AffineTransform2D(new Matrix2x2(-0.15, 0.28, 0.26, 0.24), new Vector2D(0, 0.44)));
+    transforms.add(new AffineTransform2D(new Matrix2x2(0, 0, 0, 0.16), 
+        new Vector2D(0, 0)));
+    transforms.add(new AffineTransform2D(new Matrix2x2(0.85, 0.04, -0.04, 0.85), 
+        new Vector2D(0, 1.6)));
+    transforms.add(new AffineTransform2D(new Matrix2x2(0.2, -0.26, 0.23, 0.22), 
+        new Vector2D(0, 1.6)));
+    transforms.add(new AffineTransform2D(new Matrix2x2(-0.15, 0.28, 0.26, 0.24), 
+        new Vector2D(0, 0.44)));
 
+    Vector2D minCoords = new Vector2D(-2.65, 0);
+    Vector2D maxCoords = new Vector2D(2.65, 10);
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
   
 
   /**
    * Creates ChaosGameDescription based on Affine2D transform.
-   * 
+   *
    * @return ChaosGameDescription
    */
   private ChaosGameDescription affineDescription(Vector2D minCoords,
@@ -113,18 +117,22 @@ public class ChaosGameDescriptionFactory {
 
   /**
    * Creates a default Sierpinski Triangle ChaosGameDescription.
-   * 
+   *
    * @return a ChaosGameDescription
    */
   private ChaosGameDescription sierpinskiDescription() {
     
+
+    List<Transform2D> transforms = new ArrayList<>();
+    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), 
+        new Vector2D(0, 0)));
+    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), 
+        new Vector2D(0.5, 0)));
+    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), 
+        new Vector2D(0.25, 0.5)));
+
     Vector2D minCoords = new Vector2D(0, 0);
     Vector2D maxCoords = new Vector2D(1, 1);
-    List<Transform2D> transforms = new ArrayList<>();
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0, 0)));
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0.5, 0)));
-    transforms.add(new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0.25, 0.5)));
-    
     return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
   
@@ -164,7 +172,7 @@ public class ChaosGameDescriptionFactory {
       maxCoords = parseCoords(formatedFileContent.get(2));
       Complex point = parseCoords(formatedFileContent.get(3));
       transforms.add(new JuliaTransform(point, 1));
-      transforms.add(new JuliaTransform(point,-1));
+      transforms.add(new JuliaTransform(point, -1));
 
     } else {
       throw new IllegalArgumentException("Invalid file content");
@@ -175,7 +183,6 @@ public class ChaosGameDescriptionFactory {
 
   /**
    * Parses coordinates from a line in the file.
-   *
    * TODO: Move parse methods into a separate builder class.
    * @param line the line to parse containing 2 numerical numbers at start of line
    */

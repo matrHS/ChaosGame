@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * Represents the Chaos Game CLI.
  */
-public class ChaosGameCLI {
+public class ChaosGameCli {
 
 
   private ChaosGameController controller;
@@ -24,7 +24,7 @@ public class ChaosGameCLI {
   /**
    * Creates an instance of ChaosGameCLI.
    */
-  public ChaosGameCLI() {
+  public ChaosGameCli() {
     this.controller = new ChaosGameController();
   }
 
@@ -64,6 +64,7 @@ public class ChaosGameCLI {
 
   /**
    * Gets the users menu choice.
+   *
    * @return the users menu choice.
    */
   private int getUsersMenuChoice() {
@@ -81,6 +82,7 @@ public class ChaosGameCLI {
 
   /**
    * Executes the menu choice.
+   *
    * @param selectedMenu to execute.
    * @return {@code true} if the application should continue running, {@code false} otherwise.
    */
@@ -99,14 +101,17 @@ public class ChaosGameCLI {
         printCanvas(controller.getBarnsley(parameters[0], parameters[1], parameters[2]));
         break;
         
-        case JULIA:
+      case JULIA:
         parameters = setParameters();
         printCanvas(controller.getJulia(parameters[0], parameters[1], parameters[2]));
         break;
         
       case CUSTOM:
         parameters = setParameters();
-        printCanvas(controller.getCustom(parameters[0], parameters[1], parameters[2], "data/testJulia3.csv"));
+        printCanvas(controller.getCustomCanvas(parameters[0], 
+            parameters[1], 
+            parameters[2], 
+            "data/testJulia3.csv"));
         break;
 
       case EXIT:
@@ -121,6 +126,7 @@ public class ChaosGameCLI {
 
   /**
    * Prints the canvas.
+   *
    * @param canvas to print.
    */
   private void printCanvas(ChaosCanvas canvas) {
@@ -142,6 +148,7 @@ public class ChaosGameCLI {
 
   /**
    * Sets the parameters for the canvas.
+   *
    * @return the parameters for the canvas.
    */
   public int[] setParameters() {

@@ -3,11 +3,11 @@ package edu.ntnu.mappe08.entity;
 /**
  * Represents a complex number.
  */
-public class Complex extends Vector2D{
+public class Complex extends Vector2D {
   
   /**
    * Constructor for a complex number.
-   * 
+   *
    * @param realPart real part of the complex number
    * @param imaginaryPart imaginary part of the complex number
    * @throws ArithmeticException if realPart or imaginaryPart is NaN
@@ -18,7 +18,7 @@ public class Complex extends Vector2D{
   
   /**
    * Constructor for a complex number.
-   * 
+   *
    * @param vector vector to create the complex number from
    */
   public Complex(Vector2D vector) {
@@ -27,7 +27,7 @@ public class Complex extends Vector2D{
 
   /**
    * Returns the real part of the complex number.
-   * 
+   *
    * @return real part of the complex number
    */
   public double getRealPart() {
@@ -36,7 +36,7 @@ public class Complex extends Vector2D{
   
   /**
    * Returns the imaginary part of the complex number.
-   * 
+   *
    * @return imaginary part of the complex number
    */
   public double getImaginaryPart() {
@@ -46,7 +46,7 @@ public class Complex extends Vector2D{
   /**
    * Calculates and returns the square root of a complex number.
    * // TODO: Write in report regarding potential divide by negative number
-   * 
+   *
    * @return square root of the complex number
    */
   public Complex sqrt() {
@@ -59,7 +59,7 @@ public class Complex extends Vector2D{
     if (imSign == 0) {
       imSign = 1;
     }
-    double i = imSign*Math.sqrt((length - realPart) / 2);
+    double i = imSign * Math.sqrt((length - realPart) / 2);
     
     return new Complex(r, i);
   }

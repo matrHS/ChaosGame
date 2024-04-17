@@ -1,4 +1,5 @@
 package edu.ntnu.mappe08.logic;
+
 import edu.ntnu.mappe08.entity.Matrix2x2;
 import edu.ntnu.mappe08.entity.Vector2D;
 
@@ -51,7 +52,10 @@ public class ChaosCanvas {
     if (point == null) {
       throw new IllegalArgumentException("Passed vector can not be null");
     }
-    if (point.getX0() < 0 || point.getX0() >= this.height || point.getX1() < 0 || point.getX1() >= this.width) {
+    if (point.getX0() < 0 
+        || point.getX0() >= this.height 
+        || point.getX1() < 0 
+        || point.getX1() >= this.width) {
       throw new IllegalArgumentException("Point is outside the canvas");
     }
     
@@ -72,7 +76,10 @@ public class ChaosCanvas {
     }
 
     Vector2D test2 = transformCoordsToIndices.transform(point);
-    if (test2.getX0() < 0 || test2.getX0() >= this.height || test2.getX1() < 0 || test2.getX1() >= this.width) {
+    if (test2.getX0() < 0 
+        || test2.getX0() >= this.height 
+        || test2.getX1() < 0 
+        || test2.getX1() >= this.width) {
       throw new IllegalArgumentException("Point is outside the canvas");
     }
     
@@ -86,6 +93,7 @@ public class ChaosCanvas {
 
   /**
    * Returns the canvas array.
+   *
    * @return the canvas array.
    */
   public int[][] getCanvasArray() {

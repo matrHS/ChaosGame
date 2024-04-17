@@ -26,7 +26,10 @@ public class ChaosGame {
   public ChaosGame(ChaosGameDescription description, int height, int width) {
     random = new Random();
     this.description = description;
-    this.canvas = new ChaosCanvas(height, width, description.getMinCoords(), description.getMaxCoords());
+    this.canvas = new ChaosCanvas(height, 
+        width, 
+        description.getMinCoords(), 
+        description.getMaxCoords());
     this.currentPoint = new Complex(0, 0);
   }
 

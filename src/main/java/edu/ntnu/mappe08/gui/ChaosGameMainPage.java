@@ -11,7 +11,6 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -26,7 +25,7 @@ public class ChaosGameMainPage extends Application {
   
   /**
    * Starts the javafx GUI.
-   * 
+   *
    * @param stage the stage to start.
    */
   @Override
@@ -41,7 +40,7 @@ public class ChaosGameMainPage extends Application {
     MenuBar menuBar = createMenus();
     borderPane.setTop(menuBar);
     
-    updateImage(getTransformImage(canvas));
+    updateImage(drawImageFromChaosCanvas(canvas));
     
     
     Scene scene = new Scene(borderPane, 1200, 600);
@@ -53,12 +52,16 @@ public class ChaosGameMainPage extends Application {
     // TODO: Refactor into a more sophisticated solution for swapping images.
     borderPane.setCenter(image);
   }
-  
+
+  /**
+   * Creates the menu bar at the top of the screen.
+   * Connects events to menu items.
+   *
+   * @return Fully constructed menu bar.
+   */
   public MenuBar createMenus() {
 
     // File menu
-    Menu fileMenu = new Menu("File");
-
     MenuItem saveTransform = new MenuItem("Save");
     saveTransform.setOnAction(e -> {
       controller.saveTransform();
@@ -71,7 +74,8 @@ public class ChaosGameMainPage extends Application {
     exitApp.setOnAction(e -> {
       controller.exitApp();
     });
-    
+
+    Menu fileMenu = new Menu("File");
     fileMenu.getItems().addAll(openTransform, saveTransform);
     fileMenu.getItems().add(new SeparatorMenuItem());
     fileMenu.getItems().add(exitApp);
@@ -84,16 +88,17 @@ public class ChaosGameMainPage extends Application {
   
   /**
    * Creates and gets an image based on a chaos canvas.
-   * @param canvas
-   * @return
+   *
+   * @param canvas ChaosCanvas to generate image from.
+   * @return Generated image.
    */
-  public ImageView getTransformImage(ChaosCanvas canvas) {
+  public ImageView drawImageFromChaosCanvas(ChaosCanvas canvas) {
     WritableImage chaosCanvas = new WritableImage(canvas.getWidth(), canvas.getHeight());
     PixelWriter pixelWriter = chaosCanvas.getPixelWriter();
     for (int i = 0; i < canvas.getHeight(); i++) {
       for (int j = 0; j < canvas.getWidth(); j++) {
         if (canvas.getPixel(new Vector2D(i, j)) == 0) {
-          pixelWriter.setColor(j, i, Color.BLACK);
+          pixelWriter.setColor(j, i, Color.WHITE);
         } else {
           pixelWriter.setColor(j, i, Color.RED);
         }
@@ -106,7 +111,7 @@ public class ChaosGameMainPage extends Application {
   
   /**
    * Method for starting the javafx GUI without using maven directly.
-   * 
+   *
    * @param args command line arguments.
    */
   public static void main(String[] args) {

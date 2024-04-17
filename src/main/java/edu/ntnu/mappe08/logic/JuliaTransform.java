@@ -12,7 +12,7 @@ public class JuliaTransform implements Transform2D {
 
   /**
    * Constructor for a Julia transformation.
-   * 
+   *
    * @param point Complex number to use for transformation.
    * @param sign +1 or -1 for negative or positive transformation.
    */
@@ -28,12 +28,12 @@ public class JuliaTransform implements Transform2D {
    * @param point Complex number to use for transformation.
    */
   public JuliaTransform(Complex point) {
-    this(point,1);
+    this(point, 1);
   }
 
   /**
    * Returns point C of the Julia transformation.
-   * 
+   *
    * @return The point C of the Julia transformation.
    */
   public Complex getPointC() {
@@ -44,7 +44,7 @@ public class JuliaTransform implements Transform2D {
 
   /**
    * Transforms a 2D vector using the Julia transformation.
-   * 
+   *
    * @param point Complex number to use for transformation.
    * @return The transformed complex number.
    */

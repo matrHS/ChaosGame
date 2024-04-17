@@ -6,7 +6,7 @@ import edu.ntnu.mappe08.entity.Vector2D;
 /**
  * Class for a 2D affine transformation.
  */
-public class AffineTransform2D implements Transform2D{
+public class AffineTransform2D implements Transform2D {
 
   private Matrix2x2 matrix;
   private Vector2D vector;
