@@ -19,6 +19,8 @@ public class MainPageController {
   private MainPage mainPage;
   private ChaosGameFileHandler fileHandler;
   private ChaosGameDescriptionFactory descriptionFactory;
+  
+  private int iterations = 100000;
 
   /**
    * Creates an instance of ChaosGameController.
@@ -64,7 +66,7 @@ public class MainPageController {
    * @param filePath Filepath for transform.
    * @return Simulated ChaosCanvas.
    */
-  public ChaosCanvas getCustomCanvas(int height, int width, int iterations, String filePath) {
+  public ChaosCanvas getCustomCanvas(int height, int width, int iterations,String filePath) {
     List<String> strings = fileHandler.readFromFile(filePath);
     ChaosGame chaosGame = new ChaosGame(descriptionFactory.buildChaosGameDescription(strings), 
         height, width);
@@ -78,10 +80,9 @@ public class MainPageController {
    *
    * @param height height of canvas.
    * @param width width of canvas.
-   * @param iterations number of iterations.
    * @return ChaosCanvas.
    */
-  public ChaosCanvas getSierpinski(int height, int width, int iterations) {
+  public ChaosCanvas getSierpinski(int height, int width) {
     //TODO: Implement Variable path
     return getChaosCanvas(height, width, iterations, "Sierpinski");
   }
@@ -91,10 +92,9 @@ public class MainPageController {
    *
    * @param height height of canvas.
    * @param width width of canvas.
-   * @param iterations number of iterations.
    * @return ChaosCanvas.
    */
-  public ChaosCanvas getBarnsley(int height, int width, int iterations) {
+  public ChaosCanvas getBarnsley(int height, int width) {
     //TODO: Implement Variable path
     return getChaosCanvas(height, width, iterations, "Barnsley");
   }
@@ -104,10 +104,9 @@ public class MainPageController {
    *
    * @param height height of canvas.
    * @param width width of canvas.
-   * @param iterations number of iterations.
    * @return ChaosCanvas.
    */
-  public ChaosCanvas getJulia(int height, int width, int iterations) {
+  public ChaosCanvas getJulia(int height, int width) {
     //TODO: Implement Variable path
     return getChaosCanvas(height, width, iterations, "Julia");
   }
@@ -140,9 +139,8 @@ public class MainPageController {
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
     File selectedFile = fileChooser.showOpenDialog(null);
     if (selectedFile != null) {
-      this.mainPage.updateImage(this.mainPage.drawImageFromChaosCanvas(
-          this.getCustomCanvas(1000, 800, 1000000, 
-              selectedFile.getAbsolutePath())));
+      doChangeImage(this.getCustomCanvas(1000, 800, iterations, 
+          selectedFile.getAbsolutePath()));
     }
   }
 
@@ -154,7 +152,30 @@ public class MainPageController {
     Platform.exit();
   }
 
+  /**
+   * Changes the image on the main page.
+   *
+   * @param newCanvas new canvas to draw.
+   */
   public void doChangeImage(ChaosCanvas newCanvas) {
     this.mainPage.updateImage(this.mainPage.drawImageFromChaosCanvas(newCanvas));
+  }
+
+  /**
+   * Sets the number of iterations used for calculations.
+   *
+   * @param iterations number of iterations.
+   */
+  public void setIterations(int iterations) {
+    this.iterations = iterations;
+  }
+  
+  /**
+   * Gets the number of iterations used for calculations.
+   *
+   * @return number of iterations.
+   */
+  public int getIterations() {
+    return iterations;
   }
 }

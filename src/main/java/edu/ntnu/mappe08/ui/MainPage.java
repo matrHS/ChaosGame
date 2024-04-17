@@ -12,7 +12,6 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -21,8 +20,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -49,8 +46,6 @@ public class MainPage extends Application {
     
     stage.setTitle("My Application");
     borderPane = new BorderPane();
-    
-
     GridPane transformControls = getTransformControls("Julia");
     
     borderPane.setLeft(transformControls);
@@ -74,7 +69,9 @@ public class MainPage extends Application {
 
     centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
     loadedImage = new ImageView();
+    
     centerBox.getChildren().add(loadedImage);
+    
     
   }
 
@@ -88,6 +85,10 @@ public class MainPage extends Application {
     HBox bottomBar = new HBox();
     Label iterationsLabel = new Label("Iterations");
     TextField iterations = new TextField();
+    iterations.setText(controller.getIterations() + "");
+    iterations.setOnAction(e -> {
+      controller.setIterations(Integer.parseInt(iterations.getText()));
+    });
     bottomBar.setSpacing(4);
     bottomBar.getChildren().addAll(iterationsLabel, iterations);
     return bottomBar;
@@ -141,6 +142,9 @@ public class MainPage extends Application {
   public void updateImage(ImageView image) {
     // TODO: Refactor into a more sophisticated solution for swapping images.
     loadedImage.setImage(image.getImage());
+
+
+    
   }
 
   /**
@@ -174,17 +178,17 @@ public class MainPage extends Application {
     MenuItem barnsleyDefault = new MenuItem("Barnsley");
     barnsleyDefault.setOnAction(e -> {
       controller.doChangeImage(controller.getBarnsley((int) centerCanvasBounds.getHeight(),
-          (int) centerCanvasBounds.getWidth(), 1000000));
+          (int) centerCanvasBounds.getWidth()));
     });
     MenuItem juliaDefault = new MenuItem("Julia");
     juliaDefault.setOnAction(e -> {
       controller.doChangeImage(controller.getJulia((int) centerCanvasBounds.getHeight(),
-          (int) centerCanvasBounds.getWidth(), 1000000));
+          (int) centerCanvasBounds.getWidth()));
     });
     MenuItem sierpinskiDefault = new MenuItem("Sierpinski");
     sierpinskiDefault.setOnAction(e -> {
       controller.doChangeImage(controller.getSierpinski((int) centerCanvasBounds.getHeight(),
-          (int) centerCanvasBounds.getWidth(), 1000000));
+          (int) centerCanvasBounds.getWidth()));
     });
     Menu fractalsMenu = new Menu("Fractals");
     fractalsMenu.getItems().addAll(barnsleyDefault, juliaDefault, sierpinskiDefault);
@@ -214,10 +218,8 @@ public class MainPage extends Application {
         }
       }
     }
-
+  
     ImageView imageView = new ImageView(chaosCanvas);
-//    imageView.setFitHeight(centerCanvasBounds.getHeight());
-//    imageView.setFitWidth(centerCanvasBounds.getWidth());
     return imageView;
   }
   

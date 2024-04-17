@@ -93,17 +93,17 @@ public class ChaosGameCli {
 
       case SIERPINSKI:
         parameters = setParameters();
-        printCanvas(controller.getSierpinski(parameters[0], parameters[1], parameters[2]));
+        printCanvas(controller.getSierpinski(parameters[0], parameters[1]));
         break;
 
       case BARNSLEY:
         parameters = setParameters();
-        printCanvas(controller.getBarnsley(parameters[0], parameters[1], parameters[2]));
+        printCanvas(controller.getBarnsley(parameters[0], parameters[1]));
         break;
         
       case JULIA:
         parameters = setParameters();
-        printCanvas(controller.getJulia(parameters[0], parameters[1], parameters[2]));
+        printCanvas(controller.getJulia(parameters[0], parameters[1]));
         break;
         
       case CUSTOM:
