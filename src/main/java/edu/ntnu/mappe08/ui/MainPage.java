@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -32,7 +33,7 @@ public class MainPage extends Application {
   Bounds centerCanvasBounds;
   MainPageController controller;
   BorderPane borderPane;
-  FlowPane centerBox;
+  StackPane centerBox;
   ImageView loadedImage;
   
   /**
@@ -44,7 +45,10 @@ public class MainPage extends Application {
   public void start(Stage stage) {
     this.controller = new MainPageController(this);
     
+    
+    
     stage.setTitle("My Application");
+    
     borderPane = new BorderPane();
     GridPane transformControls = getTransformControls("Julia");
     
@@ -58,19 +62,34 @@ public class MainPage extends Application {
     
     // Gets the screen size and sets the scene to be 200 pixels less than the screen size.
     Rectangle2D screenSize = Screen.getPrimary().getBounds();
-    Scene scene = new Scene(borderPane, screenSize.getWidth()-200, screenSize.getHeight()-200);
+    Scene scene = new Scene(borderPane,  screenSize.getWidth()-200, screenSize.getHeight()-200);
     
-    centerBox = new FlowPane();
-    centerBox.setBorder(Border.stroke(Color.BLACK));
+    centerBox = new StackPane();
+    centerBox.setMinHeight(0);
+    centerBox.setMinWidth(0);
     borderPane.setCenter(centerBox);
 
+    loadedImage = new ImageView();
+    centerBox.getChildren().add(loadedImage);
+    loadedImage.fitWidthProperty().bind(centerBox.widthProperty());
+    loadedImage.fitHeightProperty().bind(centerBox.heightProperty());
+
+    centerBox.widthProperty().addListener((obs, oldVal, newVal) -> {
+      updateBounds();
+    });
+
+    centerBox.heightProperty().addListener((obs, oldVal, newVal) -> {
+      updateBounds();
+    });
+    
+    
+    
     stage.setScene(scene);
     stage.show();
 
-    centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
-    loadedImage = new ImageView();
+    //centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
     
-    centerBox.getChildren().add(loadedImage);
+    
     
     
   }
@@ -142,8 +161,6 @@ public class MainPage extends Application {
   public void updateImage(ImageView image) {
     // TODO: Refactor into a more sophisticated solution for swapping images.
     loadedImage.setImage(image.getImage());
-
-
     
   }
 
@@ -200,6 +217,11 @@ public class MainPage extends Application {
     return menuBar;
   }
   
+  public void updateBounds() {
+    centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
+    //controller.doChangeImage(controller.getCurrentCanvas());
+  }
+  
   /**
    * Creates and gets an image based on a chaos canvas.
    *
@@ -209,19 +231,31 @@ public class MainPage extends Application {
   public ImageView drawImageFromChaosCanvas(ChaosCanvas canvas) {
     WritableImage chaosCanvas = new WritableImage(canvas.getWidth(), canvas.getHeight());
     PixelWriter pixelWriter = chaosCanvas.getPixelWriter();
+    int[][] drawnCanvas = canvas.getCanvasArray();
     for (int i = 0; i < canvas.getHeight(); i++) {
       for (int j = 0; j < canvas.getWidth(); j++) {
         if (canvas.getPixel(new Vector2D(i, j)) == 0) {
+          drawnCanvas[i][j] = 0;
           pixelWriter.setColor(j, i, Color.WHITE);
         } else {
-          pixelWriter.setColor(j, i, Color.RED);
+          drawnCanvas[i][j] += 100;
+          int color = (0xFF << 24);
+          color += (drawnCanvas[i][j] << 16);
+          color += (0x30 << 8);
+          color += (0x00 << 0);
+              
+          pixelWriter.setArgb(j, i, color);
         }
       }
     }
-  
+    
     ImageView imageView = new ImageView(chaosCanvas);
+
+
     return imageView;
   }
+  
+  
   
   /**
    * Method for starting the javafx GUI without using maven directly.

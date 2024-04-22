@@ -8,6 +8,7 @@ import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
 import java.io.File;
 import java.util.List;
 import javafx.application.Platform;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 /**
@@ -19,6 +20,7 @@ public class MainPageController {
   private MainPage mainPage;
   private ChaosGameFileHandler fileHandler;
   private ChaosGameDescriptionFactory descriptionFactory;
+  private ChaosCanvas currentCanvas;
   
   private int iterations = 100000;
 
@@ -54,6 +56,7 @@ public class MainPageController {
         .createDescription(transformType);
     ChaosGame chaosGame = new ChaosGame(chaosGameDescription, height, width);
     chaosGame.runSteps(iterations);
+    setCurrentCanvas(chaosGame.getCanvas());
     return chaosGame.getCanvas();
   }
 
@@ -177,5 +180,13 @@ public class MainPageController {
    */
   public int getIterations() {
     return iterations;
+  }
+
+  public ChaosCanvas getCurrentCanvas() {
+    return this.currentCanvas;
+  }
+  
+  public void setCurrentCanvas(ChaosCanvas currentCanvas) {
+    this.currentCanvas = currentCanvas;
   }
 }
