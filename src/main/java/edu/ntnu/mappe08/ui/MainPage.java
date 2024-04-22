@@ -3,6 +3,7 @@ package edu.ntnu.mappe08.ui;
 import edu.ntnu.mappe08.entity.Vector2D;
 import edu.ntnu.mappe08.logic.ChaosCanvas;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -74,14 +75,14 @@ public class MainPage extends Application {
     loadedImage.fitWidthProperty().bind(centerBox.widthProperty());
     loadedImage.fitHeightProperty().bind(centerBox.heightProperty());
 
-    centerBox.widthProperty().addListener((obs, oldVal, newVal) -> {
-      updateBounds();
-    });
-
-    centerBox.heightProperty().addListener((obs, oldVal, newVal) -> {
-      updateBounds();
-    });
     
+    ChangeListener<Number> stageSizeListener = (obs, oldVal, newVal) -> {
+      
+      updateBounds();
+      
+    };
+    centerBox.heightProperty().addListener(stageSizeListener);
+    centerBox.widthProperty().addListener(stageSizeListener);
     
     
     stage.setScene(scene);
@@ -107,6 +108,7 @@ public class MainPage extends Application {
     iterations.setText(controller.getIterations() + "");
     iterations.setOnAction(e -> {
       controller.setIterations(Integer.parseInt(iterations.getText()));
+      controller.doRedrawImage(this.centerCanvasBounds);
     });
     bottomBar.setSpacing(4);
     bottomBar.getChildren().addAll(iterationsLabel, iterations);
@@ -194,18 +196,18 @@ public class MainPage extends Application {
     // Fractals menu
     MenuItem barnsleyDefault = new MenuItem("Barnsley");
     barnsleyDefault.setOnAction(e -> {
-      controller.doChangeImage(controller.getBarnsley((int) centerCanvasBounds.getHeight(),
-          (int) centerCanvasBounds.getWidth()));
+      controller.doChangeImage(controller.getBarnsley((int) this.centerCanvasBounds.getHeight(),
+          (int) this.centerCanvasBounds.getWidth()));
     });
     MenuItem juliaDefault = new MenuItem("Julia");
     juliaDefault.setOnAction(e -> {
-      controller.doChangeImage(controller.getJulia((int) centerCanvasBounds.getHeight(),
-          (int) centerCanvasBounds.getWidth()));
+      controller.doChangeImage(controller.getJulia((int) this.centerCanvasBounds.getHeight(),
+          (int) this.centerCanvasBounds.getWidth()));
     });
     MenuItem sierpinskiDefault = new MenuItem("Sierpinski");
     sierpinskiDefault.setOnAction(e -> {
-      controller.doChangeImage(controller.getSierpinski((int) centerCanvasBounds.getHeight(),
-          (int) centerCanvasBounds.getWidth()));
+      controller.doChangeImage(controller.getSierpinski((int) this.centerCanvasBounds.getHeight(),
+          (int) this.centerCanvasBounds.getWidth()));
     });
     Menu fractalsMenu = new Menu("Fractals");
     fractalsMenu.getItems().addAll(barnsleyDefault, juliaDefault, sierpinskiDefault);
@@ -218,9 +220,11 @@ public class MainPage extends Application {
   }
   
   public void updateBounds() {
-    centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
-    //controller.doChangeImage(controller.getCurrentCanvas());
+    this.centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
+    controller.doRedrawImage(this.centerCanvasBounds);
   }
+  
+  
   
   /**
    * Creates and gets an image based on a chaos canvas.
@@ -238,7 +242,7 @@ public class MainPage extends Application {
           drawnCanvas[i][j] = 0;
           pixelWriter.setColor(j, i, Color.WHITE);
         } else {
-          drawnCanvas[i][j] += 100;
+          drawnCanvas[i][j] += 1;
           int color = (0xFF << 24);
           color += (drawnCanvas[i][j] << 16);
           color += (0x30 << 8);

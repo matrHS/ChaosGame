@@ -8,6 +8,7 @@ import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
 import java.io.File;
 import java.util.List;
 import javafx.application.Platform;
+import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
@@ -20,7 +21,7 @@ public class MainPageController {
   private MainPage mainPage;
   private ChaosGameFileHandler fileHandler;
   private ChaosGameDescriptionFactory descriptionFactory;
-  private ChaosCanvas currentCanvas;
+  private ChaosGameDescription currentDescription;
   
   private int iterations = 100000;
 
@@ -52,11 +53,9 @@ public class MainPageController {
    */
   private ChaosCanvas getChaosCanvas(int height, int width, int iterations, String transformType) {
     // TODO: Improve parameterization
-    ChaosGameDescription chaosGameDescription = this.descriptionFactory
-        .createDescription(transformType);
-    ChaosGame chaosGame = new ChaosGame(chaosGameDescription, height, width);
+    currentDescription = this.descriptionFactory.createDescription(transformType);
+    ChaosGame chaosGame = new ChaosGame(currentDescription, height, width);
     chaosGame.runSteps(iterations);
-    setCurrentCanvas(chaosGame.getCanvas());
     return chaosGame.getCanvas();
   }
 
@@ -77,6 +76,19 @@ public class MainPageController {
     return chaosGame.getCanvas();
   }
 
+  /**
+   * Returns a ChaosCanvas based on the current loaded description.
+   *
+   * @param height height of canvas.
+   * @param width width of canvas.
+   * @param iterations number of iterations.
+   * @return ChaosCanvas with new dimensions.
+   */
+  private ChaosCanvas getRedrawnCanvas(int height, int width, int iterations) {
+    ChaosGame chaosGame = new ChaosGame(currentDescription, height, width);
+    chaosGame.runSteps(iterations);
+    return chaosGame.getCanvas();
+  }
 
   /**
    * Returns a Sierpinski ChaosCanvas.
@@ -165,6 +177,16 @@ public class MainPageController {
   }
 
   /**
+   * Redraws the image on the main page using passed bounds.
+   * 
+   * @param newBounds new bounds to redraw image.
+   */
+  public void doRedrawImage(Bounds newBounds) {
+    ChaosCanvas canvas = getRedrawnCanvas((int) newBounds.getHeight(), (int) newBounds.getWidth(), iterations);
+    this.doChangeImage(canvas);
+  }
+  
+  /**
    * Sets the number of iterations used for calculations.
    *
    * @param iterations number of iterations.
@@ -181,12 +203,5 @@ public class MainPageController {
   public int getIterations() {
     return iterations;
   }
-
-  public ChaosCanvas getCurrentCanvas() {
-    return this.currentCanvas;
-  }
   
-  public void setCurrentCanvas(ChaosCanvas currentCanvas) {
-    this.currentCanvas = currentCanvas;
-  }
 }
