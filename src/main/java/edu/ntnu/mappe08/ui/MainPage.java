@@ -31,6 +31,7 @@ import javafx.stage.Stage;
  */
 public class MainPage extends Application {
   
+  private static final int MAX_ITERATIONS = 999999;
   Bounds centerCanvasBounds;
   MainPageController controller;
   BorderPane borderPane;
@@ -106,10 +107,21 @@ public class MainPage extends Application {
     Label iterationsLabel = new Label("Iterations");
     TextField iterations = new TextField();
     iterations.setText(controller.getIterations() + "");
-    iterations.setOnAction(e -> {
-      controller.setIterations(Integer.parseInt(iterations.getText()));
-      controller.doRedrawImage(this.centerCanvasBounds);
+    
+    // Catch changes in text field and ensure that inputted value has to be an integer.
+    iterations.textProperty().addListener((observable, oldValue, newValue) -> {
+      try {
+        if (!newValue.isEmpty() && Integer.parseInt(newValue) <= MAX_ITERATIONS) {
+          Integer.parseInt(newValue);
+          controller.setIterations(Integer.parseInt(iterations.getText()));
+          controller.doRedrawImage(this.centerCanvasBounds);
+        }
+      } catch (NumberFormatException e) {
+        // Throws exception if inputted value is not an integer
+        iterations.setText(oldValue);
+      }
     });
+    
     bottomBar.setSpacing(4);
     bottomBar.getChildren().addAll(iterationsLabel, iterations);
     return bottomBar;

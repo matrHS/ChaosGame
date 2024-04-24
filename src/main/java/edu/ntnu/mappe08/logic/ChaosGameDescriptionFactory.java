@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * Factory for creating ChaosGameDescriptions.
- * // TODO: Refactor to not be hardcoded.
  */
 public class ChaosGameDescriptionFactory {
 
@@ -183,7 +182,7 @@ public class ChaosGameDescriptionFactory {
 
   /**
    * Parses coordinates from a line in the file.
-   * TODO: Move parse methods into a separate builder class.
+   * // TODO: Move parse methods into a separate builder class.
    * @param line the line to parse containing 2 numerical numbers at start of line
    */
   private Complex parseCoords(String line) {

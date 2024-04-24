@@ -52,7 +52,6 @@ public class MainPageController {
    * @return ChaosCanvas.
    */
   private ChaosCanvas getChaosCanvas(int height, int width, int iterations, String transformType) {
-    // TODO: Improve parameterization
     currentDescription = this.descriptionFactory.createDescription(transformType);
     ChaosGame chaosGame = new ChaosGame(currentDescription, height, width);
     chaosGame.runSteps(iterations);
@@ -98,7 +97,6 @@ public class MainPageController {
    * @return ChaosCanvas.
    */
   public ChaosCanvas getSierpinski(int height, int width) {
-    //TODO: Implement Variable path
     return getChaosCanvas(height, width, iterations, "Sierpinski");
   }
 
@@ -110,7 +108,6 @@ public class MainPageController {
    * @return ChaosCanvas.
    */
   public ChaosCanvas getBarnsley(int height, int width) {
-    //TODO: Implement Variable path
     return getChaosCanvas(height, width, iterations, "Barnsley");
   }
 
@@ -122,7 +119,6 @@ public class MainPageController {
    * @return ChaosCanvas.
    */
   public ChaosCanvas getJulia(int height, int width) {
-    //TODO: Implement Variable path
     return getChaosCanvas(height, width, iterations, "Julia");
   }
 
@@ -163,7 +159,7 @@ public class MainPageController {
    * Exits the application.
    */ 
   public void exitApp() {
-    // TODO: Fill later
+    // TODO: Fill later with dialog to confirm exit.
     Platform.exit();
   }
 
