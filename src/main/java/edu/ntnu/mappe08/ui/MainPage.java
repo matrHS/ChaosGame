@@ -1,9 +1,16 @@
 package edu.ntnu.mappe08.ui;
 
+import edu.ntnu.mappe08.entity.Matrix2x2;
 import edu.ntnu.mappe08.entity.Vector2D;
+import edu.ntnu.mappe08.logic.AffineTransform2D;
 import edu.ntnu.mappe08.logic.ChaosCanvas;
+import edu.ntnu.mappe08.logic.Transform2D;
+import java.util.List;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -12,7 +19,10 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -32,11 +42,14 @@ import javafx.stage.Stage;
 public class MainPage extends Application {
   
   private static final int MAX_ITERATIONS = 999999;
+  private ObservableList<Transform2D> transformListWrapper;
   Bounds centerCanvasBounds;
   MainPageController controller;
   BorderPane borderPane;
   StackPane centerBox;
   ImageView loadedImage;
+  HBox transformControlsParent;
+  GridPane transformControls;
   
   /**
    * Starts the javafx GUI.
@@ -52,9 +65,12 @@ public class MainPage extends Application {
     stage.setTitle("My Application");
     
     borderPane = new BorderPane();
-    GridPane transformControls = getTransformControls("Julia");
+    transformControlsParent = new HBox();
+    transformControls = getTransformControls("Julia");
     
-    borderPane.setLeft(transformControls);
+    transformControlsParent.getChildren().add(transformControls);
+    borderPane.setLeft(transformControlsParent);
+
     
     MenuBar menuBar = createMenus();
     borderPane.setTop(menuBar);
@@ -171,21 +187,86 @@ public class MainPage extends Application {
   }
 
   private GridPane createAffineControls() {
-//    GridPane controls = new GridPane();
-//    Label c2 = new Label("Upper Right");
-//    TextField c2Real = new TextField();
-//    TextField c2Imaginary = new TextField();
-//
-//    controls.addRow(0, c2, c2Real, c2Imaginary);
-//
-//    Label c1 = new Label("Lower Left");
-//    TextField c1Real = new TextField();
-//    TextField c1Imaginary = new TextField();
-//
-//    controls.addRow(1, c1, c1Real, c1Imaginary);
-    return null;
+    GridPane controls = new GridPane();
+    Label a1 = new Label("Upperasd Right");
+    TextField a10 = new TextField();
+    TextField a11 = new TextField();
+
+    controls.addRow(0, a1, a10, a11);
+
+    Label a0 = new Label("Lowerdfdd Left");
+    TextField a00 = new TextField();
+    TextField a01 = new TextField();
+
+    controls.addRow(1, a0, a00, a01);
+
+    // TODO: Ask if this is the correct way to do this. the value factory seems crazy.
+    
+    TableColumn<AffineTransform2D, String> a00Col = new TableColumn<>("a00");
+    a00Col.setMinWidth(20);
+    a00Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Matrix2x2 matrix = transform.getMatrix();
+      return new SimpleStringProperty(matrix.getA00() + "");
+    });
+    
+
+    TableColumn<AffineTransform2D, String> a01Col = new TableColumn<>("a01");
+    a01Col.setMinWidth(20);
+    a01Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Matrix2x2 matrix = transform.getMatrix();
+      return new SimpleStringProperty(matrix.getA01() + "");
+    });
+    
+    
+    TableColumn<AffineTransform2D, String> a10Col = new TableColumn<>("a10");
+    a10Col.setMinWidth(20);
+    a10Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Matrix2x2 matrix = transform.getMatrix();
+      return new SimpleStringProperty(matrix.getA10() + "");
+    });
+    
+    TableColumn<AffineTransform2D, String> a11Col = new TableColumn<>("a11");
+    a11Col.setMinWidth(20);
+    a11Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Matrix2x2 matrix = transform.getMatrix();
+      return new SimpleStringProperty(matrix.getA11() + "");
+    });
+    
+    TableColumn<AffineTransform2D, String> x0Col = new TableColumn<>("x0");
+    x0Col.setMinWidth(20);
+    x0Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Vector2D vector = transform.getVector();
+      return new SimpleStringProperty(vector.getX0() + "");
+    });
+    
+    TableColumn<AffineTransform2D, String> x1Col = new TableColumn<>("x1");
+    x1Col.setMinWidth(20);
+    x1Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Vector2D vector = transform.getVector();
+      return new SimpleStringProperty(vector.getX1() + "");
+    });
+
+    TableView transformTable = new TableView();
+    transformTable.setItems(this.getTransformListWrapper(controller.getCurrentDescription().getTransforms()));
+    transformTable.getColumns().addAll(a00Col, a01Col, a10Col, a11Col, x0Col, x1Col);
+
+    controls.addRow(2, transformTable);
+    
+    return controls;
   }
 
+  private ObservableList<Transform2D> getTransformListWrapper(List<Transform2D> transforms) {
+    transformListWrapper
+        = FXCollections.observableArrayList(transforms);
+    return transformListWrapper;
+  }
+  
   public void updateImage(ImageView image) {
     // TODO: Refactor into a more sophisticated solution for swapping images.
     loadedImage.setImage(image.getImage());
@@ -224,16 +305,25 @@ public class MainPage extends Application {
     barnsleyDefault.setOnAction(e -> {
       controller.doChangeImage(controller.getBarnsley((int) this.centerCanvasBounds.getHeight(),
           (int) this.centerCanvasBounds.getWidth()));
+      transformControlsParent.getChildren().remove(transformControls);
+      transformControls = getTransformControls("Affine2D");
+      transformControlsParent.getChildren().add(transformControls);
     });
     MenuItem juliaDefault = new MenuItem("Julia");
     juliaDefault.setOnAction(e -> {
       controller.doChangeImage(controller.getJulia((int) this.centerCanvasBounds.getHeight(),
           (int) this.centerCanvasBounds.getWidth()));
+      transformControlsParent.getChildren().remove(transformControls);
+      transformControls = getTransformControls("Julia");
+      transformControlsParent.getChildren().add(transformControls);
     });
     MenuItem sierpinskiDefault = new MenuItem("Sierpinski");
     sierpinskiDefault.setOnAction(e -> {
       controller.doChangeImage(controller.getSierpinski((int) this.centerCanvasBounds.getHeight(),
           (int) this.centerCanvasBounds.getWidth()));
+      transformControlsParent.getChildren().remove(transformControls);
+      transformControls = getTransformControls("Affine2D");
+      transformControlsParent.getChildren().add(transformControls);
     });
     Menu fractalsMenu = new Menu("Fractals");
     fractalsMenu.getItems().addAll(barnsleyDefault, juliaDefault, sierpinskiDefault);

@@ -200,5 +200,13 @@ public class MainPageController {
   public int getIterations() {
     return iterations;
   }
-  
+
+  /**
+   * Gets the current description.
+   *
+   * @return current description.
+   */
+  public ChaosGameDescription getCurrentDescription() {
+    return currentDescription;
+  }
 }
