@@ -18,7 +18,6 @@ class ComplexTest {
     }
   
     /**
-    * Positive test:
     * Test the constructor in the Complex class.
     */
     @Test
@@ -30,7 +29,6 @@ class ComplexTest {
     }
   
     /**
-    * Positive test:
     * Test the sqrt method in the Complex class.
     */
     @Test
@@ -42,7 +40,18 @@ class ComplexTest {
     }
 
   /**
-   * Negative test:
+   * Checks that the sqrt method returns the correct value when the imaginary part is zero
+   */
+  @Test
+    public void textImZero() {
+      Complex testImZero = new Complex(5, 0);
+      Complex result = testImZero.sqrt();
+      
+      assertEquals(2.23, result.getX0(), 0.01);
+      assertEquals(0, result.getX1());
+    }
+
+  /**
    * Try initializing a complex with zero point division to get a NaN
    */
   @Test
