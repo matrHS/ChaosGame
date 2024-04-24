@@ -29,60 +29,10 @@ class ChaosGameFileHandlerTest {
     testAffineList = testAffine.lines().toList();
     testJuliaList = testJulia.lines().toList();
   }
-  
-  /**
-   * TODO: Move to factory test class
-   * Test that the buildChaosGameDescription method returns a ChaosGameDescription object with the correct values.
-   */
-  @Test
-  void testValidBuildChaosGameDescription() {
-    ChaosGameFileHandler fileHandler = new ChaosGameFileHandler();
-    assertEquals(3, fileHandler.buildChaosGameDescription(testAffineList).getTransforms().size());
-    assertEquals(2, fileHandler.buildChaosGameDescription(testJuliaList).getTransforms().size());
-  }
-  
-  /**
-   * TODO: Move to factory test class
-   * Test that the buildChaosGameDescription method throws an IllegalArgumentException when the fileContent is null.
-   */
-  @Test
-  void testNullFileContent() {
-    ChaosGameFileHandler fileHandler = new ChaosGameFileHandler();
-    assertThrows(IllegalArgumentException.class, () -> fileHandler.buildChaosGameDescription(null));
-  }
 
-  /**
-   * TODO: Move to factory test class
-   * Test that Exception is thrown if structure of file is incorrect leading to incorrect parsing.
-   */
-  @Test
-  void testInvalidFileContent() {
-    ChaosGameFileHandler fileHandler = new ChaosGameFileHandler();
-    
-    List<String> invalidFileContent = List.of("Affine2D", 
-        "0, 0", 
-        "1, 1", 
-        ".5, 0, 0, .5, 0, 0", 
-        "", 
-        ".5, 0, 0, .5, .5, 0");
-    assertThrows(IllegalArgumentException.class, () -> fileHandler.buildChaosGameDescription(invalidFileContent));
-  }
+  
 
-  /**
-   * TODO: Move to factory test class
-   * Test that buildChaosGameDescription throws an IllegalArgumentException when no valid transform type is set.
-   */
-  @Test
-  void testInvalidTransformType() {
-    ChaosGameFileHandler fileHandler = new ChaosGameFileHandler();
-    List<String> invalidFileContent = List.of("InvalidType", 
-        "0, 0", 
-        "1, 1", 
-        ".5, 0, 0, .5, 0, 0", 
-        ".5, 0, 0, .5, .25, .5", 
-        ".5, 0, 0, .5, .5, 0");
-    assertThrows(IllegalArgumentException.class, () -> fileHandler.buildChaosGameDescription(invalidFileContent));
-  }
+  
 
   /**
    * Negative test:
@@ -104,15 +54,5 @@ class ChaosGameFileHandlerTest {
     assertThrows(IllegalArgumentException.class, () -> fileHandler.readFromFile(""));
   }
   
-  /**
-   * TODO: Move to factory test class
-   * Test that the buildChaosGameDescriptionFromFile method throws an IllegalArgumentException when the filepath is null.
-   */
-  @Test
-  void testNullFilepathBuildChaosGameDescriptionFromFile() {
-    ChaosGameFileHandler fileHandler = new ChaosGameFileHandler();
-    assertThrows(IllegalArgumentException.class, () -> fileHandler.buildChaosGameDescriptionFromFile(null));
-  }
-
 
 }
