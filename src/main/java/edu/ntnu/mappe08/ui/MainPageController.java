@@ -69,8 +69,8 @@ public class MainPageController {
    */
   public ChaosCanvas getCustomCanvas(int height, int width, int iterations,String filePath) {
     List<String> strings = fileHandler.readFromFile(filePath);
-    ChaosGame chaosGame = new ChaosGame(descriptionFactory.buildChaosGameDescription(strings), 
-        height, width);
+    this.currentDescription = descriptionFactory.buildChaosGameDescription(strings);
+    ChaosGame chaosGame = new ChaosGame(currentDescription, height, width);
     chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }
@@ -150,7 +150,9 @@ public class MainPageController {
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
     File selectedFile = fileChooser.showOpenDialog(null);
     if (selectedFile != null) {
-      doChangeImage(this.getCustomCanvas(1000, 800, iterations, 
+      doChangeImage(this.getCustomCanvas((int) mainPage.centerCanvasBounds.getWidth(),
+          (int) mainPage.centerCanvasBounds.getHeight(),
+          iterations, 
           selectedFile.getAbsolutePath()));
     }
   }

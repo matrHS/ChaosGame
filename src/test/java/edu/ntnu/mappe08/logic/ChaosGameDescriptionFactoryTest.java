@@ -41,7 +41,6 @@ class ChaosGameDescriptionFactoryTest {
   }
 
   /**
-   * TODO: Move to factory test class
    * Test that Exception is thrown if structure of file is incorrect leading to incorrect parsing.
    */
   @Test
@@ -58,7 +57,6 @@ class ChaosGameDescriptionFactoryTest {
   }
 
   /**
-   * TODO: Move to factory test class
    * Test that buildChaosGameDescription throws an IllegalArgumentException when no valid transform type is set.
    */
   @Test
