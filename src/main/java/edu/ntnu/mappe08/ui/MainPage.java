@@ -153,22 +153,36 @@ public class MainPage extends Application {
 
   private GridPane createJuliaControls() {
     GridPane controls = new GridPane();
+    Label c2 = new Label("Upper Right");
+    TextField c2Real = new TextField();
+    TextField c2Imaginary = new TextField();
+
+    controls.addRow(0, c2, c2Real, c2Imaginary);
+    
     Label c1 = new Label("Lower Left");
     TextField c1Real = new TextField();
     TextField c1Imaginary = new TextField();
     
-    controls.addRow(0, c1, c1Real, c1Imaginary);
+    controls.addRow(1, c1, c1Real, c1Imaginary);
     
-    Label c2 = new Label("Upper Right");
-    TextField c2Real = new TextField();
-    TextField c2Imaginary = new TextField();
     
-    controls.addRow(1, c2, c2Real, c2Imaginary);
     
     return controls;
   }
 
   private GridPane createAffineControls() {
+//    GridPane controls = new GridPane();
+//    Label c2 = new Label("Upper Right");
+//    TextField c2Real = new TextField();
+//    TextField c2Imaginary = new TextField();
+//
+//    controls.addRow(0, c2, c2Real, c2Imaginary);
+//
+//    Label c1 = new Label("Lower Left");
+//    TextField c1Real = new TextField();
+//    TextField c1Imaginary = new TextField();
+//
+//    controls.addRow(1, c1, c1Real, c1Imaginary);
     return null;
   }
 

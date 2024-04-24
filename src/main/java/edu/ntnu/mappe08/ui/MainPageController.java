@@ -143,7 +143,6 @@ public class MainPageController {
    */
   public void openTransform() {
     // TODO: Consider refactoring file chooser to a separate method for both save and open.
-    // TODO: Ensure that files do not have to be hardcoded when it comes to canvas size etc.
     FileChooser fileChooser = new FileChooser();
 
     fileChooser.setTitle("Open Transformation");

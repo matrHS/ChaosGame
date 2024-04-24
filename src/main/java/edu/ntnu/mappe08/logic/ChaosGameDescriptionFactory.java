@@ -174,6 +174,7 @@ public class ChaosGameDescriptionFactory {
       transforms.add(new JuliaTransform(point, -1));
 
     } else {
+      // TODO: Custom exception
       throw new IllegalArgumentException("Invalid file content");
     }
     

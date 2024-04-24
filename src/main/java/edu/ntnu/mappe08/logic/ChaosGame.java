@@ -24,6 +24,9 @@ public class ChaosGame {
    * @param height the height of the canvas
    */
   public ChaosGame(ChaosGameDescription description, int height, int width) {
+    if (description == null) {
+      throw new IllegalArgumentException("description cannot be null");
+    }
     random = new Random();
     this.description = description;
     this.canvas = new ChaosCanvas(height, 
@@ -48,6 +51,9 @@ public class ChaosGame {
    * @param steps number of steps to run
    */
   public void runSteps(int steps) {
+    if (steps < 0) {
+      throw new IllegalArgumentException("steps cannot be negative");
+    }
     for (int i = 0; i < steps; i++) {
       this.runStep();
     }
