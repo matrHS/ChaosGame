@@ -76,12 +76,13 @@ public class ChaosCanvas {
     }
 
     Vector2D test2 = transformCoordsToIndices.transform(point);
-    if (test2.getX0() < 0 
-        || test2.getX0() >= this.height 
-        || test2.getX1() < 0 
-        || test2.getX1() >= this.width) {
-      throw new IllegalArgumentException("Point is outside the canvas");
-    }
+    // TODO: Consider leaving this commented out to allow "jumping" to parts of canvas leaving some pixels outside of width and height
+//    if (test2.getX0() < 0 
+//        || test2.getX0() >= this.height 
+//        || test2.getX1() < 0 
+//        || test2.getX1() >= this.width) {
+//      throw new IllegalArgumentException("Point is outside the canvas");
+//    }
     
     int i = (int) Math.round(test2.getX0());
     int j = (int) Math.round(test2.getX1());

@@ -41,7 +41,7 @@ import javafx.stage.Stage;
  */
 public class MainPage extends Application {
   
-  private static final int MAX_ITERATIONS = 999999;
+  private static final int MAX_ITERATIONS = 9999999;
   private ObservableList<Transform2D> transformListWrapper;
   Bounds centerCanvasBounds;
   MainPageController controller;
@@ -67,7 +67,9 @@ public class MainPage extends Application {
     transformControls = getTransformControls("Julia");
     
     transformControlsParent.getChildren().add(transformControls);
+    transformControlsParent.setPadding(new javafx.geometry.Insets(4));
     borderPane.setLeft(transformControlsParent);
+    
 
     
     MenuBar menuBar = createMenus();
@@ -89,7 +91,7 @@ public class MainPage extends Application {
     centerBox.getChildren().add(loadedImage);
     loadedImage.fitWidthProperty().bind(centerBox.widthProperty());
     loadedImage.fitHeightProperty().bind(centerBox.heightProperty());
-
+    
     
     ChangeListener<Number> stageSizeListener = (obs, oldVal, newVal) -> {
       
@@ -102,7 +104,7 @@ public class MainPage extends Application {
     
     stage.setScene(scene);
     stage.show();
-
+    
     //centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
     
   }
@@ -196,11 +198,13 @@ public class MainPage extends Application {
     TextField a01 = new TextField();
 
     controls.addRow(1, a0, a00, a01);
+    controls.setHgap(4);
+    controls.setVgap(4);
     parentControls.addRow(0, controls);
     
     // Help from copilot choosing the SimpleStingProperty datatype for the return type.
     TableColumn<AffineTransform2D, String> a00Col = new TableColumn<>("a00");
-    a00Col.setMinWidth(20);
+    a00Col.setMinWidth(25);
     a00Col.setCellValueFactory(cellData -> {
       AffineTransform2D transform = cellData.getValue();
       Matrix2x2 matrix = transform.getMatrix();
@@ -208,7 +212,7 @@ public class MainPage extends Application {
     });
     
     TableColumn<AffineTransform2D, String> a01Col = new TableColumn<>("a01");
-    a01Col.setMinWidth(20);
+    a01Col.setMinWidth(25);
     a01Col.setCellValueFactory(cellData -> {
       AffineTransform2D transform = cellData.getValue();
       Matrix2x2 matrix = transform.getMatrix();
@@ -216,7 +220,7 @@ public class MainPage extends Application {
     });
     
     TableColumn<AffineTransform2D, String> a10Col = new TableColumn<>("a10");
-    a10Col.setMinWidth(20);
+    a10Col.setMinWidth(25);
     a10Col.setCellValueFactory(cellData -> {
       AffineTransform2D transform = cellData.getValue();
       Matrix2x2 matrix = transform.getMatrix();
@@ -224,7 +228,7 @@ public class MainPage extends Application {
     });
     
     TableColumn<AffineTransform2D, String> a11Col = new TableColumn<>("a11");
-    a11Col.setMinWidth(20);
+    a11Col.setMinWidth(25);
     a11Col.setCellValueFactory(cellData -> {
       AffineTransform2D transform = cellData.getValue();
       Matrix2x2 matrix = transform.getMatrix();
@@ -232,7 +236,7 @@ public class MainPage extends Application {
     });
     
     TableColumn<AffineTransform2D, String> x0Col = new TableColumn<>("x0");
-    x0Col.setMinWidth(20);
+    x0Col.setMinWidth(25);
     x0Col.setCellValueFactory(cellData -> {
       AffineTransform2D transform = cellData.getValue();
       Vector2D vector = transform.getVector();
@@ -240,7 +244,7 @@ public class MainPage extends Application {
     });
     
     TableColumn<AffineTransform2D, String> x1Col = new TableColumn<>("x1");
-    x1Col.setMinWidth(20);
+    x1Col.setMinWidth(25);
     x1Col.setCellValueFactory(cellData -> {
       AffineTransform2D transform = cellData.getValue();
       Vector2D vector = transform.getVector();
@@ -250,10 +254,11 @@ public class MainPage extends Application {
     TableView transformTable = new TableView();
     transformTable.setItems(this.getTransformListWrapper(controller.getCurrentDescription().getTransforms()));
     transformTable.getColumns().addAll(a00Col, a01Col, a10Col, a11Col, x0Col, x1Col);
-    transformTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+    transformTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     transformTable.setEditable(true);
 
     parentControls.addRow(2, transformTable);
+    
     
     return parentControls;
   }
