@@ -125,14 +125,17 @@ public class MainPage extends Application {
     iterations.textProperty().addListener((observable, oldValue, newValue) -> {
       try {
         if (!newValue.isEmpty() && Integer.parseInt(newValue) <= MAX_ITERATIONS) {
-          Integer.parseInt(newValue);
-          controller.setIterations(Integer.parseInt(iterations.getText()));
+          controller.setIterations(Integer.parseInt(newValue));
           controller.doRedrawImage(this.centerCanvasBounds);
+        } else if(newValue.isEmpty()) {
+          iterations.setText("");
+        } else {
+          iterations.setText(oldValue);
         }
       } catch (NumberFormatException e) {
         // Throws exception if inputted value is not an integer
         iterations.setText(oldValue);
-      }
+      } 
     });
     
     bottomBar.setSpacing(4);
