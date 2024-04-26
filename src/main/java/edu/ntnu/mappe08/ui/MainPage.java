@@ -60,9 +60,7 @@ public class MainPage extends Application {
   public void start(Stage stage) {
     this.controller = new MainPageController(this);
     
-    
-    
-    stage.setTitle("My Application");
+    stage.setTitle("Chaos game");
     
     borderPane = new BorderPane();
     transformControlsParent = new HBox();
@@ -106,9 +104,6 @@ public class MainPage extends Application {
     stage.show();
 
     //centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
-    
-    
-    
     
   }
 
@@ -187,21 +182,23 @@ public class MainPage extends Application {
   }
 
   private GridPane createAffineControls() {
+    GridPane parentControls = new GridPane();
     GridPane controls = new GridPane();
-    Label a1 = new Label("Upperasd Right");
+    
+    Label a1 = new Label("Upper Right");
     TextField a10 = new TextField();
     TextField a11 = new TextField();
 
     controls.addRow(0, a1, a10, a11);
 
-    Label a0 = new Label("Lowerdfdd Left");
+    Label a0 = new Label("Lower Left"); 
     TextField a00 = new TextField();
     TextField a01 = new TextField();
 
     controls.addRow(1, a0, a00, a01);
-
-    // TODO: Ask if this is the correct way to do this. the value factory seems crazy.
+    parentControls.addRow(0, controls);
     
+    // Help from copilot choosing the SimpleStingProperty datatype for the return type.
     TableColumn<AffineTransform2D, String> a00Col = new TableColumn<>("a00");
     a00Col.setMinWidth(20);
     a00Col.setCellValueFactory(cellData -> {
@@ -210,7 +207,6 @@ public class MainPage extends Application {
       return new SimpleStringProperty(matrix.getA00() + "");
     });
     
-
     TableColumn<AffineTransform2D, String> a01Col = new TableColumn<>("a01");
     a01Col.setMinWidth(20);
     a01Col.setCellValueFactory(cellData -> {
@@ -218,7 +214,6 @@ public class MainPage extends Application {
       Matrix2x2 matrix = transform.getMatrix();
       return new SimpleStringProperty(matrix.getA01() + "");
     });
-    
     
     TableColumn<AffineTransform2D, String> a10Col = new TableColumn<>("a10");
     a10Col.setMinWidth(20);
@@ -255,10 +250,12 @@ public class MainPage extends Application {
     TableView transformTable = new TableView();
     transformTable.setItems(this.getTransformListWrapper(controller.getCurrentDescription().getTransforms()));
     transformTable.getColumns().addAll(a00Col, a01Col, a10Col, a11Col, x0Col, x1Col);
+    transformTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+    transformTable.setEditable(true);
 
-    controls.addRow(2, transformTable);
+    parentControls.addRow(2, transformTable);
     
-    return controls;
+    return parentControls;
   }
 
   private ObservableList<Transform2D> getTransformListWrapper(List<Transform2D> transforms) {
