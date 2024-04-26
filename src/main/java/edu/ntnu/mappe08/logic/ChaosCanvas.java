@@ -129,6 +129,30 @@ public class ChaosCanvas {
   public int getHeight() {
     return this.height;
   }
+  
+  /**
+   * Sets the width of the canvas.
+   *
+   * @param width the height of the canvas
+   */
+  public void setWidth(int width) {
+    if (width < 0) {
+      throw new IllegalArgumentException("Width cannot be negative");
+    }
+    this.width = width;
+  }
+  
+  /**
+   * Sets the height of the canvas.
+   *
+   * @param height the height of the canvas
+   */
+  public void setHeight(int height) {
+    if (height < 0) {
+      throw new IllegalArgumentException("Height cannot be negative");
+    }
+    this.height = height;
+  }
 
   /**
    * Returns the minimum coordinates of the canvas.

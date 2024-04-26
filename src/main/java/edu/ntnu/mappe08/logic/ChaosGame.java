@@ -37,6 +37,27 @@ public class ChaosGame {
   }
 
   /**
+   * Returns the description of the chaos game.
+   *
+   * @return the description of the chaos game
+   */
+  public ChaosGameDescription getDescription() {
+    return description;
+  }
+  
+  /**
+   * Sets the description of the chaos game.
+   *
+   * @param description the description of the chaos game
+   */
+  public void setDescription(ChaosGameDescription description) {
+    if (description == null) {
+      throw new IllegalArgumentException("description cannot be null");
+    }
+    this.description = description;
+  }
+  
+  /**
    * Returns the canvas of the chaos game.
    *
    * @return the canvas of the chaos game
