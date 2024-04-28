@@ -97,8 +97,8 @@ public class MainPageController implements ChaosGameNotifier {
    * @return ChaosCanvas with new dimensions.
    */
   private ChaosCanvas getRedrawnCanvas(int height, int width, int iterations) {
-//    chaosGame.reconfigureChaosGame(currentDescription, height, width);
-//    chaosGame.runSteps(iterations);
+    chaosGame.reconfigureChaosGame(currentDescription, height, width);
+    chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }
 
@@ -203,6 +203,7 @@ public class MainPageController implements ChaosGameNotifier {
    */
   public void setIterations(int iterations) {
     this.iterations = iterations;
+    update();
   }
   
   /**
@@ -220,7 +221,7 @@ public class MainPageController implements ChaosGameNotifier {
    * @return current description.
    */
   public ChaosGameDescription getCurrentDescription() {
-    return currentDescription;
+    return chaosGame.getDescription();
   }
 
   @Override

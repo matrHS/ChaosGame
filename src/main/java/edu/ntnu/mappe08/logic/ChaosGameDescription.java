@@ -31,7 +31,7 @@ public class ChaosGameDescription {
    *
    * @param minCoords the minimum coords of the chaos game
    */
-  private void setMinCoords(Vector2D minCoords) {
+  public void setMinCoords(Vector2D minCoords) {
     if (minCoords == null) {
       throw new IllegalArgumentException("minCoords cannot be null");
     }
@@ -52,7 +52,7 @@ public class ChaosGameDescription {
    *
    * @param maxCoords the maximum coords of the chaos game
    */
-  private void setMaxCoords(Vector2D maxCoords) {
+  public void setMaxCoords(Vector2D maxCoords) {
     if (maxCoords == null) {
       throw new IllegalArgumentException("maxCoords cannot be null");
     }

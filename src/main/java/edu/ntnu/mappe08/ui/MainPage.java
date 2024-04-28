@@ -64,7 +64,7 @@ public class MainPage extends Application {
     
     borderPane = new BorderPane();
     transformControlsParent = new HBox();
-    transformControls = getTransformControls("Julia");
+    transformControls = new GridPane();
     
     transformControlsParent.getChildren().add(transformControls);
     transformControlsParent.setPadding(new javafx.geometry.Insets(4));
@@ -131,7 +131,7 @@ public class MainPage extends Application {
       try {
         if (!newValue.isEmpty() && Integer.parseInt(newValue) <= MAX_ITERATIONS) {
           controller.setIterations(Integer.parseInt(newValue));
-          controller.doRedrawImage(this.centerCanvasBounds);
+//          controller.doRedrawImage(this.centerCanvasBounds);
         } else if(newValue.isEmpty()) {
           iterations.setText("");
         } else {
@@ -176,13 +176,38 @@ public class MainPage extends Application {
     GridPane controls = new GridPane();
     Label c2 = new Label("Upper Right");
     TextField c2Real = new TextField();
+    c2Real.setText(controller.getCurrentDescription().getMaxCoords().getX0() + "");
+    
     TextField c2Imaginary = new TextField();
+    c2Imaginary.setText(controller.getCurrentDescription().getMaxCoords().getX1() + "");
 
+    c2Real.setOnAction(e -> {
+      controller.getCurrentDescription().setMaxCoords(new Vector2D(Double.parseDouble(c2Real.getText()),
+          Double.parseDouble(c2Imaginary.getText())));
+    });
+    c2Imaginary.setOnAction(e -> {
+      // TODO: Figure out how to update the description with the new values.
+      // Decide if we want to make a new description or update the current one.
+      // If we update the current one we can make the description the observable
+      controller.getCurrentDescription().setMaxCoords(new Vector2D(Double.parseDouble(c2Real.getText()),
+          Double.parseDouble(c2Imaginary.getText())));
+    });
     controls.addRow(0, c2, c2Real, c2Imaginary);
     
     Label c1 = new Label("Lower Left");
     TextField c1Real = new TextField();
+    c1Real.setText(controller.getCurrentDescription().getMinCoords().getX0() + "");
     TextField c1Imaginary = new TextField();
+    c1Imaginary.setText(controller.getCurrentDescription().getMinCoords().getX1() + "");
+    
+    c1Real.setOnAction(e -> {
+      controller.getCurrentDescription().setMinCoords(new Vector2D(Double.parseDouble(c1Real.getText()),
+          Double.parseDouble(c1Imaginary.getText())));
+    });
+    c1Imaginary.setOnAction(e -> {
+      controller.getCurrentDescription().setMinCoords(new Vector2D(Double.parseDouble(c1Real.getText()),
+          Double.parseDouble(c1Imaginary.getText())));
+    });
     
     controls.addRow(1, c1, c1Real, c1Imaginary);
     

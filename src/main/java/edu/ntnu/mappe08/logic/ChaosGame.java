@@ -51,7 +51,7 @@ public class ChaosGame {
         description.getMinCoords(), 
         description.getMaxCoords());
     this.currentPoint = new Complex(0, 0);
-    notifyListeners();
+//    notifyListeners();
   }
 
   /**
