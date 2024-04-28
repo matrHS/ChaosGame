@@ -91,12 +91,12 @@ public class MainPage extends Application {
     centerBox.getChildren().add(loadedImage);
     loadedImage.fitWidthProperty().bind(centerBox.widthProperty());
     loadedImage.fitHeightProperty().bind(centerBox.heightProperty());
-    
+
     
     ChangeListener<Number> stageSizeListener = (obs, oldVal, newVal) -> {
-      
+
       updateBounds();
-      
+
     };
     centerBox.heightProperty().addListener(stageSizeListener);
     centerBox.widthProperty().addListener(stageSizeListener);
@@ -104,6 +104,11 @@ public class MainPage extends Application {
     
     stage.setScene(scene);
     stage.show();
+
+    controller.initialize();
+    
+    
+    
     
     //centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
     

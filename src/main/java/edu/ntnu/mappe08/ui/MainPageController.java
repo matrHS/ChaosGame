@@ -22,6 +22,7 @@ public class MainPageController {
   private ChaosGameFileHandler fileHandler;
   private ChaosGameDescriptionFactory descriptionFactory;
   private ChaosGameDescription currentDescription;
+  private ChaosGame chaosGame;
   
   private int iterations = 100000;
 
@@ -32,6 +33,7 @@ public class MainPageController {
     this.mainPage = mainPage;
     this.fileHandler = new ChaosGameFileHandler();
     this.descriptionFactory = new ChaosGameDescriptionFactory();
+    
   }
 
   /**
@@ -40,6 +42,15 @@ public class MainPageController {
   public MainPageController() {
     this.fileHandler = new ChaosGameFileHandler();
     this.descriptionFactory = new ChaosGameDescriptionFactory();
+  }
+  
+  /**
+   * Initializes the ChaosGameController.
+   */
+  public void initialize() {
+    this.chaosGame = new ChaosGame(descriptionFactory.createDescription("Sierpinski"), 
+        (int) mainPage.centerCanvasBounds.getHeight(), 
+        (int) mainPage.centerCanvasBounds.getWidth());
   }
 
   /**
@@ -53,7 +64,7 @@ public class MainPageController {
    */
   private ChaosCanvas getChaosCanvas(int height, int width, int iterations, String transformType) {
     currentDescription = this.descriptionFactory.createDescription(transformType);
-    ChaosGame chaosGame = new ChaosGame(currentDescription, height, width);
+    chaosGame.reconfigureChaosGame(currentDescription, height, width);
     chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }
@@ -70,7 +81,7 @@ public class MainPageController {
   public ChaosCanvas getCustomCanvas(int height, int width, int iterations,String filePath) {
     List<String> strings = fileHandler.readFromFile(filePath);
     this.currentDescription = descriptionFactory.buildChaosGameDescription(strings);
-    ChaosGame chaosGame = new ChaosGame(currentDescription, height, width);
+    chaosGame.reconfigureChaosGame(currentDescription, height, width);
     chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }
@@ -84,7 +95,7 @@ public class MainPageController {
    * @return ChaosCanvas with new dimensions.
    */
   private ChaosCanvas getRedrawnCanvas(int height, int width, int iterations) {
-    ChaosGame chaosGame = new ChaosGame(currentDescription, height, width);
+    chaosGame.reconfigureChaosGame(currentDescription, height, width);
     chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }

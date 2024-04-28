@@ -35,6 +35,18 @@ public class ChaosGame {
         description.getMaxCoords());
     this.currentPoint = new Complex(0, 0);
   }
+  
+  public void reconfigureChaosGame(ChaosGameDescription description, int height, int width) {
+    if (description == null) {
+      throw new IllegalArgumentException("description cannot be null");
+    }
+    this.description = description;
+    this.canvas = new ChaosCanvas(height, 
+        width, 
+        description.getMinCoords(), 
+        description.getMaxCoords());
+    this.currentPoint = new Complex(0, 0);
+  }
 
   /**
    * Returns the description of the chaos game.
