@@ -5,6 +5,7 @@ import edu.ntnu.mappe08.logic.ChaosGame;
 import edu.ntnu.mappe08.logic.ChaosGameDescription;
 import edu.ntnu.mappe08.logic.ChaosGameDescriptionFactory;
 import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
+import edu.ntnu.mappe08.logic.ChaosGameNotifier;
 import java.io.File;
 import java.util.List;
 import javafx.application.Platform;
@@ -16,7 +17,7 @@ import javafx.stage.FileChooser;
  * Represents the controller for the Chaos Game.
  * Should be interchangeable with GUI and CLI.
  */
-public class MainPageController {
+public class MainPageController implements ChaosGameNotifier {
 
   private MainPage mainPage;
   private ChaosGameFileHandler fileHandler;
@@ -51,6 +52,7 @@ public class MainPageController {
     this.chaosGame = new ChaosGame(descriptionFactory.createDescription("Sierpinski"), 
         (int) mainPage.centerCanvasBounds.getHeight(), 
         (int) mainPage.centerCanvasBounds.getWidth());
+    this.chaosGame.subscribe(this);
   }
 
   /**
@@ -95,8 +97,8 @@ public class MainPageController {
    * @return ChaosCanvas with new dimensions.
    */
   private ChaosCanvas getRedrawnCanvas(int height, int width, int iterations) {
-    chaosGame.reconfigureChaosGame(currentDescription, height, width);
-    chaosGame.runSteps(iterations);
+//    chaosGame.reconfigureChaosGame(currentDescription, height, width);
+//    chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }
 
@@ -219,5 +221,10 @@ public class MainPageController {
    */
   public ChaosGameDescription getCurrentDescription() {
     return currentDescription;
+  }
+
+  @Override
+  public void update() {
+    doRedrawImage(mainPage.centerCanvasBounds);
   }
 }

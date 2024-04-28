@@ -2,6 +2,8 @@ package edu.ntnu.mappe08.logic;
 
 import edu.ntnu.mappe08.entity.Complex;
 import edu.ntnu.mappe08.entity.Vector2D;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -14,6 +16,8 @@ public class ChaosGame {
   private ChaosGameDescription description;
   private Vector2D currentPoint;
   private Random random;
+  private ChaosGameNotifier notifier;
+  private List<ChaosGameNotifier> listeners = new ArrayList<>();
 
 
   /**
@@ -34,6 +38,7 @@ public class ChaosGame {
         description.getMinCoords(), 
         description.getMaxCoords());
     this.currentPoint = new Complex(0, 0);
+    
   }
   
   public void reconfigureChaosGame(ChaosGameDescription description, int height, int width) {
@@ -46,6 +51,7 @@ public class ChaosGame {
         description.getMinCoords(), 
         description.getMaxCoords());
     this.currentPoint = new Complex(0, 0);
+    notifyListeners();
   }
 
   /**
@@ -67,6 +73,7 @@ public class ChaosGame {
       throw new IllegalArgumentException("description cannot be null");
     }
     this.description = description;
+    notifyListeners();
   }
   
   /**
@@ -101,6 +108,16 @@ public class ChaosGame {
     currentPoint = newPoint;
     
     canvas.putPixel(currentPoint);
+  }
+  
+  public void subscribe(ChaosGameNotifier listener) {
+    listeners.add(listener);
+  }
+  
+  private void notifyListeners() {
+    for (ChaosGameNotifier listener : listeners) {
+      listener.update();
+    }
   }
 
 }

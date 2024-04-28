@@ -347,7 +347,8 @@ public class MainPage extends Application {
   
   public void updateBounds() {
     this.centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
-    controller.doRedrawImage(this.centerCanvasBounds);
+    // Temporarily removed redraw to get observer working first with values. will be added back.
+//    controller.doRedrawImage(this.centerCanvasBounds);
   }
   
   
