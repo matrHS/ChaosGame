@@ -145,8 +145,10 @@ public class ChaosGameDescriptionFactory {
    *
    * @param fileContent the list of strings to build the chaos game description from
    * @return a chaos game description
+   * @throws ValueParseException if parsing failed
    */
-  public ChaosGameDescription buildChaosGameDescription(List<String> fileContent) {
+  public ChaosGameDescription buildChaosGameDescription(List<String> fileContent)
+      throws ValueParseException {
     if (fileContent == null || fileContent.isEmpty()) {
       throw new IllegalArgumentException("fileContent cannot be null or empty");
     }
@@ -156,36 +158,41 @@ public class ChaosGameDescriptionFactory {
     List<Transform2D> transforms = new ArrayList<>();
 
     List<String> formatedFileContent = new ArrayList<>();
-    for (int i = 0; i < fileContent.size(); i++) {
-      formatedFileContent.add(fileContent.get(i).split("#")[0].trim());
-    }
-    for (TransformTypes type : TransformTypes.values()) {
-      if (formatedFileContent.getFirst().toUpperCase().contains(type.toString())) {
-        transformType = type;
+    try {
+      for (int i = 0; i < fileContent.size(); i++) {
+        formatedFileContent.add(fileContent.get(i).split("#")[0].trim());
       }
-    }
-
-    // TODO: Consider refactoring each transform into its own class to generalize filehandler
-    if (transformType == TransformTypes.AFFINE2D) {
-      minCoords = parseCoords(formatedFileContent.get(1));
-      maxCoords = parseCoords(formatedFileContent.get(2));
-
-      for (int i = 3; i < formatedFileContent.size(); i++) {
-        transforms.add(parseAffineTransform(formatedFileContent.get(i)));
+      for (TransformTypes type : TransformTypes.values()) {
+        if (formatedFileContent.getFirst().toUpperCase().contains(type.toString())) {
+          transformType = type;
+        }
       }
-    } else if (transformType == TransformTypes.JULIA) {
-      minCoords = parseCoords(formatedFileContent.get(1));
-      maxCoords = parseCoords(formatedFileContent.get(2));
-      Complex point = parseCoords(formatedFileContent.get(3));
-      transforms.add(new JuliaTransform(point, 1));
-      transforms.add(new JuliaTransform(point, -1));
 
-    } else {
-      // TODO: Custom exception
-      throw new IllegalArgumentException("Invalid file content");
+      // TODO: Consider refactoring each transform into its own class to generalize filehandler
+      if (transformType == TransformTypes.AFFINE2D) {
+        minCoords = parseCoords(formatedFileContent.get(1));
+        maxCoords = parseCoords(formatedFileContent.get(2));
+
+        for (int i = 3; i < formatedFileContent.size(); i++) {
+          transforms.add(parseAffineTransform(formatedFileContent.get(i)));
+        }
+      } else if (transformType == TransformTypes.JULIA) {
+        minCoords = parseCoords(formatedFileContent.get(1));
+        maxCoords = parseCoords(formatedFileContent.get(2));
+        Complex point = parseCoords(formatedFileContent.get(3));
+        transforms.add(new JuliaTransform(point, 1));
+        transforms.add(new JuliaTransform(point, -1));
+
+      } else {
+        throw new IllegalArgumentException("Invalid file content");
+      }
+    } catch (NumberFormatException e) {
+      throw new ValueParseException("Parsing failed due to incorrect number format");
+    } catch (IllegalArgumentException e) {
+      throw new ValueParseException("Empty file content");
     }
-    
-    
+
+
     return createDescription(transformType, minCoords, maxCoords, transforms);
   }
 
@@ -193,10 +200,12 @@ public class ChaosGameDescriptionFactory {
    * Parses coordinates from a line in the file.
    * // TODO: Move parse methods into a separate builder class.
    * @param line the line to parse containing 2 numerical numbers at start of line
+   * @return complex
+   * @throws ValueParseException if the line is null or empty
    */
-  private Complex parseCoords(String line) {
+  private Complex parseCoords(String line) throws ValueParseException {
     if (line == null || line.isBlank()) {
-      throw new IllegalArgumentException("line cannot be null or empty");
+      throw new ValueParseException("line cannot be null or empty");
     }
     String[] splitLine = line.split(",");
     return new Complex(Double.parseDouble(splitLine[0].trim()),
@@ -208,10 +217,11 @@ public class ChaosGameDescriptionFactory {
    *
    * @param line the line to parse containing a 2x2 matrix and a 2D vector
    * @return an affine transformation
+   * @throws ValueParseException if the line is null or empty
    */
-  private AffineTransform2D parseAffineTransform(String line) {
+  private AffineTransform2D parseAffineTransform(String line) throws ValueParseException {
     if (line == null || line.isBlank()) {
-      throw new IllegalArgumentException("line cannot be null or empty");
+      throw new ValueParseException("line cannot be null or empty");
     }
     String[] splitLine = line.split(",");
     Matrix2x2 parsedMatrix = new Matrix2x2(Double.parseDouble(splitLine[0].trim()),

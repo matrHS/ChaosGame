@@ -27,8 +27,9 @@ public class ChaosGameFileHandler {
    *
    * @param filepath path to the file to read from
    * @return a chaos game description
+   * @throws ValueParseException if the file could not be read
    */
-  public List<String> readFromFile(String filepath) {
+  public List<String> readFromFile(String filepath) throws ValueParseException {
     if (filepath == null || filepath.isBlank()) {
       throw new IllegalArgumentException("filepath cannot be null or empty");
     }
@@ -41,8 +42,7 @@ public class ChaosGameFileHandler {
     } catch (IOException e) {
       // TODO: Replace with logger
       e.printStackTrace();
-      // TODO: Replace with custom exception
-      throw new IllegalArgumentException("Could not read from file");
+      throw new ValueParseException("Could not read from file");
     }
     
     return fileContent;
@@ -56,8 +56,10 @@ public class ChaosGameFileHandler {
    *
    * @param description the chaos game description to write to file
    * @param path the path to write the file to
+   * @throws ValueParseException if the file could not be written to
    */
-  public void writeToFile(ChaosGameDescription description, String path) {
+  public void writeToFile(ChaosGameDescription description, String path)
+      throws ValueParseException {
     if (description == null || path == null || path.isBlank()) {
       throw new IllegalArgumentException("description and path cannot be null or empty");
     }
@@ -84,7 +86,7 @@ public class ChaosGameFileHandler {
               + affineTransform.getMatrix().getA11() + ", " 
               + affineTransform.getVector().getX0() + ", " 
               + affineTransform.getVector().getX1());
-          writer.write(" # Affine tranWsform \n");
+          writer.write(" # Affine transform \n");
         } else if (transform instanceof JuliaTransform) {
           JuliaTransform juliaTransform = (JuliaTransform) transform;
           writer.write(juliaTransform.getPointC().getRealPart() 
@@ -98,8 +100,7 @@ public class ChaosGameFileHandler {
     } catch (IOException e) {
       // TODO: Replace with logger
       e.printStackTrace();
-      // TODO: Replace with custom exception
-      throw new IllegalArgumentException("Could not read from file");
+      throw new ValueParseException("Could not write to file");
     }
     
   }

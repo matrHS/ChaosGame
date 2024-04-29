@@ -7,6 +7,7 @@ import edu.ntnu.mappe08.logic.ChaosGameDescriptionFactory;
 import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
 import edu.ntnu.mappe08.logic.ChaosGameObserver;
 import edu.ntnu.mappe08.logic.TransformTypes;
+import edu.ntnu.mappe08.logic.ValueParseException;
 import java.io.File;
 import java.util.List;
 import javafx.application.Platform;
@@ -81,10 +82,15 @@ public class MainPageController implements ChaosGameObserver {
    * @return Simulated ChaosCanvas.
    */
   public ChaosCanvas getCustomCanvas(int height, int width, int iterations,String filePath) {
-    List<String> strings = fileHandler.readFromFile(filePath);
-    this.currentDescription = descriptionFactory.buildChaosGameDescription(strings);
-    chaosGame.reconfigureChaosGame(currentDescription, height, width);
-    chaosGame.runSteps(iterations);
+    try {
+      List<String> strings = fileHandler.readFromFile(filePath);
+      this.currentDescription = descriptionFactory.buildChaosGameDescription(strings);
+      chaosGame.reconfigureChaosGame(currentDescription, height, width);
+      chaosGame.runSteps(iterations);
+    } catch (ValueParseException e) {
+      // TODO: Create alert for incorrect file formating.
+      e.printStackTrace();
+    }
     return chaosGame.getCanvas();
   }
 
@@ -145,9 +151,14 @@ public class MainPageController implements ChaosGameObserver {
     fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
     fileChooser.setInitialFileName("transformation.csv");
     File selectedFile = fileChooser.showSaveDialog(null);
-    if (selectedFile != null) {
-      fileHandler.writeToFile(this.descriptionFactory.createDescription(TransformTypes.JULIA),
-          selectedFile.getAbsolutePath());
+    try {
+      if (selectedFile != null) {
+        fileHandler.writeToFile(this.descriptionFactory.createDescription(TransformTypes.JULIA),
+            selectedFile.getAbsolutePath());
+      }
+    } catch (ValueParseException e) {
+      // TODO: Create alert for incorrect file formating.
+      e.printStackTrace();
     }
   }
 
