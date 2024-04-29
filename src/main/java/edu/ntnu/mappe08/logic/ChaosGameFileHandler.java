@@ -10,13 +10,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Handles reading and writing of chaos game descriptions to and from files.
  */
 public class ChaosGameFileHandler {
-  
+
+  private Logger logger;
+
   public ChaosGameFileHandler() {
+    this.logger = Logger.getLogger(ChaosGameFileHandler.class.getName());
   }
 
   
@@ -40,8 +44,7 @@ public class ChaosGameFileHandler {
       fileContent = reader.lines().toList();
       
     } catch (IOException e) {
-      // TODO: Replace with logger
-      e.printStackTrace();
+      logger.warning("Could not read from file");
       throw new ValueParseException("Could not read from file");
     }
     
@@ -98,8 +101,7 @@ public class ChaosGameFileHandler {
       
       
     } catch (IOException e) {
-      // TODO: Replace with logger
-      e.printStackTrace();
+      logger.warning("Could not write to file");
       throw new ValueParseException("Could not write to file");
     }
     

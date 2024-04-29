@@ -10,6 +10,7 @@ import edu.ntnu.mappe08.logic.TransformTypes;
 import edu.ntnu.mappe08.logic.ValueParseException;
 import java.io.File;
 import java.util.List;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.stage.FileChooser;
@@ -25,6 +26,7 @@ public class MainPageController implements ChaosGameObserver {
   private ChaosGameDescriptionFactory descriptionFactory;
   private ChaosGameDescription currentDescription;
   private ChaosGame chaosGame;
+  private Logger logger;
   
   private int iterations = 100000;
 
@@ -35,7 +37,7 @@ public class MainPageController implements ChaosGameObserver {
     this.mainPage = mainPage;
     this.fileHandler = new ChaosGameFileHandler();
     this.descriptionFactory = new ChaosGameDescriptionFactory();
-    
+    this.logger = Logger.getLogger(MainPageController.class.getName());
   }
 
   /**
@@ -44,6 +46,7 @@ public class MainPageController implements ChaosGameObserver {
   public MainPageController() {
     this.fileHandler = new ChaosGameFileHandler();
     this.descriptionFactory = new ChaosGameDescriptionFactory();
+    this.logger = Logger.getLogger(MainPageController.class.getName());
   }
   
   /**
@@ -89,7 +92,7 @@ public class MainPageController implements ChaosGameObserver {
       chaosGame.runSteps(iterations);
     } catch (ValueParseException e) {
       // TODO: Create alert for incorrect file formating.
-      e.printStackTrace();
+      logger.warning("Could not read transformation from file.");
     }
     return chaosGame.getCanvas();
   }
@@ -158,7 +161,7 @@ public class MainPageController implements ChaosGameObserver {
       }
     } catch (ValueParseException e) {
       // TODO: Create alert for incorrect file formating.
-      e.printStackTrace();
+      logger.warning("Could not save transformation to file.");
     }
   }
 
