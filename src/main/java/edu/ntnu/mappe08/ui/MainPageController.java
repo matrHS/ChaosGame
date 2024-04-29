@@ -51,7 +51,7 @@ public class MainPageController implements ChaosGameObserver {
     this.chaosGame = new ChaosGame(descriptionFactory.createDescription("Sierpinski"), 
         (int) mainPage.centerCanvasBounds.getHeight(), 
         (int) mainPage.centerCanvasBounds.getWidth());
-    this.chaosGame.subscribe(this);
+    this.chaosGame.addObserver(this);
   }
 
   /**
@@ -96,8 +96,8 @@ public class MainPageController implements ChaosGameObserver {
    * @return ChaosCanvas with new dimensions.
    */
   private ChaosCanvas getRedrawnCanvas(int height, int width, int iterations) {
-    chaosGame.reconfigureChaosGame(currentDescription, height, width);
-    chaosGame.runSteps(iterations);
+//    chaosGame.reconfigureChaosGame(currentDescription, height, width);
+//    chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
   }
 

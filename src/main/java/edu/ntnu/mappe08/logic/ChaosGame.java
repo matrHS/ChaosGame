@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  * Represents the chaos game.
  */
-public class ChaosGame {
+public class ChaosGame implements ChaosGameObservable {
 
   private ChaosCanvas canvas;
   private ChaosGameDescription description;
@@ -51,7 +51,7 @@ public class ChaosGame {
         description.getMinCoords(), 
         description.getMaxCoords());
     this.currentPoint = new Complex(0, 0);
-//    notifyListeners();
+//    notifyObservers();
   }
 
   /**
@@ -73,7 +73,7 @@ public class ChaosGame {
       throw new IllegalArgumentException("description cannot be null");
     }
     this.description = description;
-    notifyListeners();
+    reconfigureChaosGame(description, canvas.getHeight(), canvas.getWidth());
   }
   
   /**
@@ -97,6 +97,7 @@ public class ChaosGame {
     for (int i = 0; i < steps; i++) {
       this.runStep();
     }
+    notifyObservers();
   }
 
   /**
@@ -109,15 +110,27 @@ public class ChaosGame {
     
     canvas.putPixel(currentPoint);
   }
-  
-  public void subscribe(ChaosGameObserver listener) {
-    listeners.add(listener);
+
+  @Override
+  public void addObserver(ChaosGameObserver observer) {
+    if (observer == null) {
+      throw new IllegalArgumentException("observer cannot be null");
+    }
+    listeners.add(observer);
   }
-  
-  private void notifyListeners() {
+
+  @Override
+  public void removeObserver(ChaosGameObserver observer) {
+    if (observer == null) {
+      throw new IllegalArgumentException("observer cannot be null");
+    }
+    listeners.remove(observer);
+  }
+
+  @Override
+  public void notifyObservers() {
     for (ChaosGameObserver listener : listeners) {
       listener.update();
     }
   }
-
 }
