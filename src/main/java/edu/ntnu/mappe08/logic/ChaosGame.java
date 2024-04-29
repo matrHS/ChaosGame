@@ -16,8 +16,8 @@ public class ChaosGame {
   private ChaosGameDescription description;
   private Vector2D currentPoint;
   private Random random;
-  private ChaosGameNotifier notifier;
-  private List<ChaosGameNotifier> listeners = new ArrayList<>();
+  private ChaosGameObserver notifier;
+  private List<ChaosGameObserver> listeners = new ArrayList<>();
 
 
   /**
@@ -110,12 +110,12 @@ public class ChaosGame {
     canvas.putPixel(currentPoint);
   }
   
-  public void subscribe(ChaosGameNotifier listener) {
+  public void subscribe(ChaosGameObserver listener) {
     listeners.add(listener);
   }
   
   private void notifyListeners() {
-    for (ChaosGameNotifier listener : listeners) {
+    for (ChaosGameObserver listener : listeners) {
       listener.update();
     }
   }

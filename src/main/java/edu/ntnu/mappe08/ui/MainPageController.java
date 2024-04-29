@@ -5,19 +5,18 @@ import edu.ntnu.mappe08.logic.ChaosGame;
 import edu.ntnu.mappe08.logic.ChaosGameDescription;
 import edu.ntnu.mappe08.logic.ChaosGameDescriptionFactory;
 import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
-import edu.ntnu.mappe08.logic.ChaosGameNotifier;
+import edu.ntnu.mappe08.logic.ChaosGameObserver;
 import java.io.File;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
-import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 /**
  * Represents the controller for the Chaos Game.
  * Should be interchangeable with GUI and CLI.
  */
-public class MainPageController implements ChaosGameNotifier {
+public class MainPageController implements ChaosGameObserver {
 
   private MainPage mainPage;
   private ChaosGameFileHandler fileHandler;
