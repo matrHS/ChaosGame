@@ -13,9 +13,13 @@ import java.util.List;
 public class ChaosGameDescriptionFactory {
 
 
-  // TODO: Refactor to use enum instead of string.
-
-  public ChaosGameDescription createDescription(String type) {
+  /**
+   * Creates ChaosGameDescription based on transform type.
+   *
+   * @param type transform type for chaos game description
+   * @return ChaosGameDescription
+   */
+  public ChaosGameDescription createDescription(TransformTypes type) {
     return createDescription(type, null, null, null);
   }
   
@@ -25,7 +29,7 @@ public class ChaosGameDescriptionFactory {
    * @param type the type of chaos game description to create
    * @return a ChaosGameDescription
    */
-  public ChaosGameDescription createDescription(String type, 
+  public ChaosGameDescription createDescription(TransformTypes type, 
                                                  Vector2D minCoords, 
                                                  Vector2D maxCoords, 
                                                  List<Transform2D> transforms) {
@@ -33,17 +37,17 @@ public class ChaosGameDescriptionFactory {
 
     switch (type) {
 
-      case "Sierpinski":
+      case SIERPINSKI:
         description = sierpinskiDescription();
         break;
-      case "Affine2D":
+      case AFFINE2D:
         description = affineDescription(minCoords, maxCoords, transforms);
         break;
-      case "Barnsley":
+      case BARNSLEY:
         description = barnsleyDescription();
         break;
 
-      case "Julia":
+      case JULIA:
         description = juliaDescription(minCoords, maxCoords, transforms);
         break;
 
@@ -146,7 +150,7 @@ public class ChaosGameDescriptionFactory {
     if (fileContent == null || fileContent.isEmpty()) {
       throw new IllegalArgumentException("fileContent cannot be null or empty");
     }
-    String transformType;
+    TransformTypes transformType = null;
     Vector2D minCoords;
     Vector2D maxCoords;
     List<Transform2D> transforms = new ArrayList<>();
@@ -155,18 +159,21 @@ public class ChaosGameDescriptionFactory {
     for (int i = 0; i < fileContent.size(); i++) {
       formatedFileContent.add(fileContent.get(i).split("#")[0].trim());
     }
-    transformType = formatedFileContent.get(0);
+    for (TransformTypes type : TransformTypes.values()) {
+      if (formatedFileContent.getFirst().toUpperCase().contains(type.toString())) {
+        transformType = type;
+      }
+    }
 
     // TODO: Consider refactoring each transform into its own class to generalize filehandler
-    if (transformType.contains("Affine2D")) {
-      transformType = "Sierpinski";
+    if (transformType == TransformTypes.AFFINE2D) {
       minCoords = parseCoords(formatedFileContent.get(1));
       maxCoords = parseCoords(formatedFileContent.get(2));
 
       for (int i = 3; i < formatedFileContent.size(); i++) {
         transforms.add(parseAffineTransform(formatedFileContent.get(i)));
       }
-    } else if (transformType.contains("Julia")) {
+    } else if (transformType == TransformTypes.JULIA) {
       minCoords = parseCoords(formatedFileContent.get(1));
       maxCoords = parseCoords(formatedFileContent.get(2));
       Complex point = parseCoords(formatedFileContent.get(3));
@@ -177,6 +184,7 @@ public class ChaosGameDescriptionFactory {
       // TODO: Custom exception
       throw new IllegalArgumentException("Invalid file content");
     }
+    
     
     return createDescription(transformType, minCoords, maxCoords, transforms);
   }

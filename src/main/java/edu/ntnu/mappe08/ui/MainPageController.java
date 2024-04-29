@@ -6,6 +6,7 @@ import edu.ntnu.mappe08.logic.ChaosGameDescription;
 import edu.ntnu.mappe08.logic.ChaosGameDescriptionFactory;
 import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
 import edu.ntnu.mappe08.logic.ChaosGameObserver;
+import edu.ntnu.mappe08.logic.TransformTypes;
 import java.io.File;
 import java.util.List;
 import javafx.application.Platform;
@@ -48,7 +49,7 @@ public class MainPageController implements ChaosGameObserver {
    * Initializes the ChaosGameController.
    */
   public void initialize() {
-    this.chaosGame = new ChaosGame(descriptionFactory.createDescription("Sierpinski"), 
+    this.chaosGame = new ChaosGame(descriptionFactory.createDescription(TransformTypes.SIERPINSKI), 
         (int) mainPage.centerCanvasBounds.getHeight(), 
         (int) mainPage.centerCanvasBounds.getWidth());
     this.chaosGame.addObserver(this);
@@ -63,7 +64,7 @@ public class MainPageController implements ChaosGameObserver {
    * @param transformType type of transformation.
    * @return ChaosCanvas.
    */
-  private ChaosCanvas getChaosCanvas(int height, int width, int iterations, String transformType) {
+  private ChaosCanvas getChaosCanvas(int height, int width, int iterations, TransformTypes transformType) {
     currentDescription = this.descriptionFactory.createDescription(transformType);
     chaosGame.reconfigureChaosGame(currentDescription, height, width);
     chaosGame.runSteps(iterations);
@@ -109,7 +110,7 @@ public class MainPageController implements ChaosGameObserver {
    * @return ChaosCanvas.
    */
   public ChaosCanvas getSierpinski(int height, int width) {
-    return getChaosCanvas(height, width, iterations, "Sierpinski");
+    return getChaosCanvas(height, width, iterations, TransformTypes.SIERPINSKI);
   }
 
   /**
@@ -120,7 +121,7 @@ public class MainPageController implements ChaosGameObserver {
    * @return ChaosCanvas.
    */
   public ChaosCanvas getBarnsley(int height, int width) {
-    return getChaosCanvas(height, width, iterations, "Barnsley");
+    return getChaosCanvas(height, width, iterations, TransformTypes.BARNSLEY);
   }
 
   /**
@@ -131,7 +132,7 @@ public class MainPageController implements ChaosGameObserver {
    * @return ChaosCanvas.
    */
   public ChaosCanvas getJulia(int height, int width) {
-    return getChaosCanvas(height, width, iterations, "Julia");
+    return getChaosCanvas(height, width, iterations, TransformTypes.JULIA);
   }
 
   /**
@@ -145,7 +146,7 @@ public class MainPageController implements ChaosGameObserver {
     fileChooser.setInitialFileName("transformation.csv");
     File selectedFile = fileChooser.showSaveDialog(null);
     if (selectedFile != null) {
-      fileHandler.writeToFile(this.descriptionFactory.createDescription("Julia"),
+      fileHandler.writeToFile(this.descriptionFactory.createDescription(TransformTypes.JULIA),
           selectedFile.getAbsolutePath());
     }
   }

@@ -16,7 +16,7 @@ class ChaosGameDescriptionFactoryTest {
   @Test
   void createDefaultSierpinskiDescription() {
     ChaosGameDescriptionFactory factory = new ChaosGameDescriptionFactory();
-    ChaosGameDescription description = factory.createDescription("Sierpinski");
+    ChaosGameDescription description = factory.createDescription(TransformTypes.SIERPINSKI);
     assertEquals(3, description.getTransforms().size());
   }
   
@@ -26,7 +26,7 @@ class ChaosGameDescriptionFactoryTest {
   @Test
   void createDefaultBarnsleyDescription() {
     ChaosGameDescriptionFactory factory = new ChaosGameDescriptionFactory();
-    ChaosGameDescription description = factory.createDescription("Barnsley");
+    ChaosGameDescription description = factory.createDescription(TransformTypes.BARNSLEY);
     assertEquals(4, description.getTransforms().size());
   }
   
@@ -36,7 +36,7 @@ class ChaosGameDescriptionFactoryTest {
   @Test
   void createDefaultJuliaDescription() {
     ChaosGameDescriptionFactory factory = new ChaosGameDescriptionFactory();
-    ChaosGameDescription description = factory.createDescription("Julia");
+    ChaosGameDescription description = factory.createDescription(TransformTypes.JULIA);
     assertEquals(2, description.getTransforms().size());
   }
 

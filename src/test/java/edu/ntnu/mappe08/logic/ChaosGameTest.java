@@ -14,7 +14,7 @@ class ChaosGameTest {
   @Test
 void testConstructor() {
     ChaosGameDescriptionFactory factory = new ChaosGameDescriptionFactory();
-    ChaosGameDescription description = factory.createDescription("Sierpinski",
+    ChaosGameDescription description = factory.createDescription(TransformTypes.SIERPINSKI,
         null,
         null,
         null);
@@ -36,7 +36,7 @@ void testConstructor() {
   @Test
   void testRunStepNegativeSteps() {
     ChaosGameDescriptionFactory factory = new ChaosGameDescriptionFactory();
-    ChaosGameDescription description = factory.createDescription("Sierpinski",
+    ChaosGameDescription description = factory.createDescription(TransformTypes.SIERPINSKI,
         null,
         null,
         null);
