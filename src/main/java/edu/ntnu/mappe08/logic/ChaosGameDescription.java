@@ -60,6 +60,21 @@ public class ChaosGameDescription {
   }
 
   /**
+   * Returns the type of transform used in the chaos game.
+   *
+   * @return type of transform used in the chaos game, null if no transform
+   */
+  public TransformTypes getTransformType() {
+    TransformTypes transformType = null;
+    if (getTransforms().getFirst() instanceof AffineTransform2D) {
+      transformType = TransformTypes.AFFINE2D;
+    } else if (getTransforms().getFirst() instanceof JuliaTransform) {
+      transformType = TransformTypes.JULIA;
+    }
+    return transformType;
+  }
+  
+  /**
    * Returns transforms of the chaos game.
    *
    * @return the transforms of the chaos game

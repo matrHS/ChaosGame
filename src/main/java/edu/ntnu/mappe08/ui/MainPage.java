@@ -194,25 +194,19 @@ public class MainPage extends Application {
     barnsleyDefault.setOnAction(e -> {
       controller.doChangeImage(controller.getBarnsley((int) this.centerCanvasBounds.getHeight(),
           (int) this.centerCanvasBounds.getWidth()));
-      transformControlsParent.getChildren().remove(transformControls);
-      transformControls = transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D);
-      transformControlsParent.getChildren().add(transformControls);
+      setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
     });
     MenuItem juliaDefault = new MenuItem("Julia");
     juliaDefault.setOnAction(e -> {
       controller.doChangeImage(controller.getJulia((int) this.centerCanvasBounds.getHeight(),
           (int) this.centerCanvasBounds.getWidth()));
-      transformControlsParent.getChildren().remove(transformControls);
-      transformControls = transformControlsFactory.getTransformControls(TransformTypes.JULIA);
-      transformControlsParent.getChildren().add(transformControls);
+      setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.JULIA));
     });
     MenuItem sierpinskiDefault = new MenuItem("Sierpinski");
     sierpinskiDefault.setOnAction(e -> {
       controller.doChangeImage(controller.getSierpinski((int) this.centerCanvasBounds.getHeight(),
           (int) this.centerCanvasBounds.getWidth()));
-      transformControlsParent.getChildren().remove(transformControls);
-      transformControls = transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D);
-      transformControlsParent.getChildren().add(transformControls);
+      setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
     });
     Menu fractalsMenu = new Menu("Fractals");
     fractalsMenu.getItems().addAll(barnsleyDefault, juliaDefault, sierpinskiDefault);
@@ -222,6 +216,17 @@ public class MainPage extends Application {
     menuBar.getMenus().add(fractalsMenu);
     
     return menuBar;
+  }
+  
+  /**
+   * Sets the transform controls for the page.
+   *
+   * @param controls controls to set.
+   */
+  public void setTransformControls(GridPane controls) {
+    transformControlsParent.getChildren().remove(transformControls);
+    this.transformControls = controls;
+    transformControlsParent.getChildren().add(transformControls);
   }
 
 

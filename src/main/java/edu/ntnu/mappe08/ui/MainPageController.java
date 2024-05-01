@@ -165,7 +165,7 @@ public class MainPageController implements ChaosGameObserver {
     File selectedFile = fileChooser.showSaveDialog(null);
     try {
       if (selectedFile != null) {
-        fileHandler.writeToFile(this.descriptionFactory.createDescription(TransformTypes.JULIA),
+        fileHandler.writeToFile(chaosGame.getDescription(),
             selectedFile.getAbsolutePath());
       }
     } catch (ValueParseException e) {
@@ -178,7 +178,6 @@ public class MainPageController implements ChaosGameObserver {
    * Opens a transformation from a file using file chooser dialog.
    */
   public void openTransform() {
-    // TODO: Consider refactoring file chooser to a separate method for both save and open.
     FileChooser fileChooser = new FileChooser();
 
     fileChooser.setTitle("Open Transformation");
@@ -189,6 +188,7 @@ public class MainPageController implements ChaosGameObserver {
           (int) mainPage.centerCanvasBounds.getHeight(),
           iterations, 
           selectedFile.getAbsolutePath()));
+      mainPage.setTransformControls(mainPage.transformControlsFactory.getTransformControls(chaosGame.getTransformType()));
     }
   }
 

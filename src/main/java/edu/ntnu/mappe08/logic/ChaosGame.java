@@ -57,7 +57,6 @@ public class ChaosGame implements ChaosGameObservable {
         description.getMinCoords(), 
         description.getMaxCoords());
     this.currentPoint = new Complex(0, 0);
-//    notifyObservers();
   }
 
   /**
@@ -104,6 +103,16 @@ public class ChaosGame implements ChaosGameObservable {
     reconfigureChaosGame(description, canvas.getHeight(), canvas.getWidth());
   }
   
+  
+  /**
+   * Returns transform type of the chaos game description
+   *
+   * @return transform type of the chaos game description
+   */
+  public TransformTypes getTransformType() {
+    return description.getTransformType();
+  }
+  
   /**
    * Returns the canvas of the chaos game.
    *
@@ -125,7 +134,6 @@ public class ChaosGame implements ChaosGameObservable {
     for (int i = 0; i < steps; i++) {
       this.runStep();
     }
-//    notifyObservers();
   }
 
   /**
