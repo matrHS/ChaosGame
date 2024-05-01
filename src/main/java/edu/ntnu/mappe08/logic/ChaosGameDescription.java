@@ -88,7 +88,7 @@ public class ChaosGameDescription {
    *
    * @param transforms the transforms of the chaos game
    */ 
-  private void setTransforms(List<Transform2D> transforms) {
+  public void setTransforms(List<Transform2D> transforms) {
     if (transforms == null) {
       throw new IllegalArgumentException("transforms cannot be null");
     }

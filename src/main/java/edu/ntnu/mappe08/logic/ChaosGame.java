@@ -57,6 +57,7 @@ public class ChaosGame implements ChaosGameObservable {
         description.getMinCoords(), 
         description.getMaxCoords());
     this.currentPoint = new Complex(0, 0);
+    
   }
 
   /**
@@ -89,6 +90,19 @@ public class ChaosGame implements ChaosGameObservable {
     this.description.setMaxCoords(maxCoords);
     this.notifyObservers();
   }
+
+  /**
+   * Sets transforms for the chaos game description.
+   *
+   * @param transforms the transforms to set
+   */
+  public void setTransforms(List<Transform2D> transforms) {
+    if (transforms == null) {
+      throw new IllegalArgumentException("transforms cannot be null");
+    }
+    this.description.setTransforms(transforms);
+    this.notifyObservers();
+  }
   
   /**
    * Sets the description of the chaos game.
@@ -102,7 +116,6 @@ public class ChaosGame implements ChaosGameObservable {
     this.description = description;
     reconfigureChaosGame(description, canvas.getHeight(), canvas.getWidth());
   }
-  
   
   /**
    * Returns transform type of the chaos game description
