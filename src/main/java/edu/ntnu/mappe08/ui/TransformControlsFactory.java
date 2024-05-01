@@ -1,16 +1,20 @@
 package edu.ntnu.mappe08.ui;
 
 
+import edu.ntnu.mappe08.entity.Complex;
 import edu.ntnu.mappe08.entity.Matrix2x2;
 import edu.ntnu.mappe08.entity.Vector2D;
 import edu.ntnu.mappe08.logic.AffineTransform2D;
+import edu.ntnu.mappe08.logic.JuliaTransform;
 import edu.ntnu.mappe08.logic.Transform2D;
 import edu.ntnu.mappe08.logic.TransformTypes;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -67,60 +71,94 @@ public class TransformControlsFactory {
    * @return GridPane with controls for Julia transformation
    */
   private GridPane createJuliaControls() {
-    GridPane controls = new GridPane();
-    Label c2 = new Label("Upper Right");
-    TextField c2Real = new TextField();
-    c2Real.setText(controller.getCurrentDescription().getMaxCoords().getX0() + "");
+    GridPane parentControls = new GridPane();
+    GridPane juliaControls = new GridPane();
+    
+    parentControls.addRow(0, createMinMaxCoordsControls());
+    parentControls.addRow(1, new Label("Julia Controls"));
 
-    TextField c2Imaginary = new TextField();
-    c2Imaginary.setText(controller.getCurrentDescription().getMaxCoords().getX1() + "");
+    Label pointCLabel = new Label("Point C");
+    
+    Slider realSlider = new Slider(-2, 2, 0);
+    realSlider.setShowTickLabels(true);
+    realSlider.setShowTickMarks(true);
+    realSlider.setMajorTickUnit(1);
+    
+    Slider imaginarySlider = new Slider(-2, 2, 0);
+    imaginarySlider.setShowTickLabels(true);
+    imaginarySlider.setShowTickMarks(true);
+    imaginarySlider.setMajorTickUnit(1);
 
-    c2Real.setOnAction(e -> {
-      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(c2Real.getText()),
-          Double.parseDouble(c2Imaginary.getText())));
-    });
-    c2Imaginary.setOnAction(e -> {
-      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(c2Real.getText()),
-          Double.parseDouble(c2Imaginary.getText())));
-    });
-    controls.addRow(0, c2, c2Real, c2Imaginary);
-
-    Label c1 = new Label("Lower Left");
-    TextField c1Real = new TextField();
-    c1Real.setText(controller.getCurrentDescription().getMinCoords().getX0() + "");
-    TextField c1Imaginary = new TextField();
-    c1Imaginary.setText(controller.getCurrentDescription().getMinCoords().getX1() + "");
-
-    c1Real.setOnAction(e -> {
-      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(c1Real.getText()),
-          Double.parseDouble(c1Imaginary.getText())));
-    });
-    c1Imaginary.setOnAction(e -> {
-      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(c1Real.getText()),
-          Double.parseDouble(c1Imaginary.getText())));
+    TextField realField = new TextField();
+    realField.setText(realSlider.getValue() + "");
+    realField.setOnAction(e -> {
+      realSlider.setValue(Double.parseDouble(realField.getText()));
     });
 
-    controls.addRow(1, c1, c1Real, c1Imaginary);
+    TextField imaginaryField = new TextField();
+    imaginaryField.setText(imaginarySlider.getValue() + "");
+    imaginaryField.setOnAction(e -> {
+      imaginarySlider.setValue(Double.parseDouble(imaginaryField.getText()));
+    });
+    
+    realSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+      if (controller.getChaosGame().getTransformType().equals(TransformTypes.JULIA)) {
+        updateJuliaParams(realSlider, imaginarySlider);
+        realField.setText(newValue + "");
+      }
+    });
+    
+    imaginarySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+      if (controller.getChaosGame().getTransformType().equals(TransformTypes.JULIA)) {
+        updateJuliaParams(realSlider, imaginarySlider);
+        imaginaryField.setText(newValue + "");
+      }
+    });
 
-    return controls;
+    Transform2D loadedTransform = controller.getChaosGame().getDescription().getTransforms().getFirst();
+    if (loadedTransform instanceof JuliaTransform) {
+      JuliaTransform juliaTransform = (JuliaTransform) loadedTransform;
+      realSlider.setValue(juliaTransform.getPointC().getRealPart());
+      imaginarySlider.setValue(juliaTransform.getPointC().getImaginaryPart());
+    }
+    
+    Label emptyLabel = new Label("");
+    
+    juliaControls.addRow(0, pointCLabel, realSlider, imaginarySlider);
+    juliaControls.addRow(1, emptyLabel, realField, imaginaryField);
+    
+    parentControls.addRow(2, juliaControls);
+
+    return parentControls;
   }
 
+  /**
+   * Updates Julia transform parameters.
+   *
+   * @param realSlider Slider for real part
+   * @param imaginarySlider Slider for imaginary part
+   */
+  private void updateJuliaParams(Slider realSlider, Slider imaginarySlider) {
+    List<Transform2D> transforms = new ArrayList<>();
+    transforms.add(new JuliaTransform(new Complex(realSlider.getValue(), imaginarySlider.getValue()), 1));
+    transforms.add(new JuliaTransform(new Complex(realSlider.getValue(), imaginarySlider.getValue()), -1));
+    controller.getChaosGame().setTransforms(transforms);
+  }
 
   /**
-   * Creates GridPane with controls for affine transformation.
+   * Creates GridPane with controls for min and max coordinates.
    *
-   * @return GridPane with controls for affine transformation
+   * @return GridPane with controls for min and max coordinates
    */
-  private GridPane createAffineControls() {
-    GridPane parentControls = new GridPane();
+  private GridPane createMinMaxCoordsControls() {
     GridPane controls = new GridPane();
-
-    Label a1 = new Label("Upper Right");
+    Label maxCoords = new Label("Upper Right");
     TextField a10 = new TextField();
-    TextField a11 = new TextField();
-
     a10.setText(controller.getCurrentDescription().getMaxCoords().getX0() + "");
+
+    TextField a11 = new TextField();
     a11.setText(controller.getCurrentDescription().getMaxCoords().getX1() + "");
+
     a10.setOnAction(e -> {
       controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
           Double.parseDouble(a11.getText())));
@@ -129,15 +167,14 @@ public class TransformControlsFactory {
       controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
           Double.parseDouble(a11.getText())));
     });
-
-    controls.addRow(0, a1, a10, a11);
+    controls.addRow(0, maxCoords, a10, a11);
 
     Label a0 = new Label("Lower Left");
     TextField a00 = new TextField();
-    TextField a01 = new TextField();
-
     a00.setText(controller.getCurrentDescription().getMinCoords().getX0() + "");
+    TextField a01 = new TextField();
     a01.setText(controller.getCurrentDescription().getMinCoords().getX1() + "");
+
     a00.setOnAction(e -> {
       controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(a00.getText()),
           Double.parseDouble(a01.getText())));
@@ -148,9 +185,22 @@ public class TransformControlsFactory {
     });
 
     controls.addRow(1, a0, a00, a01);
+    
+    return controls;
+  }
+  
+  /**
+   * Creates GridPane with controls for affine transformation.
+   *
+   * @return GridPane with controls for affine transformation
+   */
+  private GridPane createAffineControls() {
+    GridPane parentControls = new GridPane();
+    GridPane controls = new GridPane();
+
     controls.setHgap(4);
     controls.setVgap(4);
-    parentControls.addRow(0, controls);
+    parentControls.addRow(0, createMinMaxCoordsControls());
 
     // Help from copilot choosing the SimpleStingProperty datatype for the return type.
     TableColumn<AffineTransform2D, String> a00Col = new TableColumn<>("a00");
