@@ -10,9 +10,11 @@ import edu.ntnu.mappe08.logic.Transform2D;
 import edu.ntnu.mappe08.logic.TransformTypes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
@@ -56,6 +58,8 @@ public class TransformControlsFactory {
       case JULIA:
         controls = createJuliaControls();
         break;
+      default:
+        break;
     }
     controls.setHgap(4);
     controls.setVgap(4);
@@ -72,12 +76,12 @@ public class TransformControlsFactory {
    */
   private GridPane createJuliaControls() {
     GridPane parentControls = new GridPane();
-    GridPane juliaControls = new GridPane();
+    
     
     parentControls.addRow(0, createMinMaxCoordsControls());
     parentControls.addRow(1, new Label("Julia Controls"));
 
-    Label pointCLabel = new Label("Point C");
+    
     
     Slider realSlider = new Slider(-2, 2, 0);
     realSlider.setShowTickLabels(true);
@@ -115,7 +119,8 @@ public class TransformControlsFactory {
       }
     });
 
-    Transform2D loadedTransform = controller.getChaosGame().getDescription().getTransforms().getFirst();
+    Transform2D loadedTransform = controller.getChaosGame().getDescription()
+        .getTransforms().getFirst();
     if (loadedTransform instanceof JuliaTransform) {
       JuliaTransform juliaTransform = (JuliaTransform) loadedTransform;
       realSlider.setValue(juliaTransform.getPointC().getRealPart());
@@ -123,8 +128,11 @@ public class TransformControlsFactory {
     }
     
     Label emptyLabel = new Label("");
+    Label pointcLabel = new Label("Point C");
+
+    GridPane juliaControls = new GridPane();
     
-    juliaControls.addRow(0, pointCLabel, realSlider, imaginarySlider);
+    juliaControls.addRow(0, pointcLabel, realSlider, imaginarySlider);
     juliaControls.addRow(1, emptyLabel, realField, imaginaryField);
     
     parentControls.addRow(2, juliaControls);
@@ -140,8 +148,10 @@ public class TransformControlsFactory {
    */
   private void updateJuliaParams(Slider realSlider, Slider imaginarySlider) {
     List<Transform2D> transforms = new ArrayList<>();
-    transforms.add(new JuliaTransform(new Complex(realSlider.getValue(), imaginarySlider.getValue()), 1));
-    transforms.add(new JuliaTransform(new Complex(realSlider.getValue(), imaginarySlider.getValue()), -1));
+    transforms.add(new JuliaTransform(new Complex(realSlider.getValue(), 
+        imaginarySlider.getValue()), 1));
+    transforms.add(new JuliaTransform(new Complex(realSlider.getValue(), 
+        imaginarySlider.getValue()), -1));
     controller.getChaosGame().setTransforms(transforms);
   }
 
@@ -151,8 +161,8 @@ public class TransformControlsFactory {
    * @return GridPane with controls for min and max coordinates
    */
   private GridPane createMinMaxCoordsControls() {
-    GridPane controls = new GridPane();
-    Label maxCoords = new Label("Upper Right");
+    
+    
     TextField a10 = new TextField();
     a10.setText(controller.getCurrentDescription().getMaxCoords().getX0() + "");
 
@@ -167,9 +177,12 @@ public class TransformControlsFactory {
       controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
           Double.parseDouble(a11.getText())));
     });
+    
+    Label maxCoords = new Label("Upper Right");
+    GridPane controls = new GridPane();
     controls.addRow(0, maxCoords, a10, a11);
 
-    Label a0 = new Label("Lower Left");
+    
     TextField a00 = new TextField();
     a00.setText(controller.getCurrentDescription().getMinCoords().getX0() + "");
     TextField a01 = new TextField();
@@ -184,6 +197,7 @@ public class TransformControlsFactory {
           Double.parseDouble(a01.getText())));
     });
 
+    Label a0 = new Label("Lower Left");
     controls.addRow(1, a0, a00, a01);
     
     return controls;
@@ -196,12 +210,16 @@ public class TransformControlsFactory {
    */
   private GridPane createAffineControls() {
     GridPane parentControls = new GridPane();
-    GridPane controls = new GridPane();
+    GridPane transformControls = new GridPane();
+    
 
-    controls.setHgap(4);
-    controls.setVgap(4);
+    transformControls.setHgap(4);
+    transformControls.setVgap(4);
     parentControls.addRow(0, createMinMaxCoordsControls());
-
+    
+    Label affineLabel = new Label("Affine Controls");
+    parentControls.addRow(1, affineLabel);
+    
     // Help from copilot choosing the SimpleStingProperty datatype for the return type.
     TableColumn<AffineTransform2D, String> a00Col = new TableColumn<>("a00");
     a00Col.setMinWidth(25);
@@ -252,13 +270,43 @@ public class TransformControlsFactory {
     });
 
     TableView transformTable = new TableView();
-    transformTable.setItems(this.getTransformListWrapper(controller.getCurrentDescription().getTransforms()));
+    transformTable.setItems(this.getTransformListWrapper(controller.getCurrentDescription()
+        .getTransforms()));
     transformTable.getColumns().addAll(a00Col, a01Col, a10Col, a11Col, x0Col, x1Col);
     transformTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
-    transformTable.setEditable(true);
 
+    // Add listener for double-click on row
+    transformTable.setOnMousePressed(mouseEvent -> {
+      if (mouseEvent.isPrimaryButtonDown() && (mouseEvent.getClickCount() == 2)) {
+        int selectedIndex = transformTable.getSelectionModel().getSelectedIndex();
+        AffineTransform2D selectedLiterature = (AffineTransform2D) transformTable.getItems()
+            .get(selectedIndex);
+        controller.doEditAffineTransform(selectedLiterature);
+        transformTable.setItems(this.getTransformListWrapper(this.controller.getCurrentDescription()
+            .getTransforms()));
+      }
+    });
+    
     parentControls.addRow(2, transformTable);
 
+    Button addTransform = new Button("Add Transform");
+    addTransform.setOnAction(e -> {
+      controller.doAddAffineTransform();
+      transformTable.setItems(this.getTransformListWrapper(this.controller.getCurrentDescription()
+          .getTransforms()));
+    });
+    
+    Button removeTransform = new Button("Remove Transform");
+    removeTransform.setOnAction(e -> {
+      int selectedIndex = transformTable.getSelectionModel().getSelectedIndex();
+      controller.doRemoveAffineTransform(selectedIndex);
+      transformTable.setItems(this.getTransformListWrapper(this.controller.getCurrentDescription()
+          .getTransforms()));
+    });
+
+    GridPane buttonControls = new GridPane();
+    buttonControls.addRow(0, addTransform, removeTransform);
+    parentControls.addRow(3, buttonControls);
 
     return parentControls;
   }

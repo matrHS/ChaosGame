@@ -77,7 +77,9 @@ public class ChaosGame implements ChaosGameObservable {
       throw new IllegalArgumentException("minCoords cannot be null");
     }
     this.description.setMinCoords(minCoords);
-    this.notifyObservers();
+    if (!this.getDescription().getTransforms().isEmpty()) {
+      this.notifyObservers();
+    }
   }
   
   /**
@@ -88,7 +90,9 @@ public class ChaosGame implements ChaosGameObservable {
       throw new IllegalArgumentException("maxCoords cannot be null");
     }
     this.description.setMaxCoords(maxCoords);
-    this.notifyObservers();
+    if (!this.getDescription().getTransforms().isEmpty()) {
+      this.notifyObservers();
+    }
   }
 
   /**
@@ -101,11 +105,13 @@ public class ChaosGame implements ChaosGameObservable {
       throw new IllegalArgumentException("transforms cannot be null");
     }
     this.description.setTransforms(transforms);
-    this.notifyObservers();
+    if (!transforms.isEmpty()) {
+      this.notifyObservers();
+    }
   }
   
   /**
-   * Returns transform type of the chaos game description
+   * Returns transform type of the chaos game description.
    *
    * @return transform type of the chaos game description
    */

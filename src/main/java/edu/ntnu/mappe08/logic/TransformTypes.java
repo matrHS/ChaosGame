@@ -7,5 +7,6 @@ public enum TransformTypes {
     SIERPINSKI,
     AFFINE2D,
     BARNSLEY,
-    JULIA
+    JULIA,
+    NONE
 }
