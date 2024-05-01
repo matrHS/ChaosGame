@@ -11,6 +11,13 @@ public class ChaosGameDescription {
   private Vector2D maxCoords;
   private List<Transform2D> transforms;
   
+  /**
+   * Constructor for chaos game description.
+   *
+   * @param minCoords minimum coordinates of the chaos game
+   * @param maxCoords maximum coordinates of the chaos game
+   * @param transforms transforms of the chaos game
+   */
   ChaosGameDescription(Vector2D minCoords, Vector2D maxCoords, List<Transform2D> transforms) {
     setMinCoords(minCoords);
     setMaxCoords(maxCoords);
@@ -66,7 +73,10 @@ public class ChaosGameDescription {
    */
   public TransformTypes getTransformType() {
     TransformTypes transformType = null;
-    if (getTransforms().getFirst() instanceof AffineTransform2D) {
+    
+    if (getTransforms().isEmpty()) {
+      transformType = TransformTypes.NONE;
+    } else if (getTransforms().getFirst() instanceof AffineTransform2D) {
       transformType = TransformTypes.AFFINE2D;
     } else if (getTransforms().getFirst() instanceof JuliaTransform) {
       transformType = TransformTypes.JULIA;

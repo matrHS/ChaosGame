@@ -1,15 +1,19 @@
 package edu.ntnu.mappe08.ui;
 
+import edu.ntnu.mappe08.logic.AffineTransform2D;
 import edu.ntnu.mappe08.logic.ChaosCanvas;
 import edu.ntnu.mappe08.logic.ChaosGame;
 import edu.ntnu.mappe08.logic.ChaosGameDescription;
 import edu.ntnu.mappe08.logic.ChaosGameDescriptionFactory;
 import edu.ntnu.mappe08.logic.ChaosGameFileHandler;
 import edu.ntnu.mappe08.logic.ChaosGameObserver;
+import edu.ntnu.mappe08.logic.IllegalTransformTypeException;
+import edu.ntnu.mappe08.logic.Transform2D;
 import edu.ntnu.mappe08.logic.TransformTypes;
 import edu.ntnu.mappe08.logic.ValueParseException;
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
@@ -68,7 +72,8 @@ public class MainPageController implements ChaosGameObserver {
    * @param transformType type of transformation.
    * @return ChaosCanvas.
    */
-  private ChaosCanvas getChaosCanvas(int height, int width, int iterations, TransformTypes transformType) {
+  private ChaosCanvas getChaosCanvas(int height, int width, int iterations, 
+                                     TransformTypes transformType) {
     currentDescription = this.descriptionFactory.createDescription(transformType);
     chaosGame.reconfigureChaosGame(currentDescription, height, width);
     chaosGame.runSteps(iterations);
@@ -84,7 +89,7 @@ public class MainPageController implements ChaosGameObserver {
    * @param filePath Filepath for transform.
    * @return Simulated ChaosCanvas.
    */
-  public ChaosCanvas getCustomCanvas(int height, int width, int iterations,String filePath) {
+  public ChaosCanvas getCustomCanvas(int height, int width, int iterations, String filePath) {
     try {
       List<String> strings = fileHandler.readFromFile(filePath);
       this.currentDescription = descriptionFactory.buildChaosGameDescription(strings);
@@ -160,7 +165,8 @@ public class MainPageController implements ChaosGameObserver {
     FileChooser fileChooser = new FileChooser();
     
     fileChooser.setTitle("Save Transformation");
-    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+    fileChooser.getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
     fileChooser.setInitialFileName("transformation.csv");
     File selectedFile = fileChooser.showSaveDialog(null);
     try {
@@ -181,14 +187,16 @@ public class MainPageController implements ChaosGameObserver {
     FileChooser fileChooser = new FileChooser();
 
     fileChooser.setTitle("Open Transformation");
-    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+    fileChooser.getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
     File selectedFile = fileChooser.showOpenDialog(null);
     if (selectedFile != null) {
       doChangeImage(this.getCustomCanvas((int) mainPage.centerCanvasBounds.getWidth(),
           (int) mainPage.centerCanvasBounds.getHeight(),
           iterations, 
           selectedFile.getAbsolutePath()));
-      mainPage.setTransformControls(mainPage.transformControlsFactory.getTransformControls(chaosGame.getTransformType()));
+      mainPage.setTransformControls(mainPage.transformControlsFactory
+          .getTransformControls(chaosGame.getTransformType()));
     }
   }
 
@@ -211,11 +219,13 @@ public class MainPageController implements ChaosGameObserver {
 
   /**
    * Redraws the image on the main page using passed bounds.
-   * 
+   *
    * @param newBounds new bounds to redraw image.
    */
   public void doRedrawImage(Bounds newBounds) {
-    ChaosCanvas canvas = getRedrawnCanvas((int) newBounds.getHeight(), (int) newBounds.getWidth(), iterations);
+    ChaosCanvas canvas = getRedrawnCanvas((int) newBounds.getHeight(), 
+        (int) newBounds.getWidth(), 
+        iterations);
     this.doChangeImage(canvas);
   }
   
@@ -227,6 +237,64 @@ public class MainPageController implements ChaosGameObserver {
   public void setIterations(int iterations) {
     this.iterations = iterations;
     update();
+  }
+
+  /**
+   * Edits an affine transformation.
+   *
+   * @param transform the transformation to edit.
+   */
+  public void doEditAffineTransform(AffineTransform2D transform) {
+    if (this.getChaosGame().getTransformType() != TransformTypes.AFFINE2D) {
+      throw new IllegalTransformTypeException(
+          "Cannot edit affine transformation in non affine chaos game");
+    }
+    AffineTransformDialog dialog = new AffineTransformDialog(transform);
+    Optional<AffineTransform2D> result = dialog.showAndWait();
+    result.ifPresent(newTransform -> {
+      List<Transform2D> transforms = this.getCurrentDescription().getTransforms();
+      if (transforms.getFirst() instanceof AffineTransform2D) {
+        transforms.set(transforms.indexOf(transform), newTransform);
+        this.getChaosGame().setTransforms(transforms);
+      }
+    });
+    
+  }
+
+  /**
+   * Adds an affine transformation.
+   */
+  public void doAddAffineTransform() {
+    if (this.getChaosGame().getTransformType() != TransformTypes.AFFINE2D 
+        && this.getChaosGame().getTransformType() != TransformTypes.NONE) {
+      throw new IllegalTransformTypeException(
+          "Cannot add affine transformation to non affine chaos game");
+    }
+    AffineTransformDialog dialog = new AffineTransformDialog();
+    Optional<AffineTransform2D> result = dialog.showAndWait();
+    result.ifPresent(transform -> {
+      List<Transform2D> transforms = this.getCurrentDescription().getTransforms();
+      transforms.add(transform);
+      this.getChaosGame().setTransforms(transforms);
+    });
+  }
+  
+  /**
+   * Removes an affine transformation.
+   *
+   * @param index index of transformation to remove.
+   */
+  public void doRemoveAffineTransform(int index) {
+    if (this.getChaosGame().getTransformType() != TransformTypes.AFFINE2D) {
+      throw new IllegalTransformTypeException(
+          "Cannot remove affine transformation from non affine chaos game");
+    }
+    // TODO: Add alert popup as confirmation as well as alert for no row selected
+    if (index >= 0) {
+      List<Transform2D> transforms = this.getCurrentDescription().getTransforms();
+      transforms.remove(index);
+      this.getChaosGame().setTransforms(transforms);
+    }
   }
   
   /**
