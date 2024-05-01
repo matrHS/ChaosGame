@@ -208,8 +208,6 @@ public class MainPage extends Application {
     
     controls.addRow(1, c1, c1Real, c1Imaginary);
     
-    
-    
     return controls;
   }
 
@@ -392,7 +390,7 @@ public class MainPage extends Application {
   public void updateBounds() {
     this.centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
     // Temporarily removed redraw to get observer working first with values. will be added back.
-//    controller.doRedrawImage(this.centerCanvasBounds);
+    controller.doRedrawImage(this.centerCanvasBounds);
   }
   
   
