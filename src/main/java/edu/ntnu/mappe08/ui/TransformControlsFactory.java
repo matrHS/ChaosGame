@@ -114,6 +114,13 @@ public class TransformControlsFactory {
         imaginaryField.setText(newValue + "");
       }
     });
+
+    Transform2D loadedTransform = controller.getChaosGame().getDescription().getTransforms().getFirst();
+    if (loadedTransform instanceof JuliaTransform) {
+      JuliaTransform juliaTransform = (JuliaTransform) loadedTransform;
+      realSlider.setValue(juliaTransform.getPointC().getRealPart());
+      imaginarySlider.setValue(juliaTransform.getPointC().getImaginaryPart());
+    }
     
     Label emptyLabel = new Label("");
     
