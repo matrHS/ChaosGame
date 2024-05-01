@@ -1,0 +1,229 @@
+package edu.ntnu.mappe08.ui;
+
+
+import edu.ntnu.mappe08.entity.Matrix2x2;
+import edu.ntnu.mappe08.entity.Vector2D;
+import edu.ntnu.mappe08.logic.AffineTransform2D;
+import edu.ntnu.mappe08.logic.Transform2D;
+import edu.ntnu.mappe08.logic.TransformTypes;
+import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+
+/**
+ * Factory class for creating TransformControls.
+ */
+public class TransformControlsFactory {
+
+  MainPageController controller;
+  private ObservableList<Transform2D> transformListWrapper;
+
+
+  /**
+   * Constructor for TransformControlsFactory.
+   *
+   * @param controller MainPageController
+   */
+  public TransformControlsFactory(MainPageController controller) {
+    this.controller = controller;
+  }
+
+
+
+  /**
+   * Creates GridPane with controls for current transformation type.
+   *
+   * @return GridPane with controls for current transformation type
+   */
+  public GridPane getTransformControls(TransformTypes transformType) {
+    // TODO: Refactor into factory.
+    GridPane controls = new GridPane();
+
+    switch (transformType) {
+      case AFFINE2D:
+        controls = createAffineControls();
+        break;
+      case JULIA:
+        controls = createJuliaControls();
+        break;
+    }
+    controls.setHgap(4);
+    controls.setVgap(4);
+    controls.maxWidth(200);
+    controls.minWidth(200);
+    return controls;
+  }
+
+
+  /**
+   * Creates GridPane with controls for Julia transformation.
+   *
+   * @return GridPane with controls for Julia transformation
+   */
+  private GridPane createJuliaControls() {
+    GridPane controls = new GridPane();
+    Label c2 = new Label("Upper Right");
+    TextField c2Real = new TextField();
+    c2Real.setText(controller.getCurrentDescription().getMaxCoords().getX0() + "");
+
+    TextField c2Imaginary = new TextField();
+    c2Imaginary.setText(controller.getCurrentDescription().getMaxCoords().getX1() + "");
+
+    c2Real.setOnAction(e -> {
+      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(c2Real.getText()),
+          Double.parseDouble(c2Imaginary.getText())));
+    });
+    c2Imaginary.setOnAction(e -> {
+      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(c2Real.getText()),
+          Double.parseDouble(c2Imaginary.getText())));
+    });
+    controls.addRow(0, c2, c2Real, c2Imaginary);
+
+    Label c1 = new Label("Lower Left");
+    TextField c1Real = new TextField();
+    c1Real.setText(controller.getCurrentDescription().getMinCoords().getX0() + "");
+    TextField c1Imaginary = new TextField();
+    c1Imaginary.setText(controller.getCurrentDescription().getMinCoords().getX1() + "");
+
+    c1Real.setOnAction(e -> {
+      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(c1Real.getText()),
+          Double.parseDouble(c1Imaginary.getText())));
+    });
+    c1Imaginary.setOnAction(e -> {
+      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(c1Real.getText()),
+          Double.parseDouble(c1Imaginary.getText())));
+    });
+
+    controls.addRow(1, c1, c1Real, c1Imaginary);
+
+    return controls;
+  }
+
+
+  /**
+   * Creates GridPane with controls for affine transformation.
+   *
+   * @return GridPane with controls for affine transformation
+   */
+  private GridPane createAffineControls() {
+    GridPane parentControls = new GridPane();
+    GridPane controls = new GridPane();
+
+    Label a1 = new Label("Upper Right");
+    TextField a10 = new TextField();
+    TextField a11 = new TextField();
+
+    a10.setText(controller.getCurrentDescription().getMaxCoords().getX0() + "");
+    a11.setText(controller.getCurrentDescription().getMaxCoords().getX1() + "");
+    a10.setOnAction(e -> {
+      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
+          Double.parseDouble(a11.getText())));
+    });
+    a11.setOnAction(e -> {
+      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
+          Double.parseDouble(a11.getText())));
+    });
+
+    controls.addRow(0, a1, a10, a11);
+
+    Label a0 = new Label("Lower Left");
+    TextField a00 = new TextField();
+    TextField a01 = new TextField();
+
+    a00.setText(controller.getCurrentDescription().getMinCoords().getX0() + "");
+    a01.setText(controller.getCurrentDescription().getMinCoords().getX1() + "");
+    a00.setOnAction(e -> {
+      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(a00.getText()),
+          Double.parseDouble(a01.getText())));
+    });
+    a01.setOnAction(e -> {
+      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(a00.getText()),
+          Double.parseDouble(a01.getText())));
+    });
+
+    controls.addRow(1, a0, a00, a01);
+    controls.setHgap(4);
+    controls.setVgap(4);
+    parentControls.addRow(0, controls);
+
+    // Help from copilot choosing the SimpleStingProperty datatype for the return type.
+    TableColumn<AffineTransform2D, String> a00Col = new TableColumn<>("a00");
+    a00Col.setMinWidth(25);
+    a00Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Matrix2x2 matrix = transform.getMatrix();
+      return new SimpleStringProperty(matrix.getA00() + "");
+    });
+
+    TableColumn<AffineTransform2D, String> a01Col = new TableColumn<>("a01");
+    a01Col.setMinWidth(25);
+    a01Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Matrix2x2 matrix = transform.getMatrix();
+      return new SimpleStringProperty(matrix.getA01() + "");
+    });
+
+    TableColumn<AffineTransform2D, String> a10Col = new TableColumn<>("a10");
+    a10Col.setMinWidth(25);
+    a10Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Matrix2x2 matrix = transform.getMatrix();
+      return new SimpleStringProperty(matrix.getA10() + "");
+    });
+
+    TableColumn<AffineTransform2D, String> a11Col = new TableColumn<>("a11");
+    a11Col.setMinWidth(25);
+    a11Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Matrix2x2 matrix = transform.getMatrix();
+      return new SimpleStringProperty(matrix.getA11() + "");
+    });
+
+    TableColumn<AffineTransform2D, String> x0Col = new TableColumn<>("x0");
+    x0Col.setMinWidth(25);
+    x0Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Vector2D vector = transform.getVector();
+      return new SimpleStringProperty(vector.getX0() + "");
+    });
+
+    TableColumn<AffineTransform2D, String> x1Col = new TableColumn<>("x1");
+    x1Col.setMinWidth(25);
+    x1Col.setCellValueFactory(cellData -> {
+      AffineTransform2D transform = cellData.getValue();
+      Vector2D vector = transform.getVector();
+      return new SimpleStringProperty(vector.getX1() + "");
+    });
+
+    TableView transformTable = new TableView();
+    transformTable.setItems(this.getTransformListWrapper(controller.getCurrentDescription().getTransforms()));
+    transformTable.getColumns().addAll(a00Col, a01Col, a10Col, a11Col, x0Col, x1Col);
+    transformTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+    transformTable.setEditable(true);
+
+    parentControls.addRow(2, transformTable);
+
+
+    return parentControls;
+  }
+
+
+  /**
+   * Returns an ObservableList for table of Transform2D.
+   *
+   * @param transforms List of Transform2D.
+   * @return ObservableList of Transform2D.
+   */
+  private ObservableList<Transform2D> getTransformListWrapper(List<Transform2D> transforms) {
+    transformListWrapper
+        = FXCollections.observableArrayList(transforms);
+    return transformListWrapper;
+  }
+
+}
