@@ -1,0 +1,35 @@
+.root{
+    -fx-background-color: C7D3DD;
+    -fx-font-family: Consolas;
+    -fx-focus-color: #546A76;
+    -fx-faint-focus-color: transparent;
+    -fx-accent: #546A76
+}
+
+.menu-bar{
+    -fx-background-color: AliceBlue;
+}
+.menu-item:hover, .menu-button:hover{
+    -fx-background-color: #546A76;
+
+}
+.menu-item:focused, .menu-button:showing{
+    -fx-background-color: #546A76;
+}
+
+
+.label{
+    -fx-font-size: 12;
+    -fx-padding: 4;
+}
+
+.HBox-bottom{
+    -fx-background-color: AliceBlue;
+    -fx-padding: 4;
+    -fx-spacing: 10;
+}
+
+.text-field{
+    -fx-font-family: "Arial";
+    -fx-font-size: 12;
+}

@@ -62,7 +62,7 @@ public class MainPage extends Application {
     this.controller = new MainPageController(this);
     this.transformControlsFactory = new TransformControlsFactory(this.controller);
     
-    stage.setTitle("Chaos game");
+    stage.setTitle("Chaos Game");
     
     borderPane = new BorderPane();
     transformControlsParent = new HBox();
@@ -75,6 +75,7 @@ public class MainPage extends Application {
 
     
     MenuBar menuBar = createMenus();
+    createMenus().getStyleClass().add("menu-bar");
     borderPane.setTop(menuBar);
 
     HBox bottomBarOptions = createBottomOptions();
@@ -102,8 +103,9 @@ public class MainPage extends Application {
     };
     centerBox.heightProperty().addListener(stageSizeListener);
     centerBox.widthProperty().addListener(stageSizeListener);
-    
-    
+
+
+    scene.getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
     stage.setScene(scene);
     stage.show();
 
@@ -124,6 +126,7 @@ public class MainPage extends Application {
    */
   private HBox createBottomOptions() {
     HBox bottomBar = new HBox();
+    bottomBar.getStyleClass().add("HBox-bottom");
     Label iterationsLabel = new Label("Iterations");
     TextField iterations = new TextField();
     iterations.setText(controller.getIterations() + "");
