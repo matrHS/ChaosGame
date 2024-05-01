@@ -106,9 +106,18 @@ public class MainPageController implements ChaosGameObserver {
    * @return ChaosCanvas with new dimensions.
    */
   private ChaosCanvas getRedrawnCanvas(int height, int width, int iterations) {
-//    chaosGame.reconfigureChaosGame(currentDescription, height, width);
-//    chaosGame.runSteps(iterations);
+    chaosGame.reconfigureChaosGame(currentDescription, height, width);
+    chaosGame.runSteps(iterations);
     return chaosGame.getCanvas();
+  }
+
+  /**
+   * Returns the current ChaosGame.
+   *
+   * @return ChaosGame.
+   */
+  public ChaosGame getChaosGame() {
+    return chaosGame;
   }
 
   /**

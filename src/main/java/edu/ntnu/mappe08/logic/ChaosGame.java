@@ -16,7 +16,6 @@ public class ChaosGame implements ChaosGameObservable {
   private ChaosGameDescription description;
   private Vector2D currentPoint;
   private Random random;
-  private ChaosGameObserver notifier;
   private List<ChaosGameObserver> listeners = new ArrayList<>();
 
 
@@ -40,7 +39,14 @@ public class ChaosGame implements ChaosGameObservable {
     this.currentPoint = new Complex(0, 0);
     
   }
-  
+
+  /**
+   * Reconfigures the chaos game with a new description and canvas size.
+   *
+   * @param description description of the chaos game
+   * @param height height of the canvas
+   * @param width width of the canvas
+   */
   public void reconfigureChaosGame(ChaosGameDescription description, int height, int width) {
     if (description == null) {
       throw new IllegalArgumentException("description cannot be null");
@@ -61,6 +67,28 @@ public class ChaosGame implements ChaosGameObservable {
    */
   public ChaosGameDescription getDescription() {
     return description;
+  }
+  
+  /**
+   * Returns the current point of the chaos game.
+   */
+  public void setMinCoords(Vector2D minCoords) {
+    if (minCoords == null) {
+      throw new IllegalArgumentException("minCoords cannot be null");
+    }
+    this.description.setMinCoords(minCoords);
+    this.notifyObservers();
+  }
+  
+  /**
+   * Returns the current point of the chaos game.
+   */
+  public void setMaxCoords(Vector2D maxCoords) {
+    if (maxCoords == null) {
+      throw new IllegalArgumentException("maxCoords cannot be null");
+    }
+    this.description.setMaxCoords(maxCoords);
+    this.notifyObservers();
   }
   
   /**
@@ -97,7 +125,7 @@ public class ChaosGame implements ChaosGameObservable {
     for (int i = 0; i < steps; i++) {
       this.runStep();
     }
-    notifyObservers();
+//    notifyObservers();
   }
 
   /**

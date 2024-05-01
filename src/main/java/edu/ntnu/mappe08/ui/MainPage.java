@@ -182,14 +182,11 @@ public class MainPage extends Application {
     c2Imaginary.setText(controller.getCurrentDescription().getMaxCoords().getX1() + "");
 
     c2Real.setOnAction(e -> {
-      controller.getCurrentDescription().setMaxCoords(new Vector2D(Double.parseDouble(c2Real.getText()),
+      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(c2Real.getText()),
           Double.parseDouble(c2Imaginary.getText())));
     });
     c2Imaginary.setOnAction(e -> {
-      // TODO: Figure out how to update the description with the new values.
-      // Decide if we want to make a new description or update the current one.
-      // If we update the current one we can make the description the observable
-      controller.getCurrentDescription().setMaxCoords(new Vector2D(Double.parseDouble(c2Real.getText()),
+      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(c2Real.getText()),
           Double.parseDouble(c2Imaginary.getText())));
     });
     controls.addRow(0, c2, c2Real, c2Imaginary);
@@ -201,11 +198,11 @@ public class MainPage extends Application {
     c1Imaginary.setText(controller.getCurrentDescription().getMinCoords().getX1() + "");
     
     c1Real.setOnAction(e -> {
-      controller.getCurrentDescription().setMinCoords(new Vector2D(Double.parseDouble(c1Real.getText()),
+      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(c1Real.getText()),
           Double.parseDouble(c1Imaginary.getText())));
     });
     c1Imaginary.setOnAction(e -> {
-      controller.getCurrentDescription().setMinCoords(new Vector2D(Double.parseDouble(c1Real.getText()),
+      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(c1Real.getText()),
           Double.parseDouble(c1Imaginary.getText())));
     });
     
@@ -224,11 +221,33 @@ public class MainPage extends Application {
     TextField a10 = new TextField();
     TextField a11 = new TextField();
 
+    a10.setText(controller.getCurrentDescription().getMaxCoords().getX0() + "");
+    a11.setText(controller.getCurrentDescription().getMaxCoords().getX1() + "");
+    a10.setOnAction(e -> {
+      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
+          Double.parseDouble(a11.getText())));
+    });
+    a11.setOnAction(e -> {
+      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
+          Double.parseDouble(a11.getText())));
+    });
+    
     controls.addRow(0, a1, a10, a11);
 
     Label a0 = new Label("Lower Left"); 
     TextField a00 = new TextField();
     TextField a01 = new TextField();
+    
+    a00.setText(controller.getCurrentDescription().getMinCoords().getX0() + "");
+    a01.setText(controller.getCurrentDescription().getMinCoords().getX1() + "");
+    a00.setOnAction(e -> {
+      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(a00.getText()),
+          Double.parseDouble(a01.getText())));
+    });
+    a01.setOnAction(e -> {
+      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(a00.getText()),
+          Double.parseDouble(a01.getText())));
+    });
 
     controls.addRow(1, a0, a00, a01);
     controls.setHgap(4);
