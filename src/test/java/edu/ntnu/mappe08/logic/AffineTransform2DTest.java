@@ -9,6 +9,27 @@ import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Test class for the AffineTransform2D class.
+ *
+ * <list>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test the transform method in the AffineTransform2D class.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test Affine transform with null point.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test getMatrix and getVector method for AffineTransform2D.
+ *     </p>
+ *   </li>
+ * </list>
  */
 
 class AffineTransform2DTest {
@@ -28,7 +49,6 @@ class AffineTransform2DTest {
     }
 
     /**
-    * Positive test:
     * Test the transform method in the AffineTransform2D class.
     */
     @Test
@@ -40,7 +60,6 @@ class AffineTransform2DTest {
     }
 
   /**
-   * Negative test:
    * Test Affine transform with null point.
    */
   @Test
@@ -52,7 +71,6 @@ class AffineTransform2DTest {
   }
 
   /**
-   * Positive test:
    * Test getMatrix and getVector method for AffineTransform2D.
    */
   @Test

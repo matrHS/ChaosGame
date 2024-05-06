@@ -8,6 +8,35 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class for testing the ChaosCanvas class.
+ *
+ * <list>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test the constructor of the ChaosCanvas class.
+ *       This is done by initializing a ChaosCanvas object with the given parameters.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test the getPixel and putPixel methods in the ChaosCanvas class.
+ *       This is done by putting a pixel at a given point and then getting the pixel at transformed point
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test the getPixel and putPixel methods in the ChaosCanvas class.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test the clear method in the ChaosCanvas class.
+ *     </p>
+ *   </li>
+ * </list>
  */
 class ChaosCanvasTest {
 
@@ -22,7 +51,7 @@ class ChaosCanvasTest {
   }
 
   /**
-   * Method to test the constructor of the ChaosCanvas class.
+   * test the constructor of the ChaosCanvas class.
    */
   @Test
   void testConstructor() {
@@ -41,7 +70,7 @@ class ChaosCanvasTest {
   }
 
   /**
-   * Positive test to get and put the pixel at a given point.
+   * Get and put the pixel at a given point.
    */
   @Test
   void testValidGetPutPixel() {
@@ -52,7 +81,7 @@ class ChaosCanvasTest {
   }
 
   /**
-   * Negative test to put and get the pixel at a given point.
+   * test to put and get the pixel at a given point.
    */
   @Test
   void testInvalidGetPutPixel() {
@@ -62,7 +91,7 @@ class ChaosCanvasTest {
   }
 
   /**
-   * Positive test for the clear method.
+   * test for the clear method.
    */
   @Test
   void testClear() {

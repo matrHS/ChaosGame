@@ -6,6 +6,24 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test class for the ChaosGameFileHandler class.
+ *
+ * <list>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test that the readFromFile method throws an IllegalArgumentException when the fileContent is null.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test that the readFromFile method throws an IllegalArgumentException when the fileContent is empty.
+ *     </p>
+ *   </li>
+ * </list>
+ */
 class ChaosGameFileHandlerTest {
   
   String testAffine;
@@ -35,7 +53,6 @@ class ChaosGameFileHandlerTest {
   
 
   /**
-   * Negative test:
    * Test that the readFromFile method throws an IllegalArgumentException when the fileContent is null.
    */
   @Test
@@ -45,7 +62,6 @@ class ChaosGameFileHandlerTest {
   }
 
   /**
-   * Negative test:
    * Test that the readFromFile method throws an IllegalArgumentException when the fileContent is empty.
    */
   @Test

@@ -5,6 +5,30 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test class for the Matrix2x2 class.
+ *
+ * <list>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test the constructor in the Matrix2x2 class.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test the multiply method in the Matrix2x2 class.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test Matrix2x2 multiply with null vector.
+ *     </p>
+ *   </li>
+ * </list>
+ */
 class Matrix2x2Test {
 
   private Vector2D testVector;
@@ -21,7 +45,6 @@ class Matrix2x2Test {
 
 
   /**
-   * Positive test:
    * Test the constructor in the Matrix2x2 class.
    */
   @Test
@@ -34,7 +57,6 @@ class Matrix2x2Test {
   }
   
   /**
-   * Positive test:
    * Test the multiply method in the Matrix2x2 class.
    */
   @Test
@@ -45,7 +67,6 @@ class Matrix2x2Test {
   }
   
   /**
-   * Negative test:
    * Test Matrix2x2 multiply with null vector.
    */
   @Test
