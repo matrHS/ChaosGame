@@ -118,7 +118,7 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
           textField.setText(oldValue);
         }
       } catch (NumberFormatException e) {
-        // Throws exception if inputted value is not an integer
+        // Throws exception if inputted value is not valid
         textField.setText(oldValue);
       }
       });
