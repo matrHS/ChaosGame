@@ -135,6 +135,10 @@ public class MainPageController implements ChaosGameObserver {
   public ChaosCanvas getSierpinski(int height, int width) {
     return getChaosCanvas(height, width, iterations, TransformTypes.SIERPINSKI);
   }
+  
+  public ChaosCanvas getEmptyAffine(int height, int width) {
+    return getChaosCanvas(height, width, iterations, TransformTypes.NONE);
+  }
 
   /**
    * Returns a Barnsley ChaosCanvas.

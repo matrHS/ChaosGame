@@ -46,15 +46,33 @@ public class ChaosGameDescriptionFactory {
       case BARNSLEY:
         description = barnsleyDescription();
         break;
-
       case JULIA:
         description = juliaDescription(minCoords, maxCoords, transforms);
+        break; 
+      case NONE:
+        description = emptyAffine();
         break;
+          
 
       default:
         return null;
     }
     return description;
+  }
+
+  /**
+   * Creates an empty affine ChaosGameDescription.
+   *
+   * @return a ChaosGameDescription
+   */
+  private ChaosGameDescription emptyAffine() {
+    Vector2D minCoords = new Vector2D(0, 0);
+    Vector2D maxCoords = new Vector2D(1, 1);
+    List<Transform2D> transforms = new ArrayList<>();
+    transforms.add(new AffineTransform2D(new Matrix2x2(0, 0, 0, 0),
+        new Vector2D(0, 0)));
+    
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 
 
