@@ -160,7 +160,6 @@ public class MainPage extends Application {
    * @param image image to update to.
    */
   public void updateImage(ImageView image) {
-    // TODO: Refactor into a more sophisticated solution for swapping images.
     loadedImage.setImage(image.getImage());
     
   }
@@ -193,17 +192,17 @@ public class MainPage extends Application {
     fileMenu.getItems().add(exitApp);
     
     // Fractals menu
-    MenuItem barnsleyDefault = new MenuItem("Barnsley");
-    barnsleyDefault.setOnAction(e -> {
-      controller.doChangeImage(controller.getBarnsley((int) this.centerCanvasBounds.getHeight(),
-          (int) this.centerCanvasBounds.getWidth()));
-      setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
-    });
     MenuItem juliaDefault = new MenuItem("Julia");
     juliaDefault.setOnAction(e -> {
       controller.doChangeImage(controller.getJulia((int) this.centerCanvasBounds.getHeight(),
           (int) this.centerCanvasBounds.getWidth()));
       setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.JULIA));
+    });
+    MenuItem barnsleyDefault = new MenuItem("Barnsley");
+    barnsleyDefault.setOnAction(e -> {
+      controller.doChangeImage(controller.getBarnsley((int) this.centerCanvasBounds.getHeight(),
+          (int) this.centerCanvasBounds.getWidth()));
+      setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
     });
     MenuItem sierpinskiDefault = new MenuItem("Sierpinski");
     sierpinskiDefault.setOnAction(e -> {
@@ -211,8 +210,16 @@ public class MainPage extends Application {
           (int) this.centerCanvasBounds.getWidth()));
       setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
     });
+    MenuItem emptyAffine = new MenuItem("Custom Affine");
+    emptyAffine.setOnAction(e -> {
+      controller.doChangeImage(controller.getEmptyAffine((int) this.centerCanvasBounds.getHeight(),
+          (int) this.centerCanvasBounds.getWidth()));
+      setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
+    });
     Menu fractalsMenu = new Menu("Fractals");
-    fractalsMenu.getItems().addAll(barnsleyDefault, juliaDefault, sierpinskiDefault);
+    fractalsMenu.getItems().addAll(juliaDefault, barnsleyDefault, sierpinskiDefault);
+    fractalsMenu.getItems().add(new SeparatorMenuItem());
+    fractalsMenu.getItems().addAll(emptyAffine);
     
     MenuBar menuBar = new MenuBar();
     menuBar.getMenus().addAll(fileMenu);

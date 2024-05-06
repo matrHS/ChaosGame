@@ -7,7 +7,42 @@ import edu.ntnu.mappe08.entity.Vector2D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
+/**
+ * Test class for the JuliaTransform class.
+ *
+ * <list>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test Julia transform with positive sign.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test Julia transform with negative sign.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test Julia transform with null point.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test Julia transform with non-complex point.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test getPointC method for JuliaTransform.
+ *     </p>
+ *   </li>
+ * </list>
+ */
 class JuliaTransformTest {
   Complex testComplex;
   int sign;
@@ -22,7 +57,6 @@ class JuliaTransformTest {
   }
   
   /**
-   * Positive test:
    * Test Julia transform with positive sign.
    */
   @Test
@@ -38,7 +72,6 @@ class JuliaTransformTest {
   }
 
   /**
-   * Positive test:
    * Test Julia transform with negative sign.
    */
   @Test
@@ -54,7 +87,6 @@ class JuliaTransformTest {
   }
   
   /**
-   * Negative test:
    * Test Julia transform with null point.
    */
   @Test
@@ -69,7 +101,6 @@ class JuliaTransformTest {
   }
   
   /**
-   * Negative test:
    * Test Julia transform with non-complex point.
    */
   @Test
@@ -84,7 +115,6 @@ class JuliaTransformTest {
   }
   
   /**
-   * Positive test:
    * Test getPointC method for JuliaTransform.
    */
   @Test

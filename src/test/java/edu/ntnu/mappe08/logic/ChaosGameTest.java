@@ -6,6 +6,27 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for ChaosGame.
+ *
+ * <list>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that the constructor initializes the canvas, description and currentPoint.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Check if exception is thrown if description is null
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Check that RunStep does not accept negative steps
+ *     </p>
+ *   </li>
+ * </list>
  */
 class ChaosGameTest {
   /**

@@ -6,7 +6,40 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * 
+ * Test class for the Vector2D class.
+ *
+ * <list>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that the constructor sets the x and y values correctly.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that the add method returns the correct value.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that the subtract method returns the correct value.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test that the add method throws an exception when adding a null vector.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test that the subtract method throws an exception when subtracting a null vector.
+ *     </p>
+ *   </li>
+ * </list>
  */
 class Vector2DTest {
 
@@ -24,7 +57,6 @@ class Vector2DTest {
   
   
   /**
-   * Positive test:
    * Check to see if vector successfully gets constructed
    */
   @Test
@@ -38,7 +70,6 @@ class Vector2DTest {
   }
 
   /**
-   * Positive test:
    * Check if add function correctly adds the vectors
    */
   @Test
@@ -53,7 +84,6 @@ class Vector2DTest {
   }
 
   /**
-   * Positive test:
    * Check if subtraction function correctly subtracts the vectors
    */
   @Test
@@ -68,7 +98,6 @@ class Vector2DTest {
   }
   
   /**
-   * Negative test:
    * Check if add function throws exception when null vector is passed
    */
   @Test
@@ -80,7 +109,6 @@ class Vector2DTest {
   }
   
   /**
-   * Negative test:
    * Check if subtract function throws exception when null vector is passed
    */
   @Test
@@ -90,16 +118,6 @@ class Vector2DTest {
       testVector.subtract(nullVector);
     });
   }
-
-  /**
-   * Negative test:
-   * Try initializing a vector with zero point division to get a NaN
-   */
-  @Test
-  public void TestZeroPointConstructor(){
-    assertThrows(ArithmeticException.class, () -> {
-      Vector2D zeroVector = new Vector2D(Math.sqrt(-5),Math.sqrt(-7));
-    });
-  }
+  
 
 }

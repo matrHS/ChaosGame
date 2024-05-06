@@ -7,7 +7,25 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-// TODO: Write Javadoc of positive and negative tests.
+
+/**
+ * Test class for the ChaosGameDescription class.
+ *
+ * <list>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that the constructor sets the minCoords, maxCoords and transforms correctly.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test that the constructor throws an IllegalArgumentException when any parameter is null.
+ *     </p>
+ *   </li>
+ * </list>
+ */
 class ChaosGameDescriptionTest {
 
   Vector2D testMinCoords;
@@ -20,7 +38,6 @@ class ChaosGameDescriptionTest {
   }
   
   /**
-   * Positive test:
    * Test that the constructor sets the minCoords, maxCoords and transforms correctly.
    */
   @Test
@@ -33,7 +50,6 @@ class ChaosGameDescriptionTest {
   }
   
   /**
-   * Negative test:
    * Test that the constructor throws an IllegalArgumentException when any parameter is null.
    */
   @Test

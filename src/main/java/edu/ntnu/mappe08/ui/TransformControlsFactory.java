@@ -48,7 +48,6 @@ public class TransformControlsFactory {
    * @return GridPane with controls for current transformation type
    */
   public GridPane getTransformControls(TransformTypes transformType) {
-    // TODO: Refactor into factory.
     GridPane controls = new GridPane();
 
     switch (transformType) {

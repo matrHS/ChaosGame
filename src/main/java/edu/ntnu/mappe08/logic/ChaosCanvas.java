@@ -76,14 +76,7 @@ public class ChaosCanvas {
     }
 
     Vector2D test2 = transformCoordsToIndices.transform(point);
-    // TODO: Consider leaving this commented out to allow "jumping" to parts of canvas leaving some pixels outside of width and height
-//    if (test2.getX0() < 0 
-//        || test2.getX0() >= this.height 
-//        || test2.getX1() < 0 
-//        || test2.getX1() >= this.width) {
-//      throw new IllegalArgumentException("Point is outside the canvas");
-//    }
-    
+    // no checks for pixels outside the canvas to allow "jumping" within the fractal for zoom etc.
     int i = (int) Math.round(test2.getX0());
     int j = (int) Math.round(test2.getX1());
     if (i >= 0 && i < this.height && j >= 0 && j < this.width) {
@@ -128,30 +121,6 @@ public class ChaosCanvas {
    */
   public int getHeight() {
     return this.height;
-  }
-  
-  /**
-   * Sets the width of the canvas.
-   *
-   * @param width the height of the canvas
-   */
-  public void setWidth(int width) {
-    if (width < 0) {
-      throw new IllegalArgumentException("Width cannot be negative");
-    }
-    this.width = width;
-  }
-  
-  /**
-   * Sets the height of the canvas.
-   *
-   * @param height the height of the canvas
-   */
-  public void setHeight(int height) {
-    if (height < 0) {
-      throw new IllegalArgumentException("Height cannot be negative");
-    }
-    this.height = height;
   }
 
   /**

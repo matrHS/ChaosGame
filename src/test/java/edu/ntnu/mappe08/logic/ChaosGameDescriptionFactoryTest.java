@@ -7,6 +7,39 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test class for ChaosGameDescriptionFactory.
+ * 
+ * <list>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that factory create a default sierpinski description with 3 transforms.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that factory create a default barnsley description with 4 transforms.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that factory create a default julia description with 2 transforms.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test that Exception is thrown if structure of file is incorrect leading to incorrect parsing.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test that buildChaosGameDescription throws an IllegalArgumentException when no valid transform type is set.
+ *     </p>
+ *   </li>
+ * </list>
  */
 class ChaosGameDescriptionFactoryTest {
 
@@ -53,7 +86,7 @@ class ChaosGameDescriptionFactoryTest {
         ".5, 0, 0, .5, 0, 0",
         "",
         ".5, 0, 0, .5, .5, 0");
-    assertThrows(IllegalArgumentException.class, () -> factory.buildChaosGameDescription(invalidFileContent));
+    assertThrows(ValueParseException.class, () -> factory.buildChaosGameDescription(invalidFileContent));
   }
 
   /**
@@ -68,7 +101,7 @@ class ChaosGameDescriptionFactoryTest {
         ".5, 0, 0, .5, 0, 0",
         ".5, 0, 0, .5, .25, .5",
         ".5, 0, 0, .5, .5, 0");
-    assertThrows(IllegalArgumentException.class, () -> factory.buildChaosGameDescription(invalidFileContent));
+    assertThrows(ValueParseException.class, () -> factory.buildChaosGameDescription(invalidFileContent));
   }
 
   
