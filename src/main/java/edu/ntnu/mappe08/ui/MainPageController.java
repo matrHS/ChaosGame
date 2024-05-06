@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 
 /**
@@ -96,7 +98,10 @@ public class MainPageController implements ChaosGameObserver {
       chaosGame.reconfigureChaosGame(currentDescription, height, width);
       chaosGame.runSteps(iterations);
     } catch (ValueParseException e) {
-      // TODO: Create alert for incorrect file formating.
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Error");
+      alert.setContentText("Could not read transformation from file.");
+      alert.showAndWait();
       logger.warning("Could not read transformation from file.");
     }
     return chaosGame.getCanvas();
@@ -179,7 +184,10 @@ public class MainPageController implements ChaosGameObserver {
             selectedFile.getAbsolutePath());
       }
     } catch (ValueParseException e) {
-      // TODO: Create alert for incorrect file formating.
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Error");
+      alert.setContentText("Could not save transformation to file.");
+      alert.showAndWait();
       logger.warning("Could not save transformation to file.");
     }
   }
@@ -208,8 +216,14 @@ public class MainPageController implements ChaosGameObserver {
    * Exits the application.
    */ 
   public void exitApp() {
-    // TODO: Fill later with dialog to confirm exit.
-    Platform.exit();
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle("Exit");
+    alert.setContentText("Are you sure you want to exit?");
+    alert.showAndWait().ifPresent(response -> {
+      if (response == ButtonType.OK) {
+        Platform.exit();
+      }
+    });
   }
 
   /**
@@ -293,11 +307,16 @@ public class MainPageController implements ChaosGameObserver {
       throw new IllegalTransformTypeException(
           "Cannot remove affine transformation from non affine chaos game");
     }
-    // TODO: Add alert popup as confirmation as well as alert for no row selected
+    
     if (index >= 0) {
       List<Transform2D> transforms = this.getCurrentDescription().getTransforms();
       transforms.remove(index);
       this.getChaosGame().setTransforms(transforms);
+    } else {
+      Alert alert = new Alert(Alert.AlertType.WARNING);
+      alert.setTitle("No row selected");
+      alert.setContentText("Please select a row to remove.");
+      alert.showAndWait();
     }
   }
   
