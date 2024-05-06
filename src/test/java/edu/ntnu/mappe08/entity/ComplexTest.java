@@ -5,6 +5,36 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test class for the Complex class.
+ * 
+ * <list>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that the constructor sets the real and imaginary part correctly.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that the sqrt method returns the correct value.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Positive test:
+ *       Test that the sqrt method returns the correct value when the imaginary part is zero.
+ *     </p>
+ *   </li>
+ *   <li>
+ *     <p>
+ *       Negative test:
+ *       Test that the constructor throws an ArithmeticException when dividing by zero.
+ *       This is done by initializing a complex with zero point division to get a NaN.
+ *     </p>
+ *   </li>
+ */
 class ComplexTest {
   
     private Complex testComplex;

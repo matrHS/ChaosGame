@@ -53,7 +53,7 @@ class ChaosGameDescriptionFactoryTest {
         ".5, 0, 0, .5, 0, 0",
         "",
         ".5, 0, 0, .5, .5, 0");
-    assertThrows(IllegalArgumentException.class, () -> factory.buildChaosGameDescription(invalidFileContent));
+    assertThrows(ValueParseException.class, () -> factory.buildChaosGameDescription(invalidFileContent));
   }
 
   /**
@@ -68,7 +68,7 @@ class ChaosGameDescriptionFactoryTest {
         ".5, 0, 0, .5, 0, 0",
         ".5, 0, 0, .5, .25, .5",
         ".5, 0, 0, .5, .5, 0");
-    assertThrows(IllegalArgumentException.class, () -> factory.buildChaosGameDescription(invalidFileContent));
+    assertThrows(ValueParseException.class, () -> factory.buildChaosGameDescription(invalidFileContent));
   }
 
   

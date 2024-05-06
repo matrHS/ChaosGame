@@ -216,7 +216,7 @@ public class ChaosGameDescriptionFactory {
 
   /**
    * Parses coordinates from a line in the file.
-   * // TODO: Move parse methods into a separate builder class.
+   *
    * @param line the line to parse containing 2 numerical numbers at start of line
    * @return complex
    * @throws ValueParseException if the line is null or empty
