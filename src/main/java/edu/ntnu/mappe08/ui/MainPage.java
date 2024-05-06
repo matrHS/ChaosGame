@@ -157,7 +157,6 @@ public class MainPage extends Application {
    * @param image image to update to.
    */
   public void updateImage(ImageView image) {
-    // TODO: Refactor into a more sophisticated solution for swapping images.
     loadedImage.setImage(image.getImage());
     
   }
