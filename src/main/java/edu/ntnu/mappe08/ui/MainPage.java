@@ -268,10 +268,9 @@ public class MainPage extends Application {
           drawnCanvas[i][j] = 0;
           pixelWriter.setColor(j, i, Color.WHITE);
         } else {
-          drawnCanvas[i][j] += 1;
           int color = (0xFF << 24);
           color += (drawnCanvas[i][j] << 16);
-          color += (0x30 << 8);
+          color += (0x00 << 8);
           color += (0x00 << 0);
               
           pixelWriter.setArgb(j, i, color);
