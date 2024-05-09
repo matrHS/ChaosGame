@@ -43,6 +43,7 @@ import javafx.stage.Stage;
 public class MainPage extends Application {
   
   private static final int MAX_ITERATIONS = 9999999;
+  private boolean setupDone;
   Bounds centerCanvasBounds;
   MainPageController controller;
   BorderPane borderPane;
@@ -98,23 +99,29 @@ public class MainPage extends Application {
     
     ChangeListener<Number> stageSizeListener = (obs, oldVal, newVal) -> {
 
-      updateBounds();
+      // prevents null pointer on first run as the property listener for height and width triggers
+      // an event once window opens
+      if (setupDone) {
+        updateBounds();
+      }
 
     };
     centerBox.heightProperty().addListener(stageSizeListener);
     centerBox.widthProperty().addListener(stageSizeListener);
 
 
+
     scene.getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+    
     stage.setScene(scene);
     stage.show();
-
+    
+    // Takes dimensions of visible center bounds to allow initialization of the controller
+    centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
     controller.initialize();
     
     
-    
-    
-    //centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
+    this.setupDone = true;
     
   }
 
@@ -267,10 +274,9 @@ public class MainPage extends Application {
           drawnCanvas[i][j] = 0;
           pixelWriter.setColor(j, i, Color.WHITE);
         } else {
-          drawnCanvas[i][j] += 1;
           int color = (0xFF << 24);
           color += (drawnCanvas[i][j] << 16);
-          color += (0x30 << 8);
+          color += (0x00 << 8);
           color += (0x00 << 0);
               
           pixelWriter.setArgb(j, i, color);
