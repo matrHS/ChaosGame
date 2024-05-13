@@ -133,7 +133,7 @@ public class MainPage extends Application {
    */
   private HBox createBottomOptions() {
     HBox bottomBar = new HBox();
-    bottomBar.getStyleClass().add("HBox-bottom");
+    bottomBar.getStyleClass().add("h-box-bottom");
     Label iterationsLabel = new Label("Iterations");
     TextField iterations = new TextField();
     iterations.setText(controller.getIterations() + "");
@@ -252,7 +252,6 @@ public class MainPage extends Application {
    */
   public void updateBounds() {
     this.centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
-    // Temporarily removed redraw to get observer working first with values. will be added back.
     controller.doRedrawImage(this.centerCanvasBounds);
   }
   

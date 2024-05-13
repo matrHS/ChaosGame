@@ -5,6 +5,7 @@ import edu.ntnu.mappe08.entity.Vector2D;
 import edu.ntnu.mappe08.logic.AffineTransform2D;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -47,7 +48,9 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
    */
   private void createContent() {
     GridPane gridPane = new GridPane();
-    
+    this.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+
+
     getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
     getDialogPane().setContent(gridPane);Label matrixValues = new Label("Matrix");
     gridPane.addRow(0, matrixValues);

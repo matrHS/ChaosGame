@@ -3,7 +3,7 @@
     -fx-font-family: Consolas;
     -fx-focus-color: #546A76;
     -fx-faint-focus-color: transparent;
-    -fx-accent: #546A76
+    -fx-accent: transparent;
 }
 
 .menu-bar{
@@ -20,16 +20,94 @@
 
 .label{
     -fx-font-size: 12;
-    -fx-padding: 4;
+    -fx-padding: 6;
 }
 
-.HBox-bottom{
+.h-box-bottom{
     -fx-background-color: AliceBlue;
     -fx-padding: 4;
     -fx-spacing: 10;
+}
+
+.grid-pane-coords{
+    -fx-padding: 4;
+    -fx-hgap: 6;
+    -fx-vgap: 6;
+}
+
+.grid-pane-controls{
+    -fx-padding: 8;
+    -fx-hgap: 7;
+    -fx-vgap: 7;
+}
+
+.label-controls{
+    -fx-font-size: 13;
+    -fx-font-weight: 600;
+    -fx-label-padding: 7;
+
+}
+
+
+.grid-pane-buttons{
+    -fx-padding: 4;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+.button{
+    -fx-font-size: 12;
+    -fx-background-color: AliceBlue;
+    -fx-background-radius: 2px 2px 2px 2px;
+}
+.button:hover{
+    -fx-background-color: #e5e9ff;
 }
 
 .text-field{
     -fx-font-family: "Arial";
     -fx-font-size: 12;
 }
+
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-font-family: "Arial";
+}
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #e5e9ff, #e5f3ff);
+}
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+
+.table-row-cell:odd{
+    -fx-background-color: #ffffff;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+.table-row-cell:even{
+    -fx-background-color: #f0f8ff;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+.table-row-cell:hover{
+    -fx-text-background-color: #c44dff;
+}
+.table-row-cell:selected{
+    -fx-background-color: #546A76;
+    -fx-text-background-color: White;
+}
+
+.dialog-pane > .text-field{
+    -fx-font-family: "Arial";
+    -fx-font-size: 12;
+}
+

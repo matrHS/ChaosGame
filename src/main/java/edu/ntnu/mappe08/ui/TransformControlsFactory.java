@@ -60,10 +60,6 @@ public class TransformControlsFactory {
       default:
         break;
     }
-    controls.setHgap(4);
-    controls.setVgap(4);
-    controls.maxWidth(200);
-    controls.minWidth(200);
     return controls;
   }
 
@@ -75,10 +71,13 @@ public class TransformControlsFactory {
    */
   private GridPane createJuliaControls() {
     GridPane parentControls = new GridPane();
-    
+    parentControls.getStyleClass().add("grid-pane-controls");
     
     parentControls.addRow(0, createMinMaxCoordsControls());
-    parentControls.addRow(1, new Label("Julia Controls"));
+
+    Label juliaLabel = new Label("Julia Controls");
+    juliaLabel.getStyleClass().add("label-controls");
+    parentControls.addRow(1, juliaLabel);
 
     
     
@@ -130,11 +129,13 @@ public class TransformControlsFactory {
     Label pointcLabel = new Label("Point C");
 
     GridPane juliaControls = new GridPane();
+
     
     juliaControls.addRow(0, pointcLabel, realSlider, imaginarySlider);
     juliaControls.addRow(1, emptyLabel, realField, imaginaryField);
     
     parentControls.addRow(2, juliaControls);
+    juliaControls.getStyleClass().add("grid-pane-controls");
 
     return parentControls;
   }
@@ -198,6 +199,7 @@ public class TransformControlsFactory {
 
     Label a0 = new Label("Lower Left");
     controls.addRow(1, a0, a00, a01);
+    controls.getStyleClass().add("grid-pane-coords");
     
     return controls;
   }
@@ -209,6 +211,7 @@ public class TransformControlsFactory {
    */
   private GridPane createAffineControls() {
     GridPane parentControls = new GridPane();
+    parentControls.getStyleClass().add("grid-pane-controls");
     GridPane transformControls = new GridPane();
     
 
@@ -217,6 +220,7 @@ public class TransformControlsFactory {
     parentControls.addRow(0, createMinMaxCoordsControls());
     
     Label affineLabel = new Label("Affine Controls");
+    affineLabel.getStyleClass().add("label-controls");
     parentControls.addRow(1, affineLabel);
     
     // Help from copilot choosing the SimpleStingProperty datatype for the return type.
@@ -304,6 +308,7 @@ public class TransformControlsFactory {
     });
 
     GridPane buttonControls = new GridPane();
+    buttonControls.getStyleClass().add("grid-pane-buttons");
     buttonControls.addRow(0, addTransform, removeTransform);
     parentControls.addRow(3, buttonControls);
 
