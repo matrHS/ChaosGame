@@ -1,5 +1,6 @@
 package edu.ntnu.mappe08.ui;
 
+import edu.ntnu.mappe08.entity.Vector2D;
 import edu.ntnu.mappe08.logic.AffineTransform2D;
 import edu.ntnu.mappe08.logic.ChaosCanvas;
 import edu.ntnu.mappe08.logic.ChaosGame;
@@ -66,6 +67,7 @@ public class MainPageController implements ChaosGameObserver {
         (int) mainPage.centerCanvasBounds.getHeight(), 
         (int) mainPage.centerCanvasBounds.getWidth());
     this.chaosGame.addObserver(this);
+    this.chaosGame.addObserver(mainPage.transformControlsFactory);
   }
 
   /**
@@ -322,6 +324,39 @@ public class MainPageController implements ChaosGameObserver {
       alert.showAndWait();
     }
   }
+
+  /**
+   * Zooms in or out on the canvas based on mouse position.
+   *
+   * @param mousePos mouse position.
+   * @param scrollDirection scroll direction.
+   */
+  public void doZoom(Vector2D mousePos, double scrollDirection) {
+    // Gets the canvas width and height
+    int maxWidth = (int) mainPage.centerCanvasBounds.getWidth();
+    int maxHeight = (int) mainPage.centerCanvasBounds.getHeight();
+    double zoomFactor = 1.1; // Zoom speed
+
+    // Normalize cursor position in relation to canvas dimensions
+    double interpX = mousePos.getX0() / maxWidth;
+    double interpY = 1- (mousePos.getX1() / maxHeight);
+
+    // Calculate new zoom level
+    double zoomDirection = Math.signum(scrollDirection)*-1;
+    double newZoomLevel = Math.pow(zoomFactor, zoomDirection);
+
+    // Calculate the new min and max coordinates in relation to position and zoom level
+    Vector2D currentMin = chaosGame.getDescription().getMinCoords();
+    Vector2D currentMax = chaosGame.getDescription().getMaxCoords();
+    double newMinX = currentMin.getX0() + interpX * (currentMax.getX0() - currentMin.getX0()) * (1 - newZoomLevel);
+    double newMaxX = currentMax.getX0() - (1 - interpX) * (currentMax.getX0() - currentMin.getX0()) * (1 - newZoomLevel);
+    double newMinY = currentMin.getX1() + interpY * (currentMax.getX1() - currentMin.getX1()) * (1 - newZoomLevel);
+    double newMaxY = currentMax.getX1() - (1 - interpY) * (currentMax.getX1() - currentMin.getX1()) * (1 - newZoomLevel);
+
+    // Updates the min and max coordinates
+    chaosGame.setMinCoords(new Vector2D(newMinX, newMinY));
+    chaosGame.setMaxCoords(new Vector2D(newMaxX, newMaxY));
+  }
   
   /**
    * Gets the number of iterations used for calculations.
@@ -345,4 +380,6 @@ public class MainPageController implements ChaosGameObserver {
   public void update() {
     doRedrawImage(mainPage.centerCanvasBounds);
   }
+
+  
 }

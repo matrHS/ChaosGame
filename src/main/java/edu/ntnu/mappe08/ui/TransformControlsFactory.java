@@ -5,6 +5,7 @@ import edu.ntnu.mappe08.entity.Complex;
 import edu.ntnu.mappe08.entity.Matrix2x2;
 import edu.ntnu.mappe08.entity.Vector2D;
 import edu.ntnu.mappe08.logic.AffineTransform2D;
+import edu.ntnu.mappe08.logic.ChaosGameObserver;
 import edu.ntnu.mappe08.logic.JuliaTransform;
 import edu.ntnu.mappe08.logic.Transform2D;
 import edu.ntnu.mappe08.logic.TransformTypes;
@@ -25,10 +26,15 @@ import javafx.scene.layout.GridPane;
 /**
  * Factory class for creating TransformControls.
  */
-public class TransformControlsFactory {
+public class TransformControlsFactory implements ChaosGameObserver {
 
   MainPageController controller;
   private ObservableList<Transform2D> transformListWrapper;
+  private TextField a10;
+  private TextField a11;
+  private TextField a00;
+  private TextField a01;
+  private Vector2D maxCoords;
 
 
   /**
@@ -107,14 +113,14 @@ public class TransformControlsFactory {
     realSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
       if (controller.getChaosGame().getTransformType().equals(TransformTypes.JULIA)) {
         updateJuliaParams(realSlider, imaginarySlider);
-        realField.setText(newValue + "");
+        realField.setText(String.format("%.2f",newValue));
       }
     });
     
     imaginarySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
       if (controller.getChaosGame().getTransformType().equals(TransformTypes.JULIA)) {
         updateJuliaParams(realSlider, imaginarySlider);
-        imaginaryField.setText(newValue + "");
+        imaginaryField.setText(String.format("%.2f",newValue));
       }
     });
 
@@ -162,10 +168,10 @@ public class TransformControlsFactory {
   private GridPane createMinMaxCoordsControls() {
     
     
-    TextField a10 = new TextField();
+    a10 = new TextField();
     a10.setText(controller.getCurrentDescription().getMaxCoords().getX0() + "");
 
-    TextField a11 = new TextField();
+    a11 = new TextField();
     a11.setText(controller.getCurrentDescription().getMaxCoords().getX1() + "");
 
     a10.setOnAction(e -> {
@@ -182,9 +188,9 @@ public class TransformControlsFactory {
     controls.addRow(0, maxCoords, a10, a11);
 
     
-    TextField a00 = new TextField();
+    a00 = new TextField();
     a00.setText(controller.getCurrentDescription().getMinCoords().getX0() + "");
-    TextField a01 = new TextField();
+    a01 = new TextField();
     a01.setText(controller.getCurrentDescription().getMinCoords().getX1() + "");
 
     a00.setOnAction(e -> {
@@ -323,4 +329,11 @@ public class TransformControlsFactory {
     return transformListWrapper;
   }
 
+  @Override
+  public void update() {
+    a00.setText(String.format("%.2f", controller.getCurrentDescription().getMinCoords().getX0()));
+    a01.setText(String.format("%.2f", controller.getCurrentDescription().getMinCoords().getX1()));
+    a10.setText(String.format("%.2f", controller.getCurrentDescription().getMaxCoords().getX0()));
+    a11.setText(String.format("%.2f", controller.getCurrentDescription().getMaxCoords().getX1()));
+  }
 }

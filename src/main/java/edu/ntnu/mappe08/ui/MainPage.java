@@ -1,17 +1,10 @@
 package edu.ntnu.mappe08.ui;
 
-import edu.ntnu.mappe08.entity.Matrix2x2;
 import edu.ntnu.mappe08.entity.Vector2D;
-import edu.ntnu.mappe08.logic.AffineTransform2D;
 import edu.ntnu.mappe08.logic.ChaosCanvas;
-import edu.ntnu.mappe08.logic.Transform2D;
 import edu.ntnu.mappe08.logic.TransformTypes;
-import java.util.List;
 import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -20,16 +13,11 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -95,7 +83,14 @@ public class MainPage extends Application {
     centerBox.getChildren().add(loadedImage);
     loadedImage.fitWidthProperty().bind(centerBox.widthProperty());
     loadedImage.fitHeightProperty().bind(centerBox.heightProperty());
-
+    
+    
+    loadedImage.setOnScroll(e -> {
+      Vector2D mousePos = new Vector2D(e.getX(), e.getY());
+      controller.doZoom(mousePos, e.getDeltaY());
+    });
+    
+    
     
     ChangeListener<Number> stageSizeListener = (obs, oldVal, newVal) -> {
 
