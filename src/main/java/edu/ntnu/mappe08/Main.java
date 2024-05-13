@@ -1,6 +1,7 @@
 package edu.ntnu.mappe08;
 
 
+import edu.ntnu.mappe08.ui.ChaosGameCli;
 import edu.ntnu.mappe08.ui.MainPage;
 
 /**
@@ -15,7 +16,7 @@ public class Main {
    * @param args Arguments
    */
   public static void main(String[] args) {
-//    ChaosGameCLI app = new ChaosGameCLI();
+//    ChaosGameCli app = new ChaosGameCli();
 //    app.start();
     MainPage app = new MainPage();
     app.main(args);

@@ -59,6 +59,7 @@ public class ChaosGameCli {
     System.out.println("1. Sierpinski Triangle");
     System.out.println("2. Barnsley Fern");
     System.out.println("3. Julia");
+    System.out.println("4. Load Custom");
     System.out.println("9. Exit");
   }
 
@@ -108,10 +109,11 @@ public class ChaosGameCli {
         
       case CUSTOM:
         parameters = setParameters();
+        String filepath = setFilePath();
         printCanvas(controller.getCustomCanvas(parameters[0], 
             parameters[1], 
-            parameters[2], 
-            "data/testJulia3.csv"));
+            parameters[2],
+            filepath));
         break;
 
       case EXIT:
@@ -122,6 +124,15 @@ public class ChaosGameCli {
         System.out.println("Invalid menu choice");
     }
     return running;
+  }
+
+  private String setFilePath() {
+    String filepath = "";
+    Scanner userInput = new Scanner(System.in);
+    System.out.println("Please enter the file path for the fractal: ");
+    filepath = userInput.nextLine();
+    
+    return filepath;
   }
 
   /**

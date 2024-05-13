@@ -52,6 +52,9 @@ public class MainPageController implements ChaosGameObserver {
   public MainPageController() {
     this.fileHandler = new ChaosGameFileHandler();
     this.descriptionFactory = new ChaosGameDescriptionFactory();
+    // Legacy code for CLI to work
+    this.chaosGame = new ChaosGame(descriptionFactory.createDescription(TransformTypes.SIERPINSKI), 
+        1, 1);
     this.logger = Logger.getLogger(MainPageController.class.getName());
   }
   
