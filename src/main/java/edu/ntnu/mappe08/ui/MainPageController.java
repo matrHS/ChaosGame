@@ -145,7 +145,14 @@ public class MainPageController implements ChaosGameObserver {
   public ChaosCanvas getSierpinski(int height, int width) {
     return getChaosCanvas(height, width, iterations, TransformTypes.SIERPINSKI);
   }
-  
+
+  /**
+   * Returns Affine ChaosCanvas with 1 empty transform.
+   *
+   * @param height height of canvas.
+   * @param width width of canvas.
+   * @return
+   */
   public ChaosCanvas getEmptyAffine(int height, int width) {
     return getChaosCanvas(height, width, iterations, TransformTypes.NONE);
   }
@@ -159,6 +166,10 @@ public class MainPageController implements ChaosGameObserver {
    */
   public ChaosCanvas getBarnsley(int height, int width) {
     return getChaosCanvas(height, width, iterations, TransformTypes.BARNSLEY);
+  }
+
+  public ChaosCanvas getSnowflake(int height, int width) {
+    return getChaosCanvas(height, width, iterations, TransformTypes.SNOWFLAKE);
   }
 
   /**
@@ -382,6 +393,7 @@ public class MainPageController implements ChaosGameObserver {
   public void update() {
     doRedrawImage(mainPage.centerCanvasBounds);
   }
+
 
   
 }

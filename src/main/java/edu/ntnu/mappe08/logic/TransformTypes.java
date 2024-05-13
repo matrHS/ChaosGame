@@ -8,5 +8,6 @@ public enum TransformTypes {
     AFFINE2D,
     BARNSLEY,
     JULIA,
+    SNOWFLAKE,
     NONE
 }

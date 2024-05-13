@@ -67,8 +67,7 @@ public class MainPage extends Application {
     createMenus().getStyleClass().add("menu-bar");
     borderPane.setTop(menuBar);
 
-    HBox bottomBarOptions = createBottomOptions();
-    borderPane.setBottom(bottomBarOptions);
+    
     
     // Gets the screen size and sets the scene to be 200 pixels less than the screen size.
     Rectangle2D screenSize = Screen.getPrimary().getBounds();
@@ -212,6 +211,12 @@ public class MainPage extends Application {
           (int) this.centerCanvasBounds.getWidth()));
       setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
     });
+    MenuItem snowflakeDefault = new MenuItem("Snowflake");
+    snowflakeDefault.setOnAction(e -> {
+      controller.doChangeImage(controller.getSnowflake((int) this.centerCanvasBounds.getHeight(),
+          (int) this.centerCanvasBounds.getWidth()));
+      setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
+    });
     MenuItem emptyAffine = new MenuItem("Custom Affine");
     emptyAffine.setOnAction(e -> {
       controller.doChangeImage(controller.getEmptyAffine((int) this.centerCanvasBounds.getHeight(),
@@ -219,7 +224,7 @@ public class MainPage extends Application {
       setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
     });
     Menu fractalsMenu = new Menu("Fractals");
-    fractalsMenu.getItems().addAll(juliaDefault, barnsleyDefault, sierpinskiDefault);
+    fractalsMenu.getItems().addAll(juliaDefault, barnsleyDefault, sierpinskiDefault, snowflakeDefault);
     fractalsMenu.getItems().add(new SeparatorMenuItem());
     fractalsMenu.getItems().addAll(emptyAffine);
     
@@ -236,6 +241,7 @@ public class MainPage extends Application {
    * @param controls controls to set.
    */
   public void setTransformControls(GridPane controls) {
+    borderPane.setBottom(createBottomOptions());
     transformControlsParent.getChildren().remove(transformControls);
     this.transformControls = controls;
     transformControlsParent.getChildren().add(transformControls);

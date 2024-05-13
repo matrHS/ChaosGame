@@ -49,6 +49,9 @@ public class ChaosGameDescriptionFactory {
       case JULIA:
         description = juliaDescription(minCoords, maxCoords, transforms);
         break; 
+      case SNOWFLAKE:
+        description = snowflakeDescription();
+        break;
       case NONE:
         description = emptyAffine();
         break;
@@ -58,6 +61,27 @@ public class ChaosGameDescriptionFactory {
         return null;
     }
     return description;
+  }
+
+  /**
+   * Creates Affine2D ChaosGameDescription based on Snowflake transforms.
+   *
+   * @return a ChaosGameDescription
+   */
+  private ChaosGameDescription snowflakeDescription() {
+    List<Transform2D> transforms = new ArrayList<>();
+    transforms.add(new AffineTransform2D(new Matrix2x2(0.4, 0, 0, 0.4),
+        new Vector2D(-160, 0)));
+    transforms.add(new AffineTransform2D(new Matrix2x2(0.4, 0, 0, 0.4),
+        new Vector2D(160, 0)));
+    transforms.add(new AffineTransform2D(new Matrix2x2(0.4, -0.5, 0.5, 0.4),
+        new Vector2D(0, 0)));
+    transforms.add(new AffineTransform2D(new Matrix2x2(0.4, 0.5, -0.5, 0.4),
+        new Vector2D(0, 0)));
+
+    Vector2D minCoords = new Vector2D(-2, -2);
+    Vector2D maxCoords = new Vector2D(160, 160);
+    return new ChaosGameDescription(minCoords, maxCoords, transforms);
   }
 
   /**
