@@ -3,6 +3,7 @@ package edu.ntnu.mappe08.ui;
 import edu.ntnu.mappe08.entity.Matrix2x2;
 import edu.ntnu.mappe08.entity.Vector2D;
 import edu.ntnu.mappe08.logic.AffineTransform2D;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -97,17 +98,25 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
     setResultConverter(dialogButton -> {
       AffineTransform2D affineTransform2D = null;
       if (dialogButton == ButtonType.OK) {
-        affineTransform2D = new AffineTransform2D(new Matrix2x2( Double.parseDouble(matrixA00.getText()),
-            Double.parseDouble(matrixA01.getText()),
-            Double.parseDouble(matrixA10.getText()),
-            Double.parseDouble(matrixA11.getText())),
-            new Vector2D(Double.parseDouble(vectorX0.getText()),
-                Double.parseDouble(vectorX1.getText())));
+        try {
+          affineTransform2D = new AffineTransform2D(new Matrix2x2( Double.parseDouble(matrixA00.getText()),
+              Double.parseDouble(matrixA01.getText()),
+              Double.parseDouble(matrixA10.getText()),
+              Double.parseDouble(matrixA11.getText())),
+              new Vector2D(Double.parseDouble(vectorX0.getText()),
+                  Double.parseDouble(vectorX1.getText())));
+        } catch (NumberFormatException e) {
+          Alert alert = new Alert(Alert.AlertType.ERROR);
+          alert.setTitle("Error");
+          alert.setHeaderText("Invalid input");
+          alert.setContentText("Please enter valid numbers for all fields");
+          alert.showAndWait();
+        }
       }
       return affineTransform2D;
-    }
-    );
-    
+      }
+      );
+
   }
 
   private static void addNumericListener(TextField textField) {

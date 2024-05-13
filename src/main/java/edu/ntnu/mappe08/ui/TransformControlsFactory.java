@@ -5,15 +5,18 @@ import edu.ntnu.mappe08.entity.Complex;
 import edu.ntnu.mappe08.entity.Matrix2x2;
 import edu.ntnu.mappe08.entity.Vector2D;
 import edu.ntnu.mappe08.logic.AffineTransform2D;
+import edu.ntnu.mappe08.logic.ChaosGameObserver;
 import edu.ntnu.mappe08.logic.JuliaTransform;
 import edu.ntnu.mappe08.logic.Transform2D;
 import edu.ntnu.mappe08.logic.TransformTypes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -25,10 +28,15 @@ import javafx.scene.layout.GridPane;
 /**
  * Factory class for creating TransformControls.
  */
-public class TransformControlsFactory {
+public class TransformControlsFactory implements ChaosGameObserver {
 
   MainPageController controller;
   private ObservableList<Transform2D> transformListWrapper;
+  private TextField a10;
+  private TextField a11;
+  private TextField a00;
+  private TextField a01;
+  private Alert numberFormatAlert;
 
 
   /**
@@ -49,7 +57,8 @@ public class TransformControlsFactory {
    */
   public GridPane getTransformControls(TransformTypes transformType) {
     GridPane controls = new GridPane();
-
+    numberFormatAlert = createNumberFormatAlert();
+    
     switch (transformType) {
       case AFFINE2D:
         controls = createAffineControls();
@@ -61,6 +70,19 @@ public class TransformControlsFactory {
         break;
     }
     return controls;
+  }
+
+  /**
+   * Creates generic alert for number format error.
+   *
+   * @return Alert for number format error
+   */
+  private Alert createNumberFormatAlert() {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Error");
+    alert.setHeaderText("Invalid input");
+    alert.setContentText("Please enter a valid number");
+    return alert;
   }
 
 
@@ -94,26 +116,34 @@ public class TransformControlsFactory {
     TextField realField = new TextField();
     realField.setText(realSlider.getValue() + "");
     realField.setOnAction(e -> {
-      realSlider.setValue(Double.parseDouble(realField.getText()));
+      try {
+        realSlider.setValue(Double.parseDouble(realField.getText()));
+      } catch (NumberFormatException ex) {
+        this.numberFormatAlert.showAndWait();
+      }
     });
 
     TextField imaginaryField = new TextField();
     imaginaryField.setText(imaginarySlider.getValue() + "");
     imaginaryField.setOnAction(e -> {
-      imaginarySlider.setValue(Double.parseDouble(imaginaryField.getText()));
+      try {
+        imaginarySlider.setValue(Double.parseDouble(imaginaryField.getText()));
+      } catch (NumberFormatException ex) {
+        this.numberFormatAlert.showAndWait();
+      }
     });
     
     realSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
       if (controller.getChaosGame().getTransformType().equals(TransformTypes.JULIA)) {
         updateJuliaParams(realSlider, imaginarySlider);
-        realField.setText(newValue + "");
+        realField.setText(String.format("%.2f",newValue));
       }
     });
     
     imaginarySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
       if (controller.getChaosGame().getTransformType().equals(TransformTypes.JULIA)) {
         updateJuliaParams(realSlider, imaginarySlider);
-        imaginaryField.setText(newValue + "");
+        imaginaryField.setText(String.format("%.2f",newValue));
       }
     });
 
@@ -163,19 +193,27 @@ public class TransformControlsFactory {
   private GridPane createMinMaxCoordsControls() {
     
     
-    TextField a10 = new TextField();
-    a10.setText(controller.getCurrentDescription().getMaxCoords().getX0() + "");
+    a10 = new TextField();
+    a10.setText(String.format("%.2f",controller.getCurrentDescription().getMaxCoords().getX0()));
 
-    TextField a11 = new TextField();
-    a11.setText(controller.getCurrentDescription().getMaxCoords().getX1() + "");
+    a11 = new TextField();
+    a11.setText(String.format("%.2f",controller.getCurrentDescription().getMaxCoords().getX1()));
 
     a10.setOnAction(e -> {
-      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
-          Double.parseDouble(a11.getText())));
+      try {
+        controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
+            Double.parseDouble(a11.getText())));
+      } catch (NumberFormatException ex) {
+        this.numberFormatAlert.showAndWait();
+      }
     });
     a11.setOnAction(e -> {
-      controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
-          Double.parseDouble(a11.getText())));
+      try {
+        controller.getChaosGame().setMaxCoords(new Vector2D(Double.parseDouble(a10.getText()),
+            Double.parseDouble(a11.getText())));
+      } catch (NumberFormatException ex) {
+        this.numberFormatAlert.showAndWait();
+      }
     });
     
     Label maxCoords = new Label("Upper Right");
@@ -183,18 +221,26 @@ public class TransformControlsFactory {
     controls.addRow(0, maxCoords, a10, a11);
 
     
-    TextField a00 = new TextField();
-    a00.setText(controller.getCurrentDescription().getMinCoords().getX0() + "");
-    TextField a01 = new TextField();
-    a01.setText(controller.getCurrentDescription().getMinCoords().getX1() + "");
+    a00 = new TextField();
+    a00.setText(String.format("%.2f",controller.getCurrentDescription().getMinCoords().getX0()));
+    a01 = new TextField();
+    a01.setText(String.format("%.2f",controller.getCurrentDescription().getMinCoords().getX1()));
 
     a00.setOnAction(e -> {
-      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(a00.getText()),
-          Double.parseDouble(a01.getText())));
+      try {
+        controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(a00.getText()),
+            Double.parseDouble(a01.getText())));
+      } catch (NumberFormatException ex) {
+        this.numberFormatAlert.showAndWait();
+      }
     });
     a01.setOnAction(e -> {
-      controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(a00.getText()),
-          Double.parseDouble(a01.getText())));
+      try {
+        controller.getChaosGame().setMinCoords(new Vector2D(Double.parseDouble(a00.getText()),
+            Double.parseDouble(a01.getText())));
+      } catch (NumberFormatException ex) {
+        this.numberFormatAlert.showAndWait();
+      }
     });
 
     Label a0 = new Label("Lower Left");
@@ -328,4 +374,11 @@ public class TransformControlsFactory {
     return transformListWrapper;
   }
 
+  @Override
+  public void update() {
+    a00.setText(String.format("%.2f", controller.getCurrentDescription().getMinCoords().getX0()));
+    a01.setText(String.format("%.2f", controller.getCurrentDescription().getMinCoords().getX1()));
+    a10.setText(String.format("%.2f", controller.getCurrentDescription().getMaxCoords().getX0()));
+    a11.setText(String.format("%.2f", controller.getCurrentDescription().getMaxCoords().getX1()));
+  }
 }
