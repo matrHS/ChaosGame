@@ -67,6 +67,7 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
 
     getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
     getDialogPane().setContent(gridPane);Label matrixValues = new Label("Matrix");
+    matrixValues.getStyleClass().add("label-dialog");
     gridPane.addRow(0, matrixValues);
     
     Label matrixA00Label = new Label("a00");
@@ -88,6 +89,7 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
     gridPane.addRow(2, matrixA10Label, matrixA10, matrixA11Label, matrixA11);
     
     Label vectorValues = new Label("Vector");
+    vectorValues.getStyleClass().add("label-dialog");
     gridPane.addRow(3, vectorValues);
     
     Label vectorX0Label = new Label("x0");

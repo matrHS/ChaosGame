@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,6 +24,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -158,6 +160,7 @@ public class TransformControlsFactory implements ChaosGameObserver {
     Label emptyLabel = new Label("");
     Label pointcLabel = new Label("Point C");
 
+
     GridPane juliaControls = new GridPane();
 
     
@@ -191,12 +194,13 @@ public class TransformControlsFactory implements ChaosGameObserver {
    * @return GridPane with controls for min and max coordinates
    */
   private GridPane createMinMaxCoordsControls() {
-    
-    
+
     a10 = new TextField();
+    a10.setTooltip(new Tooltip("Upper bound of x-axis"));
     a10.setText(String.format("%.2f",controller.getCurrentDescription().getMaxCoords().getX0()));
 
     a11 = new TextField();
+    a11.setTooltip(new Tooltip("Upper bound of y-axis"));
     a11.setText(String.format("%.2f",controller.getCurrentDescription().getMaxCoords().getX1()));
 
     a10.setOnAction(e -> {
@@ -215,15 +219,22 @@ public class TransformControlsFactory implements ChaosGameObserver {
         this.numberFormatAlert.showAndWait();
       }
     });
+
+
+    Label coordsLabel = new Label("Coordinates");
+    coordsLabel.getStyleClass().add("label-controls");
     
     Label maxCoords = new Label("Upper Right");
     GridPane controls = new GridPane();
-    controls.addRow(0, maxCoords, a10, a11);
+    controls.addRow(0, coordsLabel);
+    controls.addRow(1, maxCoords, a10, a11);
 
     
     a00 = new TextField();
+    a00.setTooltip(new Tooltip("Lower bound of x-axis"));
     a00.setText(String.format("%.2f",controller.getCurrentDescription().getMinCoords().getX0()));
     a01 = new TextField();
+    a01.setTooltip(new Tooltip("Lower bound of y-axis"));
     a01.setText(String.format("%.2f",controller.getCurrentDescription().getMinCoords().getX1()));
 
     a00.setOnAction(e -> {
@@ -244,7 +255,7 @@ public class TransformControlsFactory implements ChaosGameObserver {
     });
 
     Label a0 = new Label("Lower Left");
-    controls.addRow(1, a0, a00, a01);
+    controls.addRow(2, a0, a00, a01);
     controls.getStyleClass().add("grid-pane-coords");
     
     return controls;

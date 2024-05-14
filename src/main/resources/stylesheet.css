@@ -3,7 +3,7 @@
     -fx-font-family: Consolas;
     -fx-focus-color: #546A76;
     -fx-faint-focus-color: transparent;
-    -fx-accent: transparent;
+    -fx-accent: #546A76;
 }
 
 .menu-bar{
@@ -23,6 +23,11 @@
     -fx-padding: 6;
 }
 
+.label-dialog{
+    -fx-font-size: 12;
+    -fx-padding: 10 0 10 20;
+}
+
 .h-box-bottom{
     -fx-background-color: AliceBlue;
     -fx-padding: 4;
@@ -36,18 +41,16 @@
 }
 
 .grid-pane-controls{
-    -fx-padding: 8;
-    -fx-hgap: 7;
-    -fx-vgap: 7;
+    -fx-padding: 6;
+    -fx-hgap: 6;
+    -fx-vgap: 6;
 }
 
 .label-controls{
     -fx-font-size: 13;
     -fx-font-weight: 600;
-    -fx-label-padding: 7;
-
+    -fx-padding: 10 0 10 20;
 }
-
 
 .grid-pane-buttons{
     -fx-padding: 4;

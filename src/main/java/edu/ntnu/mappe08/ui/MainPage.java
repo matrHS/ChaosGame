@@ -14,6 +14,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
@@ -135,6 +136,7 @@ public class MainPage extends Application {
     bottomBar.getStyleClass().add("h-box-bottom");
     Label iterationsLabel = new Label("Iterations");
     TextField iterations = new TextField();
+    iterations.setTooltip(new Tooltip("Limited: 0 - " + MAX_ITERATIONS));
     iterations.setText(controller.getIterations() + "");
     
     // Catch changes in text field and ensure that inputted value has to be an integer.
