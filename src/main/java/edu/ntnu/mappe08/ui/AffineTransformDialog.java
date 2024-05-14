@@ -9,7 +9,9 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class AffineTransformDialog extends Dialog<AffineTransform2D> {
 
@@ -49,7 +51,18 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
    */
   private void createContent() {
     GridPane gridPane = new GridPane();
-    this.getDialogPane().getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+
+    // Adds stylesheet and icon to the dialog.
+    this.getDialogPane().getStylesheets().add(getClass().getResource(
+        "/stylesheet.css").toExternalForm());
+
+    if (this.getDialogPane().getScene().getWindow() instanceof Stage) {
+      Stage stage = (Stage) this.getDialogPane().getScene().getWindow();
+      stage.getIcons().add(new Image(
+          this.getClass().getResource("/images/icon64x64.png").toExternalForm()));
+    }
+
+
 
 
     getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -99,7 +112,8 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
       AffineTransform2D affineTransform2D = null;
       if (dialogButton == ButtonType.OK) {
         try {
-          affineTransform2D = new AffineTransform2D(new Matrix2x2( Double.parseDouble(matrixA00.getText()),
+          affineTransform2D = new AffineTransform2D(new Matrix2x2(
+              Double.parseDouble(matrixA00.getText()),
               Double.parseDouble(matrixA01.getText()),
               Double.parseDouble(matrixA10.getText()),
               Double.parseDouble(matrixA11.getText())),

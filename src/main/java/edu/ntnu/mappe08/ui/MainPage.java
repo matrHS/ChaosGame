@@ -14,6 +14,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -106,7 +107,11 @@ public class MainPage extends Application {
 
 
     scene.getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
-    
+
+    stage.getIcons().add(new Image(
+        this.getClass().getResource("/images/icon64x64.png").toExternalForm()));
+
+
     stage.setScene(scene);
     stage.show();
     
