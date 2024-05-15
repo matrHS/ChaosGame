@@ -89,6 +89,12 @@ public class MainPage extends Application {
       controller.doZoom(mousePos, e.getDeltaY());
     });
     
+    loadedImage.setOnMouseDragged(e -> {
+      Vector2D mousePos = new Vector2D(e.getX(), e.getY());
+      controller.doDrag(mousePos);
+    });
+    
+    
     
     
     ChangeListener<Number> stageSizeListener = (obs, oldVal, newVal) -> {
