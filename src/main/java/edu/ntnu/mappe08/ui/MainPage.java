@@ -14,6 +14,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -106,7 +108,11 @@ public class MainPage extends Application {
 
 
     scene.getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
-    
+
+    stage.getIcons().add(new Image(
+        this.getClass().getResource("/images/icon64x64.png").toExternalForm()));
+
+
     stage.setScene(scene);
     stage.show();
     
@@ -127,9 +133,10 @@ public class MainPage extends Application {
    */
   private HBox createBottomOptions() {
     HBox bottomBar = new HBox();
-    bottomBar.getStyleClass().add("HBox-bottom");
+    bottomBar.getStyleClass().add("h-box-bottom");
     Label iterationsLabel = new Label("Iterations");
     TextField iterations = new TextField();
+    iterations.setTooltip(new Tooltip("Limited: 0 - " + MAX_ITERATIONS));
     iterations.setText(controller.getIterations() + "");
     
     // Catch changes in text field and ensure that inputted value has to be an integer.
@@ -253,7 +260,6 @@ public class MainPage extends Application {
    */
   public void updateBounds() {
     this.centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
-    // Temporarily removed redraw to get observer working first with values. will be added back.
     controller.doRedrawImage(this.centerCanvasBounds);
   }
   

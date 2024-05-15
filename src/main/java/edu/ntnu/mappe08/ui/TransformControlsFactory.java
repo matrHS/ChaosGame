@@ -11,8 +11,6 @@ import edu.ntnu.mappe08.logic.Transform2D;
 import edu.ntnu.mappe08.logic.TransformTypes;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +21,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -69,10 +68,6 @@ public class TransformControlsFactory implements ChaosGameObserver {
       default:
         break;
     }
-    controls.setHgap(4);
-    controls.setVgap(4);
-    controls.maxWidth(200);
-    controls.minWidth(200);
     return controls;
   }
 
@@ -97,10 +92,13 @@ public class TransformControlsFactory implements ChaosGameObserver {
    */
   private GridPane createJuliaControls() {
     GridPane parentControls = new GridPane();
-    
+    parentControls.getStyleClass().add("grid-pane-controls");
     
     parentControls.addRow(0, createMinMaxCoordsControls());
-    parentControls.addRow(1, new Label("Julia Controls"));
+
+    Label juliaLabel = new Label("Julia Controls");
+    juliaLabel.getStyleClass().add("label-controls");
+    parentControls.addRow(1, juliaLabel);
 
     
     
@@ -158,13 +156,18 @@ public class TransformControlsFactory implements ChaosGameObserver {
     
     Label emptyLabel = new Label("");
     Label pointcLabel = new Label("Point C");
+    pointcLabel.getStyleClass().add("label-width");
+    emptyLabel.getStyleClass().add("label-width");
+
 
     GridPane juliaControls = new GridPane();
+
     
     juliaControls.addRow(0, pointcLabel, realSlider, imaginarySlider);
     juliaControls.addRow(1, emptyLabel, realField, imaginaryField);
     
     parentControls.addRow(2, juliaControls);
+    juliaControls.getStyleClass().add("grid-pane-controls");
 
     return parentControls;
   }
@@ -190,12 +193,13 @@ public class TransformControlsFactory implements ChaosGameObserver {
    * @return GridPane with controls for min and max coordinates
    */
   private GridPane createMinMaxCoordsControls() {
-    
-    
+
     a10 = new TextField();
+    a10.setTooltip(new Tooltip("Upper bound of x-axis"));
     a10.setText(String.format("%.2f",controller.getCurrentDescription().getMaxCoords().getX0()));
 
     a11 = new TextField();
+    a11.setTooltip(new Tooltip("Upper bound of y-axis"));
     a11.setText(String.format("%.2f",controller.getCurrentDescription().getMaxCoords().getX1()));
 
     a10.setOnAction(e -> {
@@ -214,15 +218,22 @@ public class TransformControlsFactory implements ChaosGameObserver {
         this.numberFormatAlert.showAndWait();
       }
     });
+
+
+    Label coordsLabel = new Label("Coordinates");
+    coordsLabel.getStyleClass().add("label-controls");
     
     Label maxCoords = new Label("Upper Right");
     GridPane controls = new GridPane();
-    controls.addRow(0, maxCoords, a10, a11);
+    controls.addRow(0, coordsLabel);
+    controls.addRow(1, maxCoords, a10, a11);
 
     
     a00 = new TextField();
+    a00.setTooltip(new Tooltip("Lower bound of x-axis"));
     a00.setText(String.format("%.2f",controller.getCurrentDescription().getMinCoords().getX0()));
     a01 = new TextField();
+    a01.setTooltip(new Tooltip("Lower bound of y-axis"));
     a01.setText(String.format("%.2f",controller.getCurrentDescription().getMinCoords().getX1()));
 
     a00.setOnAction(e -> {
@@ -243,7 +254,8 @@ public class TransformControlsFactory implements ChaosGameObserver {
     });
 
     Label a0 = new Label("Lower Left");
-    controls.addRow(1, a0, a00, a01);
+    controls.addRow(2, a0, a00, a01);
+    controls.getStyleClass().add("grid-pane-coords");
     
     return controls;
   }
@@ -255,6 +267,7 @@ public class TransformControlsFactory implements ChaosGameObserver {
    */
   private GridPane createAffineControls() {
     GridPane parentControls = new GridPane();
+    parentControls.getStyleClass().add("grid-pane-controls");
     GridPane transformControls = new GridPane();
     
 
@@ -263,6 +276,7 @@ public class TransformControlsFactory implements ChaosGameObserver {
     parentControls.addRow(0, createMinMaxCoordsControls());
     
     Label affineLabel = new Label("Affine Controls");
+    affineLabel.getStyleClass().add("label-controls");
     parentControls.addRow(1, affineLabel);
     
     // Help from copilot choosing the SimpleStingProperty datatype for the return type.
@@ -350,6 +364,7 @@ public class TransformControlsFactory implements ChaosGameObserver {
     });
 
     GridPane buttonControls = new GridPane();
+    buttonControls.getStyleClass().add("grid-pane-buttons");
     buttonControls.addRow(0, addTransform, removeTransform);
     parentControls.addRow(3, buttonControls);
 
