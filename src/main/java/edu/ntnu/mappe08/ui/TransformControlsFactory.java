@@ -11,12 +11,9 @@ import edu.ntnu.mappe08.logic.Transform2D;
 import edu.ntnu.mappe08.logic.TransformTypes;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -159,6 +156,8 @@ public class TransformControlsFactory implements ChaosGameObserver {
     
     Label emptyLabel = new Label("");
     Label pointcLabel = new Label("Point C");
+    pointcLabel.getStyleClass().add("label-width");
+    emptyLabel.getStyleClass().add("label-width");
 
 
     GridPane juliaControls = new GridPane();
