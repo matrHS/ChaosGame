@@ -338,6 +338,29 @@ public class MainPageController implements ChaosGameObserver {
     }
   }
 
+  public void doDrag(Vector2D mousePos) {
+    int maxWidth = (int) mainPage.centerCanvasBounds.getWidth();
+    int maxHeight = (int) mainPage.centerCanvasBounds.getHeight();
+    
+    // Normalize cursor position in relation to canvas dimensions
+    double normX = mousePos.getX0() / maxWidth;
+    double normY = (mousePos.getX1() / maxHeight);
+
+    // Calculate the new min and max coordinates in relation to position and zoom level
+    Vector2D currentMin = chaosGame.getDescription().getMinCoords();
+    Vector2D currentMax = chaosGame.getDescription().getMaxCoords();
+    
+    double newMinX = currentMin.getX0() - normX * (currentMax.getX0() - currentMin.getX0());
+    double newMaxX = currentMax.getX0() - normX * (currentMax.getX0() - currentMin.getX0());
+//    double newMinY = currentMin.getX1() - normY * (currentMax.getX1() - currentMin.getX1());
+//    double newMaxY = currentMax.getX1() - normY * (currentMax.getX1() - currentMin.getX1());
+    
+    // Updates the min and max coordinates
+    chaosGame.setMinCoords(new Vector2D(newMinX, currentMin.getX1()));
+    chaosGame.setMaxCoords(new Vector2D(newMaxX, currentMax.getX1()));
+    
+  }
+
   /**
    * Zooms in or out on the canvas based on mouse position.
    *
