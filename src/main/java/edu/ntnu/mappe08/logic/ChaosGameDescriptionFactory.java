@@ -210,7 +210,6 @@ public class ChaosGameDescriptionFactory {
         }
       }
 
-      // TODO: Consider refactoring each transform into its own class to generalize filehandler
       if (transformType == TransformTypes.AFFINE2D) {
         minCoords = parseCoords(formatedFileContent.get(1));
         maxCoords = parseCoords(formatedFileContent.get(2));

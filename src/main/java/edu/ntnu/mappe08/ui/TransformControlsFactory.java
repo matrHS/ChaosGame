@@ -135,14 +135,14 @@ public class TransformControlsFactory implements ChaosGameObserver {
     realSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
       if (controller.getChaosGame().getTransformType().equals(TransformTypes.JULIA)) {
         updateJuliaParams(realSlider, imaginarySlider);
-        realField.setText(String.format("%.2f",newValue));
+        realField.setText(String.format("%.2f", newValue));
       }
     });
     
     imaginarySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
       if (controller.getChaosGame().getTransformType().equals(TransformTypes.JULIA)) {
         updateJuliaParams(realSlider, imaginarySlider);
-        imaginaryField.setText(String.format("%.2f",newValue));
+        imaginaryField.setText(String.format("%.2f", newValue));
       }
     });
 
@@ -196,11 +196,11 @@ public class TransformControlsFactory implements ChaosGameObserver {
 
     a10 = new TextField();
     a10.setTooltip(new Tooltip("Upper bound of x-axis"));
-    a10.setText(String.format("%.2f",controller.getCurrentDescription().getMaxCoords().getX0()));
+    a10.setText(String.format("%.2f", controller.getCurrentDescription().getMaxCoords().getX0()));
 
     a11 = new TextField();
     a11.setTooltip(new Tooltip("Upper bound of y-axis"));
-    a11.setText(String.format("%.2f",controller.getCurrentDescription().getMaxCoords().getX1()));
+    a11.setText(String.format("%.2f", controller.getCurrentDescription().getMaxCoords().getX1()));
 
     a10.setOnAction(e -> {
       try {
@@ -231,10 +231,10 @@ public class TransformControlsFactory implements ChaosGameObserver {
     
     a00 = new TextField();
     a00.setTooltip(new Tooltip("Lower bound of x-axis"));
-    a00.setText(String.format("%.2f",controller.getCurrentDescription().getMinCoords().getX0()));
+    a00.setText(String.format("%.2f", controller.getCurrentDescription().getMinCoords().getX0()));
     a01 = new TextField();
     a01.setTooltip(new Tooltip("Lower bound of y-axis"));
-    a01.setText(String.format("%.2f",controller.getCurrentDescription().getMinCoords().getX1()));
+    a01.setText(String.format("%.2f", controller.getCurrentDescription().getMinCoords().getX1()));
 
     a00.setOnAction(e -> {
       try {

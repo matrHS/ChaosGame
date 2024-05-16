@@ -73,7 +73,12 @@ public class MainPage extends Application {
     
     // Gets the screen size and sets the scene to be 200 pixels less than the screen size.
     Rectangle2D screenSize = Screen.getPrimary().getBounds();
-    Scene scene = new Scene(borderPane,  screenSize.getWidth()-200, screenSize.getHeight()-200);
+    Scene scene = new Scene(borderPane,  screenSize.getWidth() - 200, screenSize.getHeight() - 200);
+
+    scene.getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+
+    stage.getIcons().add(new Image(
+        this.getClass().getResource("/images/icon64x64.png").toExternalForm()));
     
     centerBox = new StackPane();
     centerBox.setMinHeight(0);
@@ -107,10 +112,7 @@ public class MainPage extends Application {
 
 
 
-    scene.getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
 
-    stage.getIcons().add(new Image(
-        this.getClass().getResource("/images/icon64x64.png").toExternalForm()));
 
 
     stage.setScene(scene);
@@ -134,7 +136,7 @@ public class MainPage extends Application {
   private HBox createBottomOptions() {
     HBox bottomBar = new HBox();
     bottomBar.getStyleClass().add("h-box-bottom");
-    Label iterationsLabel = new Label("Iterations");
+    
     TextField iterations = new TextField();
     iterations.setTooltip(new Tooltip("Limited: 0 - " + MAX_ITERATIONS));
     iterations.setText(controller.getIterations() + "");
@@ -144,8 +146,7 @@ public class MainPage extends Application {
       try {
         if (!newValue.isEmpty() && Integer.parseInt(newValue) <= MAX_ITERATIONS) {
           controller.setIterations(Integer.parseInt(newValue));
-//          controller.doRedrawImage(this.centerCanvasBounds);
-        } else if(newValue.isEmpty()) {
+        } else if (newValue.isEmpty()) {
           iterations.setText("");
         } else {
           iterations.setText(oldValue);
@@ -155,6 +156,8 @@ public class MainPage extends Application {
         iterations.setText(oldValue);
       } 
     });
+
+    Label iterationsLabel = new Label("Iterations");
     
     bottomBar.setSpacing(4);
     bottomBar.getChildren().addAll(iterationsLabel, iterations);
@@ -231,7 +234,8 @@ public class MainPage extends Application {
       setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
     });
     Menu fractalsMenu = new Menu("Fractals");
-    fractalsMenu.getItems().addAll(juliaDefault, barnsleyDefault, sierpinskiDefault, snowflakeDefault);
+    fractalsMenu.getItems()
+        .addAll(juliaDefault, barnsleyDefault, sierpinskiDefault, snowflakeDefault);
     fractalsMenu.getItems().add(new SeparatorMenuItem());
     fractalsMenu.getItems().addAll(emptyAffine);
     

@@ -3,7 +3,7 @@ package edu.ntnu.mappe08.logic;
 /**
  * Exception class for value or parsing errors.
  */
-public class ValueParseException extends Exception{
+public class ValueParseException extends Exception {
 
   /**
    * Constructor for the exception.
