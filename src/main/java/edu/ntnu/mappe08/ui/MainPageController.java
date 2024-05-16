@@ -151,7 +151,7 @@ public class MainPageController implements ChaosGameObserver {
    *
    * @param height height of canvas.
    * @param width width of canvas.
-   * @return
+   * @return ChaosCanvas.
    */
   public ChaosCanvas getEmptyAffine(int height, int width) {
     return getChaosCanvas(height, width, iterations, TransformTypes.NONE);
@@ -352,19 +352,23 @@ public class MainPageController implements ChaosGameObserver {
 
     // Normalize cursor position in relation to canvas dimensions
     double normX = mousePos.getX0() / maxWidth;
-    double normY = 1- (mousePos.getX1() / maxHeight);
+    double normY = 1 - (mousePos.getX1() / maxHeight);
 
     // Calculate new zoom level
-    double zoomDirection = Math.signum(scrollDirection)*-1;
+    double zoomDirection = Math.signum(scrollDirection) * -1;
     double newZoomLevel = Math.pow(zoomFactor, zoomDirection);
 
     // Calculate the new min and max coordinates in relation to position and zoom level
     Vector2D currentMin = chaosGame.getDescription().getMinCoords();
     Vector2D currentMax = chaosGame.getDescription().getMaxCoords();
-    double newMinX = currentMin.getX0() + normX * (currentMax.getX0() - currentMin.getX0()) * (1 - newZoomLevel);
-    double newMaxX = currentMax.getX0() - (1 - normX) * (currentMax.getX0() - currentMin.getX0()) * (1 - newZoomLevel);
-    double newMinY = currentMin.getX1() + normY * (currentMax.getX1() - currentMin.getX1()) * (1 - newZoomLevel);
-    double newMaxY = currentMax.getX1() - (1 - normY) * (currentMax.getX1() - currentMin.getX1()) * (1 - newZoomLevel);
+    double newMinX = currentMin.getX0() + normX 
+        * (currentMax.getX0() - currentMin.getX0()) * (1 - newZoomLevel);
+    double newMaxX = currentMax.getX0() - (1 - normX) 
+        * (currentMax.getX0() - currentMin.getX0()) * (1 - newZoomLevel);
+    double newMinY = currentMin.getX1() + normY 
+        * (currentMax.getX1() - currentMin.getX1()) * (1 - newZoomLevel);
+    double newMaxY = currentMax.getX1() - (1 - normY) 
+        * (currentMax.getX1() - currentMin.getX1()) * (1 - newZoomLevel);
 
     // Updates the min and max coordinates
     chaosGame.setMinCoords(new Vector2D(newMinX, newMinY));

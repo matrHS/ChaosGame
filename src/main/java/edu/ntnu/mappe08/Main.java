@@ -16,8 +16,13 @@ public class Main {
    * @param args Arguments
    */
   public static void main(String[] args) {
-//    ChaosGameCli app = new ChaosGameCli();
-//    app.start();
+    // Uncomment the following two lines to run the CLI version of the application
+    
+    // ChaosGameCli app = new ChaosGameCli();
+    // app.start();
+    
+    // Uncomment the following line to run the GUI version of the application
+    
     MainPage app = new MainPage();
     app.main(args);
   }

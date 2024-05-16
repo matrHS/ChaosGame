@@ -12,6 +12,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+/**
+ * Dialog for editing or adding new affine transforms to loaded affine fractal.
+ */
 public class AffineTransformDialog extends Dialog<AffineTransform2D> {
 
   /**
@@ -49,7 +52,7 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
    * Create content for the dialog.
    */
   private void createContent() {
-    GridPane gridPane = new GridPane();
+    
 
     // Adds stylesheet and icon to the dialog.
     this.getDialogPane().getStylesheets().add(getClass().getResource(
@@ -60,12 +63,12 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
       stage.getIcons().add(new Image(
           this.getClass().getResource("/images/icon64x64.png").toExternalForm()));
     }
-
-
-
+    
+    GridPane gridPane = new GridPane();
 
     getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-    getDialogPane().setContent(gridPane);Label matrixValues = new Label("Matrix");
+    getDialogPane().setContent(gridPane);
+    Label matrixValues = new Label("Matrix");
     matrixValues.getStyleClass().add("label-dialog");
     gridPane.addRow(0, matrixValues);
     
@@ -129,8 +132,8 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
         }
       }
       return affineTransform2D;
-      }
-      );
+    });
+    
 
   }
 
@@ -139,7 +142,7 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
       try {
         if (!newValue.isEmpty()) {
           Double.parseDouble(newValue);
-        } else if(newValue.isEmpty()) {
+        } else if (newValue.isEmpty()) {
           textField.setText("");
         } else {
           textField.setText(oldValue);
@@ -148,7 +151,7 @@ public class AffineTransformDialog extends Dialog<AffineTransform2D> {
         // Throws exception if inputted value is not valid
         textField.setText(oldValue);
       }
-      });
+    });
   }
 
 }

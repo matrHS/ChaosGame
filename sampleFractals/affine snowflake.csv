@@ -1,0 +1,7 @@
+Affine2D # Type of transform 
+-2.0, -2.0 # Lower left 
+160.0, 160.0 # Upper Right 
+0.4, 0.0, 0.0, 0.4, -160.0, 0.0 # Affine transform 
+0.4, 0.0, 0.0, 0.4, 160.0, 0.0 # Affine transform 
+0.4, -0.5, 0.5, 0.4, 0.0, 0.0 # Affine transform 
+0.4, 0.5, -0.5, 0.4, 0.0, 0.0 # Affine transform 
