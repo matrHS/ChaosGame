@@ -79,52 +79,8 @@ public class MainPage extends Application {
 
     stage.getIcons().add(new Image(
         this.getClass().getResource("/images/icon64x64.png").toExternalForm()));
-    
-    centerBox = new StackPane();
-    centerBox.setMinHeight(0);
-    centerBox.setMinWidth(0);
-    borderPane.setCenter(centerBox);
 
-    loadedImage = new ImageView();
-    centerBox.getChildren().add(loadedImage);
-    loadedImage.fitWidthProperty().bind(centerBox.widthProperty());
-    loadedImage.fitHeightProperty().bind(centerBox.heightProperty());
-    
-    
-    loadedImage.setOnScroll(e -> {
-      Vector2D mousePos = new Vector2D(e.getX(), e.getY());
-      controller.doZoom(mousePos, e.getDeltaY());
-    });
-    
-    loadedImage.setOnMouseDragged(e -> {
-      Vector2D mousePos = new Vector2D(e.getX(), e.getY());
-      controller.doDrag(mousePos);
-    });
-    
-    loadedImage.setOnMousePressed(e -> {
-      Vector2D mousePos = new Vector2D(e.getX(), e.getY());
-      controller.doSetOldMousePos(mousePos);
-    });
-    
-    
-    
-    
-    
-    ChangeListener<Number> stageSizeListener = (obs, oldVal, newVal) -> {
-
-      // prevents null pointer on first run as the property listener for height and width triggers
-      // an event once window opens
-      if (setupDone) {
-        updateBounds();
-      }
-
-    };
-    centerBox.heightProperty().addListener(stageSizeListener);
-    centerBox.widthProperty().addListener(stageSizeListener);
-
-
-
-
+    createCenter();
 
 
     stage.setScene(scene);
@@ -139,7 +95,50 @@ public class MainPage extends Application {
     
   }
 
-  
+  /**
+   * Sets up and creates the center pane of the screen along with all bindings and event listeners.
+   */
+  private void createCenter() {
+    centerBox = new StackPane();
+    centerBox.setMinHeight(0);
+    centerBox.setMinWidth(0);
+    borderPane.setCenter(centerBox);
+
+    loadedImage = new ImageView();
+    centerBox.getChildren().add(loadedImage);
+    loadedImage.fitWidthProperty().bind(centerBox.widthProperty());
+    loadedImage.fitHeightProperty().bind(centerBox.heightProperty());
+
+
+    loadedImage.setOnScroll(e -> {
+      Vector2D mousePos = new Vector2D(e.getX(), e.getY());
+      // DeltaY depends on windows scroll settings, value is normallized to -1 or 1 in controller.
+      controller.doZoom(mousePos, e.getDeltaY());
+    });
+
+    loadedImage.setOnMouseDragged(e -> {
+      Vector2D mousePos = new Vector2D(e.getX(), e.getY());
+      controller.doDrag(mousePos);
+    });
+
+    loadedImage.setOnMousePressed(e -> {
+      Vector2D mousePos = new Vector2D(e.getX(), e.getY());
+      controller.doSetOldMousePos(mousePos);
+    });
+
+
+    ChangeListener<Number> stageSizeListener = (obs, oldVal, newVal) -> {
+      // prevents null pointer on first run as the property listener for height and width triggers
+      // an event once window opens
+      if (setupDone) {
+        updateBounds();
+      }
+    };
+    centerBox.heightProperty().addListener(stageSizeListener);
+    centerBox.widthProperty().addListener(stageSizeListener);
+  }
+
+
   /**
    * Creates the bottom menu with options for all transformations.
    *

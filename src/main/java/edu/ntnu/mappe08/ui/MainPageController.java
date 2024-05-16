@@ -356,16 +356,12 @@ public class MainPageController implements ChaosGameObserver {
     double normX = 1 - mousePos.getX0() / maxWidth;
     double normY = (mousePos.getX1() / maxHeight);
     
-    
-    
     // Calculate the new min and max coordinates in relation to position and zoom level
     Vector2D currentMin = chaosGame.getDescription().getMinCoords();
     Vector2D currentMax = chaosGame.getDescription().getMaxCoords();
 
     double panXfactor = (currentMax.getX0() - currentMin.getX0());
     double panYfactor = (currentMax.getX1() - currentMin.getX1());
-    
-
     double newMinX = currentMin.getX0() + (normX - oldMousePos.getX0()) * (panXfactor);
     double newMaxX = currentMax.getX0() + (normX - oldMousePos.getX0()) * (panXfactor);
     double newMinY = currentMin.getX1() + (normY - oldMousePos.getX1()) * (panYfactor);
@@ -407,14 +403,14 @@ public class MainPageController implements ChaosGameObserver {
     // Gets the canvas width and height
     int maxWidth = (int) mainPage.centerCanvasBounds.getWidth();
     int maxHeight = (int) mainPage.centerCanvasBounds.getHeight();
-    double zoomFactor = 1.1; // Zoom speed
-
+    
     // Normalize cursor position in relation to canvas dimensions
     double normX = mousePos.getX0() / maxWidth;
     double normY = 1 - (mousePos.getX1() / maxHeight);
 
     // Calculate new zoom level
     double zoomDirection = Math.signum(scrollDirection) * -1;
+    double zoomFactor = 1.1; // Zoom speed
     double newZoomLevel = Math.pow(zoomFactor, zoomDirection);
 
     // Calculate the new min and max coordinates in relation to position and zoom level
