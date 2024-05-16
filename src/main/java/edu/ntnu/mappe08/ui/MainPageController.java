@@ -399,5 +399,38 @@ public class MainPageController implements ChaosGameObserver {
   }
 
 
-  
+  /**
+   * Shows a help dialog with instructions.
+   */
+  public void showHelp() {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Help");
+    alert.setHeaderText("Chaos Game Help");
+    alert.setWidth(500);
+    alert.setContentText("""
+            Default fractals can be loaded from the "fractals" menu.
+            Custom fractals can be loaded from the "file" menu.
+            Loaded fractals can be saved to a file using the "file" menu.
+            Depending on the loaded fractal, the controls on the left will change.
+            The number of iterations can be changed in the bottom left corner.
+            The canvas can be zoomed in and out using the scroll wheel.
+            """);
+    alert.showAndWait();
+  }
+
+  /**
+   * Shows about dialog with information about the application.
+   */
+  public void showAbout() {
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("About");
+    alert.setHeaderText("Chaos Game");
+    alert.setContentText("""
+        Chaos Game is an application developed by Matthew Hunt and Thea Pernille
+        as part of the course IDATA2003-2024 at NTNU.
+        There are sample fractals included in the "sampleFractals" folder 
+        if the user needs more inspiration.
+        """);
+    alert.showAndWait();
+  }
 }

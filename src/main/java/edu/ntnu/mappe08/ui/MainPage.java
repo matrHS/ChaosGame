@@ -239,9 +239,24 @@ public class MainPage extends Application {
     fractalsMenu.getItems().add(new SeparatorMenuItem());
     fractalsMenu.getItems().addAll(emptyAffine);
     
+    MenuItem help = new MenuItem("Help");
+    help.setOnAction(e -> {
+      controller.showHelp();
+    });
+    
+    MenuItem about = new MenuItem("About");
+    about.setOnAction(e -> {
+      controller.showAbout();
+    });
+    
+    Menu helpMenu = new Menu("Help");
+    helpMenu.getItems().addAll(help, about);
+    
+    
     MenuBar menuBar = new MenuBar();
-    menuBar.getMenus().addAll(fileMenu);
+    menuBar.getMenus().add(fileMenu);
     menuBar.getMenus().add(fractalsMenu);
+    menuBar.getMenus().add(helpMenu);
     
     return menuBar;
   }
