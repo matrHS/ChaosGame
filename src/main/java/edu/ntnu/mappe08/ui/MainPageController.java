@@ -465,7 +465,6 @@ public class MainPageController implements ChaosGameObserver {
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setTitle("Help");
     alert.setHeaderText("Chaos Game Help");
-    alert.setWidth(500);
     alert.setContentText("""
             Default fractals can be loaded from the "fractals" menu.
             Custom fractals can be loaded from the "file" menu.
