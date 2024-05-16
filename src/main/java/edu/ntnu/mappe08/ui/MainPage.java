@@ -101,6 +101,12 @@ public class MainPage extends Application {
       controller.doDrag(mousePos);
     });
     
+    loadedImage.setOnMousePressed(e -> {
+      Vector2D mousePos = new Vector2D(e.getX(), e.getY());
+      controller.doSetOldMousePos(mousePos);
+    });
+    
+    
     
     
     
