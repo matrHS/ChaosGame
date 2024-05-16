@@ -14,6 +14,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -71,7 +73,12 @@ public class MainPage extends Application {
     
     // Gets the screen size and sets the scene to be 200 pixels less than the screen size.
     Rectangle2D screenSize = Screen.getPrimary().getBounds();
-    Scene scene = new Scene(borderPane,  screenSize.getWidth()-200, screenSize.getHeight()-200);
+    Scene scene = new Scene(borderPane,  screenSize.getWidth() - 200, screenSize.getHeight() - 200);
+
+    scene.getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
+
+    stage.getIcons().add(new Image(
+        this.getClass().getResource("/images/icon64x64.png").toExternalForm()));
     
     centerBox = new StackPane();
     centerBox.setMinHeight(0);
@@ -111,8 +118,9 @@ public class MainPage extends Application {
 
 
 
-    scene.getStylesheets().add(getClass().getResource("/stylesheet.css").toExternalForm());
-    
+
+
+
     stage.setScene(scene);
     stage.show();
     
@@ -133,9 +141,10 @@ public class MainPage extends Application {
    */
   private HBox createBottomOptions() {
     HBox bottomBar = new HBox();
-    bottomBar.getStyleClass().add("HBox-bottom");
-    Label iterationsLabel = new Label("Iterations");
+    bottomBar.getStyleClass().add("h-box-bottom");
+    
     TextField iterations = new TextField();
+    iterations.setTooltip(new Tooltip("Limited: 0 - " + MAX_ITERATIONS));
     iterations.setText(controller.getIterations() + "");
     
     // Catch changes in text field and ensure that inputted value has to be an integer.
@@ -143,8 +152,7 @@ public class MainPage extends Application {
       try {
         if (!newValue.isEmpty() && Integer.parseInt(newValue) <= MAX_ITERATIONS) {
           controller.setIterations(Integer.parseInt(newValue));
-//          controller.doRedrawImage(this.centerCanvasBounds);
-        } else if(newValue.isEmpty()) {
+        } else if (newValue.isEmpty()) {
           iterations.setText("");
         } else {
           iterations.setText(oldValue);
@@ -154,6 +162,8 @@ public class MainPage extends Application {
         iterations.setText(oldValue);
       } 
     });
+
+    Label iterationsLabel = new Label("Iterations");
     
     bottomBar.setSpacing(4);
     bottomBar.getChildren().addAll(iterationsLabel, iterations);
@@ -230,13 +240,29 @@ public class MainPage extends Application {
       setTransformControls(transformControlsFactory.getTransformControls(TransformTypes.AFFINE2D));
     });
     Menu fractalsMenu = new Menu("Fractals");
-    fractalsMenu.getItems().addAll(juliaDefault, barnsleyDefault, sierpinskiDefault, snowflakeDefault);
+    fractalsMenu.getItems()
+        .addAll(juliaDefault, barnsleyDefault, sierpinskiDefault, snowflakeDefault);
     fractalsMenu.getItems().add(new SeparatorMenuItem());
     fractalsMenu.getItems().addAll(emptyAffine);
     
+    MenuItem help = new MenuItem("Help");
+    help.setOnAction(e -> {
+      controller.showHelp();
+    });
+    
+    MenuItem about = new MenuItem("About");
+    about.setOnAction(e -> {
+      controller.showAbout();
+    });
+    
+    Menu helpMenu = new Menu("Help");
+    helpMenu.getItems().addAll(help, about);
+    
+    
     MenuBar menuBar = new MenuBar();
-    menuBar.getMenus().addAll(fileMenu);
+    menuBar.getMenus().add(fileMenu);
     menuBar.getMenus().add(fractalsMenu);
+    menuBar.getMenus().add(helpMenu);
     
     return menuBar;
   }
@@ -259,7 +285,6 @@ public class MainPage extends Application {
    */
   public void updateBounds() {
     this.centerCanvasBounds = borderPane.getCenter().getBoundsInLocal();
-    // Temporarily removed redraw to get observer working first with values. will be added back.
     controller.doRedrawImage(this.centerCanvasBounds);
   }
   

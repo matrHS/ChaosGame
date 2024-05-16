@@ -3,7 +3,7 @@
     -fx-font-family: Consolas;
     -fx-focus-color: #546A76;
     -fx-faint-focus-color: transparent;
-    -fx-accent: #546A76
+    -fx-accent: #546A76;
 }
 
 .menu-bar{
@@ -11,25 +11,103 @@
 }
 .menu-item:hover, .menu-button:hover{
     -fx-background-color: #546A76;
-
 }
 .menu-item:focused, .menu-button:showing{
     -fx-background-color: #546A76;
 }
 
-
 .label{
     -fx-font-size: 12;
-    -fx-padding: 4;
+    -fx-padding: 6;
 }
 
-.HBox-bottom{
+.label-dialog{
+    -fx-font-size: 12;
+    -fx-padding: 10 0 10 20;
+}
+
+.label-controls{
+    -fx-font-size: 13;
+    -fx-font-weight: 600;
+    -fx-padding: 10 0 10 20;
+}
+
+.label-width{
+    -fx-min-width: 96;
+}
+
+.h-box-bottom{
     -fx-background-color: AliceBlue;
     -fx-padding: 4;
     -fx-spacing: 10;
 }
 
+.grid-pane-coords{
+    -fx-padding: 4;
+    -fx-hgap: 6;
+    -fx-vgap: 6;
+    -fx-min-height: 130;
+}
+
+.grid-pane-controls{
+    -fx-padding: 6;
+    -fx-hgap: 6;
+    -fx-vgap: 6;
+}
+
+.grid-pane-buttons{
+    -fx-padding: 4;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+.button{
+    -fx-font-size: 12;
+    -fx-background-color: AliceBlue;
+    -fx-background-radius: 2px 2px 2px 2px;
+}
+.button:hover{
+    -fx-background-color: #e5e9ff;
+}
+
 .text-field{
     -fx-font-family: "Arial";
     -fx-font-size: 12;
+}
+
+
+.table-view {
+    -fx-background-color: C7D3DD;
+    -fx-font-family: "Arial";
+    -fx-background-radius: 2px 2px 2px 2px;
+}
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, AliceBlue, #e5f3ff);
+    -fx-background-radius: 2px 2px 0 0;
+}
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+
+.table-row-cell:odd{
+    -fx-background-color: AliceBlue;
+    -fx-padding: 2;
+}
+.table-row-cell:even{
+    -fx-background-color: White;
+    -fx-padding: 2;
+}
+.table-row-cell:hover{
+    -fx-text-background-color: Orchid;
+}
+.table-row-cell:selected{
+    -fx-background-color: #546A76;
+    -fx-text-background-color: White;
 }
