@@ -356,19 +356,27 @@ public class MainPageController implements ChaosGameObserver {
     double normX = 1 - mousePos.getX0() / maxWidth;
     double normY = (mousePos.getX1() / maxHeight);
     
+    
+    
     // Calculate the new min and max coordinates in relation to position and zoom level
     Vector2D currentMin = chaosGame.getDescription().getMinCoords();
     Vector2D currentMax = chaosGame.getDescription().getMaxCoords();
 
-    double newMinX = currentMin.getX0() + (normX - oldMousePos.getX0());
-    double newMaxX = currentMax.getX0() + (normX - oldMousePos.getX0());
-    double newMinY = currentMin.getX1() + (normY - oldMousePos.getX1());
-    double newMaxY = currentMax.getX1() + (normY - oldMousePos.getX1());
+    double panXfactor = (currentMax.getX0() - currentMin.getX0());
+    double panYfactor = (currentMax.getX1() - currentMin.getX1());
+    
+
+    double newMinX = currentMin.getX0() + (normX - oldMousePos.getX0()) * (panXfactor);
+    double newMaxX = currentMax.getX0() + (normX - oldMousePos.getX0()) * (panXfactor);
+    double newMinY = currentMin.getX1() + (normY - oldMousePos.getX1()) * (panYfactor);
+    double newMaxY = currentMax.getX1() + (normY - oldMousePos.getX1()) * (panYfactor);
 
     // Updates the min and max coordinates
     chaosGame.setMinCoords(new Vector2D(newMinX, newMinY));
     chaosGame.setMaxCoords(new Vector2D(newMaxX, newMaxY));
 
+    // Sets the old normalized mouse position so that there is a difference between mouse positions.
+    // for next cpu cycle, this gives us 2 points to calculate the new min max coords from.
     oldMousePos = new Vector2D(normX, normY);
   }
 
@@ -465,6 +473,7 @@ public class MainPageController implements ChaosGameObserver {
             Depending on the loaded fractal, the controls on the left will change.
             The number of iterations can be changed in the bottom left corner.
             The canvas can be zoomed in and out using the scroll wheel.
+            The canvas can be panned by clicking anywhere on the image and dragging.
             """);
     alert.showAndWait();
   }
