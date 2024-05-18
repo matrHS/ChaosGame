@@ -37,6 +37,8 @@ public class MainPageController implements ChaosGameObserver {
   
   private int iterations = 100000;
 
+  private Vector2D oldMousePos = new Vector2D(0, 0);
+
   /**
    * Creates an instance of ChaosGameController.
    */
@@ -45,6 +47,7 @@ public class MainPageController implements ChaosGameObserver {
     this.fileHandler = new ChaosGameFileHandler();
     this.descriptionFactory = new ChaosGameDescriptionFactory();
     this.logger = Logger.getLogger(MainPageController.class.getName());
+    
   }
 
   /**
@@ -338,6 +341,58 @@ public class MainPageController implements ChaosGameObserver {
     }
   }
 
+
+  /**
+   * Pans the canvas based on mouse position.
+   * Uses old mouse position to calculate delta for pan.
+   *
+   * @param mousePos current mouse position.
+   */
+  public void doDrag(Vector2D mousePos) {
+    int maxWidth = (int) mainPage.centerCanvasBounds.getWidth();
+    int maxHeight = (int) mainPage.centerCanvasBounds.getHeight();
+
+    // Normalize cursor position in relation to canvas dimensions
+    double normX = 1 - mousePos.getX0() / maxWidth;
+    double normY = (mousePos.getX1() / maxHeight);
+    
+    // Calculate the new min and max coordinates in relation to position and zoom level
+    Vector2D currentMin = chaosGame.getDescription().getMinCoords();
+    Vector2D currentMax = chaosGame.getDescription().getMaxCoords();
+
+    double panXfactor = (currentMax.getX0() - currentMin.getX0());
+    double panYfactor = (currentMax.getX1() - currentMin.getX1());
+    double newMinX = currentMin.getX0() + (normX - oldMousePos.getX0()) * (panXfactor);
+    double newMaxX = currentMax.getX0() + (normX - oldMousePos.getX0()) * (panXfactor);
+    double newMinY = currentMin.getX1() + (normY - oldMousePos.getX1()) * (panYfactor);
+    double newMaxY = currentMax.getX1() + (normY - oldMousePos.getX1()) * (panYfactor);
+
+    // Updates the min and max coordinates
+    chaosGame.setMinCoords(new Vector2D(newMinX, newMinY));
+    chaosGame.setMaxCoords(new Vector2D(newMaxX, newMaxY));
+
+    // Sets the old normalized mouse position so that there is a difference between mouse positions.
+    // for next cpu cycle, this gives us 2 points to calculate the new min max coords from.
+    oldMousePos = new Vector2D(normX, normY);
+  }
+
+  /**
+   * Sets the old mouse position for dragging purposes.
+   * Activated when mouse is pressed on canvas to prevent jagged panning.
+   *
+   * @param mousePos mouse position.
+   */
+  public void doSetOldMousePos(Vector2D mousePos) {
+    int maxWidth = (int) mainPage.centerCanvasBounds.getWidth();
+    int maxHeight = (int) mainPage.centerCanvasBounds.getHeight();
+
+    // Normalize cursor position in relation to canvas dimensions
+    double normX = 1 - mousePos.getX0() / maxWidth;
+    double normY = (mousePos.getX1() / maxHeight);
+    
+    this.oldMousePos = new Vector2D(normX, normY);
+  }
+
   /**
    * Zooms in or out on the canvas based on mouse position.
    *
@@ -348,14 +403,14 @@ public class MainPageController implements ChaosGameObserver {
     // Gets the canvas width and height
     int maxWidth = (int) mainPage.centerCanvasBounds.getWidth();
     int maxHeight = (int) mainPage.centerCanvasBounds.getHeight();
-    double zoomFactor = 1.1; // Zoom speed
-
+    
     // Normalize cursor position in relation to canvas dimensions
     double normX = mousePos.getX0() / maxWidth;
     double normY = 1 - (mousePos.getX1() / maxHeight);
 
     // Calculate new zoom level
     double zoomDirection = Math.signum(scrollDirection) * -1;
+    double zoomFactor = 1.1; // Zoom speed
     double newZoomLevel = Math.pow(zoomFactor, zoomDirection);
 
     // Calculate the new min and max coordinates in relation to position and zoom level
@@ -406,7 +461,6 @@ public class MainPageController implements ChaosGameObserver {
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setTitle("Help");
     alert.setHeaderText("Chaos Game Help");
-    alert.setWidth(500);
     alert.setContentText("""
             Default fractals can be loaded from the "fractals" menu.
             Custom fractals can be loaded from the "file" menu.
@@ -414,6 +468,7 @@ public class MainPageController implements ChaosGameObserver {
             Depending on the loaded fractal, the controls on the left will change.
             The number of iterations can be changed in the bottom left corner.
             The canvas can be zoomed in and out using the scroll wheel.
+            The canvas can be panned by clicking anywhere on the image and dragging.
             """);
     alert.showAndWait();
   }
@@ -433,4 +488,6 @@ public class MainPageController implements ChaosGameObserver {
         """);
     alert.showAndWait();
   }
+
+  
 }
