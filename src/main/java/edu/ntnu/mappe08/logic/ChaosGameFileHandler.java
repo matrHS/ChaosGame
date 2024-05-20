@@ -68,9 +68,9 @@ public class ChaosGameFileHandler {
     }
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
       String transformType = "";
-      if (description.getTransforms().get(0) instanceof AffineTransform2D) {
+      if (description.getTransformType() == TransformTypes.AFFINE2D) {
         transformType = "Affine2D";
-      } else if (description.getTransforms().get(0) instanceof JuliaTransform) {
+      } else if (description.getTransformType() == TransformTypes.JULIA) {
         transformType = "Julia";
       }
       writer.write(transformType);
