@@ -481,7 +481,7 @@ public class MainPageController implements ChaosGameObserver {
     alert.setTitle("About");
     alert.setHeaderText("Chaos Game");
     alert.setContentText("""
-        Chaos Game is an application developed by Matthew Hunt and Thea Pernille
+        Chaos Game is an application developed by * and *
         as part of the course IDATA2003-2024 at NTNU.
         There are sample fractals included in the "sampleFractals" folder 
         if the user needs more inspiration.
