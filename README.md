@@ -1,4 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/AIO_Bc8D)
 
 # Project description
 
@@ -12,6 +11,7 @@ The packages are separated into three main categories: "entity", "logic" and "ui
 
 # How to run the application
 
+## Running with Maven
 To run the application java 21 should be installed on your machine along maven.
 The application can be downloaded from the Releases page on GitHub or by downloading the latest source code as a zip 
 file.
@@ -23,6 +23,33 @@ mvn javafx:run
 ```
 
 The applcation can also be run from an IDE by running the main class `Main` in the `edu.ntnu.mappe08` package.
+
+## Running compiled code
+
+To run the application regardless of any IDE it is important that the code is compiled first into a JAR and that the
+Java Development Kit is installed on the system. For Windows machines it is important that the JDK bin folder is included
+in the Systems PATH enviroment variables so that Java can be ran from the terminal.
+It is also assumed that the mvn "shade" plugin is installed to ensure that the required javafx dependencies are included.
+
+Compilation of the source code also assumes maven is installed on the target system.
+The code can be compiled and packaged to a JAR using the commands  
+`
+mvn clean
+`  
+and  
+`
+mvn install
+`  
+in the terminal or using the mvn plugin in your IDE of choice
+
+Once the source code has been compiled and packaged, a JAR file will appear in the [target](target) folder.
+This is the JAR file used to run the application in the terminal.
+
+To start the application in the terminal the following command should be used.  
+`
+java -cp .\target\mappe08-1.1.2.jar edu.ntnu.mappe08.Main
+`
+
 
 # How to use the application
 
